@@ -8,26 +8,26 @@ import Cookies from 'universal-cookie'
 import Login from './Components/Login';
 
 class Routers extends React.Component {
-     render() {
-          const cookies = new Cookies()
+  render() {
+    const cookies = new Cookies()
 
-          if( !cookies.get('udatxu') ) {
-               return(
-                    <BrowserRouter>
-                         <Container fluid id="login-bg">
-                              <Routes>
-                                   <Route exact path="/" element= { <Login /> } />
-                                   {/* <Route exact path="/forgot" element= { <Forgot /> } /> */}
-                                   {/* <Route exact path="/chgpwd" element= { <ChgPwd /> } /> */}
-                                   <Route path="*" element={<Navigate to={'/'} />} />
-                              </Routes> 
-                         </Container> 
-                    </BrowserRouter>  
-               )
-          } else { 
-
-          }
-     }
+    if( !cookies.get('udatxu') ) {
+      return(
+        <BrowserRouter>
+          <Container fluid id="login-bg">
+            <Routes>
+              <Route exact path="/" element= { <Login /> } />
+              {/* <Route exact path="/forgot" element= { <Forgot /> } /> */}
+              {/* <Route exact path="/chgpwd" element= { <ChgPwd /> } /> */}
+              <Route path="*" element={<Navigate to={'/'} />} />
+            </Routes> 
+          </Container> 
+        </BrowserRouter>  
+      )
+    } else { 
+      // kode login user
+    }
+  }
 }
 
 export default Routers;
