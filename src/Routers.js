@@ -5,7 +5,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 
 /* Components & Layout */
-import Login from './Components/Login';
+import Login from './Components/Login'
+import Register from './Components/Register'
+import Forgot from './Components/Forgot'
+
+/* Custom CSS */
+import '../src/Assets/CSS/Login.css'
 
 class Routers extends React.Component {
   render() {
@@ -17,8 +22,8 @@ class Routers extends React.Component {
           <Container fluid id="login-bg">
             <Routes>
               <Route exact path="/" element= { <Login /> } />
-              {/* <Route exact path="/forgot" element= { <Forgot /> } /> */}
-              {/* <Route exact path="/chgpwd" element= { <ChgPwd /> } /> */}
+              <Route exact path="/register" element= { <Register /> } />
+              <Route exact path="/forgot" element= { <Forgot /> } />
               <Route path="*" element={<Navigate to={'/'} />} />
             </Routes> 
           </Container> 

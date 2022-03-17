@@ -1,15 +1,37 @@
-body {
-  width: 100% !important;
-  height: 100% !important;
-  background-color: whitesmoke;
+#login-bg {
+  /* Location of the image */
+  background-image: url('../Images/bromo.jpeg');
+
+  /* Image is centered vertically and horizontally at all times */
+  background-position: center center;
+
+  /* Image doesn't repeat */
+  background-repeat: no-repeat;
+
+  /* Makes the image fixed in the viewport so that it doesn't move when 
+     the content height is greater than the image height */
+  background-attachment: fixed;
+
+  /* This is what makes the background image rescale based on its container's size */
+  background-size: cover;
+
+  /* Pick a solid background color that will be displayed while the background image is loading */
+  background-color: #464646;
+
+  /* SHORTHAND CSS NOTATION
+  * background: url(background-photo.jpg) center center cover no-repeat fixed;
+  */
+
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-#login {
-  width: 300px; /* Set this to your convenience */
-  height: 250px; /* Set this to your convenience */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -125px; /* Half of height */
-  margin-left: -150px; /* Half of width */
-}
+/* SweetAlert2: Blurry Background */
+/* body.swal2-shown > [aria-hidden='true'] {
+  transition: 0.1s filter;
+  filter: blur(10px);
+} */

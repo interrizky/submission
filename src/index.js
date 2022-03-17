@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import Login from './Components/Login'
+/* Bootstrap */
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+import Routers from './Routers'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <Routers />
   </React.StrictMode>,
   document.getElementById('root')
 );
