@@ -21,10 +21,10 @@ class Routers extends React.Component {
         <BrowserRouter>
           <Container fluid id="login-bg">
             <Routes>
-              <Route exact path="/" element= { <Login /> } />
-              <Route exact path="/register" element= { <Register /> } />
-              <Route exact path="/forgot" element= { <Forgot /> } />
-              <Route path="*" element={<Navigate to={'/'} />} />
+              <Route path="/" element= { <Login /> } />
+              <Route path="/register" element= { <Register /> } />
+              <Route path="/forgot" element= { <Forgot /> } />
+              <Route path="*" element= { <Navigate to={'/'} /> } />
             </Routes> 
           </Container> 
         </BrowserRouter>  
