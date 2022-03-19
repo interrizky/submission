@@ -45,7 +45,7 @@ class Register extends React.Component {
                   <div className="form-group mb-3">
                       <label htmlFor="inputPassword-1-label" className="col-form-label" style={{ textAlign: "left" }}>Password</label>
                       <div className="input-group mb-2">
-                        <input autoFocus type="password" id="password1" name="password1" className="form-control" placeholder="Your Password" aria-label="Password1" aria-describedby="basic-addon5" autoComplete="off" onKeyPress={ this.movePwdTwo } />
+                        <input type="password" id="password1" name="password1" className="form-control" placeholder="Your Password" aria-label="Password1" aria-describedby="basic-addon5" autoComplete="off" onKeyPress={ this.movePwdTwo } />
                         <div className="input-group-prepend">
                           <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
                         </div>
