@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie'
 import Login from './Components/Login'
 import Register from './Components/Register'
 import Forgot from './Components/Forgot'
+import Navbar from './Components/Navbar'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -16,7 +17,7 @@ class Routers extends React.Component {
   render() {
     const cookies = new Cookies()
 
-    if( !cookies.get('udatxu') ) {
+    if( cookies.get('udatxu') ) {
       return(
         <BrowserRouter>
           <Container fluid id="login-bg">
@@ -30,7 +31,18 @@ class Routers extends React.Component {
         </BrowserRouter>  
       )
     } else { 
-      // kode login user
+      return(
+        <BrowserRouter>
+          <Container fluid id="user-main-bg">
+            <Navbar />
+            {/* Routes */}
+            <Routes>
+              <Route exact path="/home" element= { <Login /> } />
+            </Routes>
+            {/* Routes */}
+          </Container> 
+        </BrowserRouter>                    
+      )
     }
   }
 }
