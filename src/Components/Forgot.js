@@ -9,31 +9,36 @@ class Forgot extends React.Component {
           justifyContent: 'center', 
           alignItems: 'center', 
           // textAlign: 'center', 
-          width: '500px', 
-          height: '575px',                 
+          width: '480px', 
+          height: '480px',                 
           borderRadius: '15px'
         }}>
-          <div className="wrapper-form mx-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
+          <div className="wrapper-header mx-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
             <div className="header mb-2">
               <h4 style={{ textAlign: "center" }}>Forgot Password</h4>
             </div>
             <div className="text mb-2">
-              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan lalu ketik ENTER. Tunggu beberapa saat untuk sistem melakukan pengecekan dan kemudian klik tombol RESEND NEW PASSWORD. Password baru akan dikirimkan ke email anda. Terima kasih.
-              </p>
-            </div>
+              {/* <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan lalu ketik ENTER. Tunggu beberapa saat untuk sistem melakukan pengecekan dan kemudian klik tombol RESEND NEW PASSWORD. Password baru akan dikirimkan ke email anda. Terima kasih.
+              </p> */}
+              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Password baru akan dikirimkan ke email anda. Terima kasih.
+              </p>              
+            </div>         
+          </div>
+
+          <div className="wrapper-form mx-5 my-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
             <div className="form mb-2">
               <div className="form-group mb-3">
                 <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
                 <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
               </div>
-              <div className="form-group mb-3">
+              {/* <div className="form-group mb-3">
                 <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Peserta</label>                  
-                <input type="text" id="nama" name="nama" className="form-control" placeholder="Your Full Name" aria-label="Name" aria-describedby="basic-addon2" />
+                <input readOnly="true" type="text" id="nama" name="nama" className="form-control" placeholder="Your Full Name" aria-label="Name" aria-describedby="basic-addon2" />
               </div>
               <div className="form-group mb-3">
                 <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>No. Handphone Aktif</label>                  
-                <input type="text" id="handphone" name="handphone" className="form-control" placeholder="Your Active Phone Number" aria-label="Phone Number" aria-describedby="basic-addon3" />
-              </div>              
+                <input readOnly="true" type="text" id="handphone" name="handphone" className="form-control" placeholder="Your Active Phone Number" aria-label="Phone Number" aria-describedby="basic-addon3" />
+              </div>               */}
             </div>
             <div className="button my-4">
               <div className="input-group mb-3">
@@ -46,8 +51,9 @@ class Forgot extends React.Component {
                   CANCEL
                 </button>           
               </div>
-            </div>            
+            </div>             
           </div>          
+
         </div>        
       </div>
     )

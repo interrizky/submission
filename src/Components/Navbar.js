@@ -2,7 +2,6 @@ import React from 'react'
 
 // logo
 import NavbarLogo from '../Assets/Images/ejavec-logo.svg'
-
 // button react-feather
 import { Search, XCircle, RefreshCw } from 'react-feather'
 
@@ -41,7 +40,8 @@ class Navbar extends React.Component {
           id="row-alert"
           className="alert alert-success show my-2"
           role="alert"
-        >Selamat Datang, User
+        >
+          Selamat Datang, User
         </div>
 
         <div className="wrapper-navigation d-flex my-3">
@@ -66,7 +66,7 @@ class Navbar extends React.Component {
                   className="form-control search"
                   id="search"
                   name="search"
-                  placeholder="Search Product Here.."
+                  placeholder="Search Paper Here.."
                 />
                 <div className="wrapper-button-navigation">
                   <button
@@ -110,6 +110,25 @@ class Navbar extends React.Component {
           </div>
         </div>        
 
+      <div
+        className="wrapper-table-product table-responsive my-3"
+        style={{ overflow: "auto", height: "550px" }}
+      >
+        <table className="table table-bordered table-hover table-light mb-0">
+          <thead className="thead-light">
+            <tr>
+              <th scope="col" className="text-center" style={{ width: "5%" }}>#</th>
+              <th scope="col" className="text-center">Judul</th>              
+              <th scope="col" className="text-center" style={{ width: "10%" }}>Nama Kelompok</th>              
+              <th scope="col" className="text-center" style={{ width: "10%" }}>Kategori</th>
+              <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis</th>
+              <th scope="col" className="text-center" style={{ width: "10%" }}>Status</th>
+              <th scope="col" className="text-center" style={{ width: "10%" }}>Action</th>
+            </tr>
+          </thead>
+          <tbody className="table-body" id="table-body"></tbody>
+        </table>
+      </div>
 
       </React.Fragment>
     )

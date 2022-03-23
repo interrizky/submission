@@ -17,7 +17,7 @@ class Routers extends React.Component {
   render() {
     const cookies = new Cookies()
 
-    if( cookies.get('udatxu') ) {
+    if( !cookies.get('udatxu') ) {
       return(
         <BrowserRouter>
           <Container fluid id="login-bg">
@@ -37,7 +37,8 @@ class Routers extends React.Component {
             <Navbar />
             {/* Routes */}
             <Routes>
-              <Route exact path="/home" element= { <Login /> } />
+              <Route exact path="/home" element= { <Navbar /> } />
+              <Route path="*" element= { <Navigate to={'/home'} /> } />
             </Routes>
             {/* Routes */}
           </Container> 

@@ -1,9 +1,55 @@
 import React from 'react';
+import Axios from 'axios';
 
 // Icon
 import { EyeOff } from 'react-feather'
+// SweetAlert2
+import Swal from 'sweetalert2'
 
 class Register extends React.Component {
+  clickSignUp = (event) => {
+    event.preventDefault();
+
+    if( document.querySelector('#nama').value === '' || document.querySelector('#handphone').value === '' || document.querySelector('#organisasi').value === '' || document.querySelector('#email').value === '' || document.querySelector('#password1').value === '' || document.querySelector('#password2').value === '') {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Periksa Kembali Semua Inputan Anda!',
+        icon: 'error',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',            
+      })            
+    } else if( document.querySelector('#password1').value !== document.querySelector('#password2').value ) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Terjadi Kesalahan Pada Kolom Password Anda!',
+          icon: 'error',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',            
+        })            
+    } else {
+      const datax = Axios({
+        url: 'http://localhost:2020/register',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({ 
+          data_nama: document.querySelector('#nama').value,
+          data_handphone: document.querySelector('#handphone').value,
+          data_organisasi: document.querySelector('#organisasi').value,
+          data_email: document.querySelector('#email').value,
+          data_password: document.querySelector('#password2').value,
+        })                   
+      })
+      
+      if( datax !== null ) {
+
+      } else {
+
+      }
+    }
+  }
+
   render() {
     return(
       <div className="row register-page d-flex align-items-center">
@@ -12,7 +58,7 @@ class Register extends React.Component {
           justifyContent: 'center', 
           alignItems: 'center', 
           // textAlign: 'center', 
-          width: '600px', 
+          width: '720px', 
           height: '575px',                 
           borderRadius: '15px'
         }}>
@@ -26,21 +72,21 @@ class Register extends React.Component {
                 <div className="wrapper-form-kiri col-xs-12 col-sm-12 col-md-6 col-lg-6">
                   <div className="form-group mb-3">
                     <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Peserta</label>                  
-                    <input autoFocus type="text" id="nama" name="nama" className="form-control" placeholder="Your Full Name" aria-label="Name" aria-describedby="basic-addon1" />
+                    <input autoFocus type="text" id="nama" name="nama" className="form-control" placeholder="Full Name" aria-label="Name" aria-describedby="basic-addon1" />
                   </div>
                   <div className="form-group mb-3">
                     <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>No. Handphone Aktif</label>                  
-                    <input type="text" id="handphone" name="handphone" className="form-control" placeholder="Your Active Phone Number" aria-label="Phone Number" aria-describedby="basic-addon2" />
+                    <input type="text" id="handphone" name="handphone" className="form-control" placeholder="Active Phone Number" aria-label="Phone Number" aria-describedby="basic-addon2" />
                   </div>
                   <div className="form-group mb-3">
                     <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Instansi</label>                  
-                    <input type="text" id="instansi" name="instansi" className="form-control" placeholder="Your Organization Name" aria-label="Organization Name" aria-describedby="basic-addon3" />
+                    <input type="text" id="organisasi" name="organisasi" className="form-control" placeholder="Organization / Institution Name" aria-label="Organization Name" aria-describedby="basic-addon3" />
                   </div>    
                 </div>
                 <div className="wrapper-form-kanan col-xs-12 col-sm-12 col-md-6 col-lg-6">
                   <div className="form-group mb-3">
                     <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
-                    <input type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon4" />
+                    <input type="text" id="email" name="email" className="form-control" placeholder="Active Email" aria-label="Email" aria-describedby="basic-addon4" />
                   </div>
                   <div className="form-group mb-3">
                       <label htmlFor="inputPassword-1-label" className="col-form-label" style={{ textAlign: "left" }}>Password</label>
@@ -54,7 +100,7 @@ class Register extends React.Component {
                   <div className="form-group mb-3">
                       <label htmlFor="inputPassword-2-label" className="col-form-label" style={{ textAlign: "left" }}>Confirm Password</label>
                       <div className="input-group mb-2">
-                        <input type="password" id="password2" name="password2" className="form-control" placeholder="Confirm It" aria-label="Password2" aria-describedby="basic-addon6" autoComplete="off" onKeyUp={ this.typeText } onKeyPress={ this.moveToButton } />
+                        <input type="password" id="password2" name="password2" className="form-control" placeholder="Confirm Password" aria-label="Password2" aria-describedby="basic-addon6" autoComplete="off" onKeyUp={ this.typeText } onKeyPress={ this.moveToButton } />
                         <div className="input-group-prepend">
                           <div className="input-group-text"><EyeOff onClick={ this.showHideTwo } /></div>
                         </div>
