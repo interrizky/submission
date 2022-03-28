@@ -9,6 +9,8 @@ import Login from './Components/Login'
 import Register from './Components/Register'
 import Forgot from './Components/Forgot'
 import Navbar from './Components/Navbar'
+import Verification from './Components/Verification'
+import Code from './Components/Code'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -25,6 +27,8 @@ class Routers extends React.Component {
               <Route path="/" element= { <Login /> } />
               <Route path="/register" element= { <Register /> } />
               <Route path="/forgot" element= { <Forgot /> } />
+              <Route path="/verification" element= { <Verification /> } />
+              <Route path="/code" element= { <Code /> } />
               <Route path="*" element= { <Navigate to={'/'} /> } />
             </Routes> 
           </Container> 
