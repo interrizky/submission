@@ -1,12 +1,28 @@
-import React from 'react'
+import React from 'react';
+// import Axios from 'axios';
 
-// logo
+/* ModalForm */
+import ModalForm from './ModalForm'
+/* logo */
 import NavbarLogo from '../Assets/Images/ejavec-logo.svg'
-// button react-feather
+/* button react-feather */
 import { Search, XCircle, RefreshCw } from 'react-feather'
+/* Universal Cookie */
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
 
 
 class Navbar extends React.Component {
+  state = {
+    isOpen: false,
+  }
+
+  openModal = () => this.setState({ isOpen: true });
+  closeModal = () => this.setState({ isOpen: false });
+  handleSubmit = (event) => {
+    event.preventDefault()
+  } 
+
   render() {
     return(
       <React.Fragment>
@@ -30,6 +46,7 @@ class Navbar extends React.Component {
               id="btnLogout"
               type="button"
               className="btn btn-outline-dark"
+              onClick={ this.clickLogout }
             >
               Logout
             </button>
@@ -41,7 +58,7 @@ class Navbar extends React.Component {
           className="alert alert-success show my-2"
           role="alert"
         >
-          Selamat Datang, User
+          Selamat Datang, {cookies.get('udatxu').name}
         </div>
 
         <div className="wrapper-navigation d-flex my-3">
@@ -52,9 +69,19 @@ class Navbar extends React.Component {
                 name="btnAdd"
                 id="btnAdd"
                 className="btn btn-md btn-outline-primary mr-4"
+                onClick={ this.openModal }  
               >
                 Add Paper
               </button>
+              { this.state.isOpen ? 
+                <ModalForm 
+                  closeModal={ this.closeModal } 
+                  isOpen={ this.state.isOpen } 
+                  handleSubmit={ this.handleSubmit }
+                /> 
+                : 
+                null 
+              }
             </form>
           </div>
 
@@ -132,6 +159,14 @@ class Navbar extends React.Component {
 
       </React.Fragment>
     )
+  }
+
+  clickLogout = (event) => {
+    event.preventDefault();
+    /* remove cookies */
+    cookies.remove('udatxu', { path: '/' })
+    /* refresh page and hopes it directly went to Login Page */
+    window.location.reload()    
   }
 }
 

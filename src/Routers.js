@@ -35,19 +35,22 @@ class Routers extends React.Component {
         </BrowserRouter>  
       )
     } else { 
-      return(
-        <BrowserRouter>
-          <Container fluid id="user-main-bg">
-            <Navbar />
-            {/* Routes */}
-            <Routes>
-              <Route exact path="/home" element= { <Navbar /> } />
-              <Route path="*" element= { <Navigate to={'/home'} /> } />
-            </Routes>
-            {/* Routes */}
-          </Container> 
-        </BrowserRouter>                    
-      )
+      if( cookies.get('udatxu').role === 'peserta' && cookies.get('udatxu').user_status === 'active' ) {
+        return(
+          <BrowserRouter>
+            <Container fluid id="user-main-bg">
+              {/* Routes */}
+              <Routes>
+                <Route exact path="/home" element= { <Navbar /> } />
+                <Route path="*" element= { <Navigate to={'/home'} /> } />
+              </Routes>
+              {/* Routes */}
+            </Container> 
+          </BrowserRouter>
+        )
+      } else {
+
+      }
     }
   }
 }

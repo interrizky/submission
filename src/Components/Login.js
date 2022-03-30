@@ -8,8 +8,8 @@ import imgEjavec from '../Assets/Images/ejavec-logo.svg'
 /* SweetAlert2 */
 import Swal from 'sweetalert2'
 /* Universal Cookie */
-// import Cookies from 'universal-cookie'
-// const cookies = new Cookies()
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
 
 class Login extends React.Component {
   clickRegister = () => {
@@ -40,7 +40,7 @@ class Login extends React.Component {
         })                   
       })
 
-      console.log(datax)      
+      // console.log(datax)
 
       /* data user ditemukan: role peserta active dan inactive, admin gas pol */
       if( datax.data.message === "OK" && datax.data.result.role === "admin" ) {
@@ -80,19 +80,47 @@ class Login extends React.Component {
               window.location.href = '/verification'
             })
       } else if( datax.data.message === "OK" && datax.data.result.role === "peserta" && datax.data.result.user_status === "active" ) {
-        // swallfire panjang + bikin cookies
-        // swallfire panjang + bikin cookies
-        // swallfire panjang + bikin cookies
+          // swallfire panjang + bikin cookies
+          let timerInterval
+          Swal.fire({
+            title: 'Success!',
+            text: 'Check Your Email For The New Password Code',
+            icon: 'success',
+            confirmButtonText: 'COOL',
+            confirmButtonColor: 'orange',
+            html: 'Welcome! Will be redirected to Login Page in <b></b> milliseconds.',
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft()
+                }, 100)
+              },
+              willClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+              }
+              /* set cookies */
+              cookies.set('udatxu', JSON.stringify(datax.data.result), { 
+                path: '/',
+                maxAge: 86400,
+              })              
+              /* redirect page to USER dashboard page */  
+              window.location.href = '/home'
+            }) 
       } else {
         Swal.fire({
           title: 'Error!',
-          text: 'Terjadi Kesalahan!',
+          text: 'Terjadi Kesalahan! Masukkan Email dan Password Yang Sesuai!',
           icon: 'error',
           confirmButtonText: 'Okay',
           confirmButtonColor: 'Orange',            
-        })
-
-        window.location.href = '/'        
+        })      
       }
     }
   }
