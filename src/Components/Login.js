@@ -75,7 +75,7 @@ class Login extends React.Component {
               }
               /* put it in the LocalStorage (cause of using location.href) */
               localStorage.setItem('email', datax.data.result.email)
-              localStorage.setItem('name', datax.data.result.name);
+              localStorage.setItem('name', datax.data.result.name)
               /* redirected to verification page */
               window.location.href = '/verification'
             })

@@ -8,9 +8,11 @@ import Cookies from 'universal-cookie'
 import Login from './Components/Login'
 import Register from './Components/Register'
 import Forgot from './Components/Forgot'
-import Navbar from './Components/Navbar'
+import PesertaDash from './Components/PesertaDash'
 import Verification from './Components/Verification'
 import Code from './Components/Code'
+import PaperOne from './Components/PaperOne'
+import PaperGroup from './Components/PaperGroup'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -41,7 +43,9 @@ class Routers extends React.Component {
             <Container fluid id="user-main-bg">
               {/* Routes */}
               <Routes>
-                <Route exact path="/home" element= { <Navbar /> } />
+                <Route exact path="/home" element= { <PesertaDash /> } />
+                <Route exact path="/submissionone" element= { <PaperOne /> } />
+                <Route exact path="/submissiongrup" element= { <PaperGroup /> } />
                 <Route path="*" element= { <Navigate to={'/home'} /> } />
               </Routes>
               {/* Routes */}
