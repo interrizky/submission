@@ -40,7 +40,7 @@ class Login extends React.Component {
         })                   
       })
 
-      // console.log(datax)
+      console.log(datax)
 
       /* data user ditemukan: role peserta active dan inactive, admin gas pol */
       if( datax.data.message === "OK" && datax.data.result.role === "admin" ) {
@@ -162,10 +162,10 @@ class Login extends React.Component {
                   NEW USERS? SIGN UP HERE
                 </button>        
               </div>              
-              <div className="input-group" style={{ alignItems: "center", justifyContent: "end" }}>
-                <a href="/forgot" style={{ margin: "0", textDecoration: "none" }}>Forgot Password</a>
+              <div className="input-group" style={{ alignItems: "center", justifyContent: "center" }}>
+                <a href="/forgot" style={{ margin: "0", textDecoration: "none" }}>Forgot Password?</a>
               </div>
-              <div className="input-group" style={{ alignItems: "center", justifyContent: "end" }}>
+              <div className="input-group my-2" style={{ alignItems: "center", justifyContent: "center" }}>
                 <a href="/code" style={{ margin: "0", textDecoration: "none" }}>Resend The Registration Code</a>
               </div>                
             </div> 
