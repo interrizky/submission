@@ -186,7 +186,7 @@ class PaperOne extends React.Component {
             <div className="form-group mb-4">
               <label htmlFor="judul">Judul Paper</label>
               <textarea autoFocus type="text" className="form-control" id="judul" name="judul" value={this.state.judul} onChange={this.judul_change} required />
-            </div>      
+            </div> 
             <div className="form-group mb-2">
               <label htmlFor="select-files-1">File Paper (Max 8MB), format file .pdf., .doc atau .docx</label>
             </div>

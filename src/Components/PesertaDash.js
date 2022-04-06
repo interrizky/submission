@@ -12,7 +12,12 @@ class PesertaDash extends React.Component {
   closeModal = () => this.setState({ isOpen: false });
   handleSubmit = (event) => {
     event.preventDefault()
-  } 
+  }
+
+  clearFilter = (event) => {
+    event.preventDefault()
+    document.querySelector('#search').value = ''
+  }
     
   render() {
     return(
@@ -67,6 +72,7 @@ class PesertaDash extends React.Component {
                     name="btnReset"
                     id="btnReset"
                     className="btn btn-md btn-outline-danger"
+                    onClick= {this.clearFilter}
                   >
                     <XCircle />
                   </button>

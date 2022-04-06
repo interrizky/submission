@@ -112,7 +112,7 @@ class Login extends React.Component {
               })              
               /* redirect page to USER dashboard page */  
               window.location.href = '/home'
-            }) 
+            })
       } else {
         Swal.fire({
           title: 'Error!',

@@ -145,22 +145,22 @@ class Register extends React.Component {
                     <input type="text" id="email" name="email" className="form-control" placeholder="Active Email" aria-label="Email" aria-describedby="basic-addon4" />
                   </div>
                   <div className="form-group mb-3">
-                      <label htmlFor="inputPassword-1-label" className="col-form-label" style={{ textAlign: "left" }}>Password</label>
-                      <div className="input-group mb-2">
-                        <input type="password" id="password1" name="password1" className="form-control" placeholder="Your Password" aria-label="Password1" aria-describedby="basic-addon5" autoComplete="off" minLength="4" maxLength="12" />
-                        <div className="input-group-prepend">
-                          <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
-                        </div>
+                    <label htmlFor="inputPassword-1-label" className="col-form-label" style={{ textAlign: "left" }}>Password</label>
+                    <div className="input-group mb-2">
+                      <input type="password" id="password1" name="password1" className="form-control" placeholder="Your Password" aria-label="Password1" aria-describedby="basic-addon5" autoComplete="off" minLength="4" maxLength="12" />
+                      <div className="input-group-prepend">
+                        <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
                       </div>
+                    </div>
                   </div>   
                   <div className="form-group mb-3">
-                      <label htmlFor="inputPassword-2-label" className="col-form-label" style={{ textAlign: "left" }}>Confirm Password</label>
-                      <div className="input-group mb-2">
-                        <input type="password" id="password2" name="password2" className="form-control" placeholder="Confirm Password" aria-label="Password2" aria-describedby="basic-addon6" autoComplete="off" minLength="4" maxLength="12" />
-                        <div className="input-group-prepend">
-                          <div className="input-group-text"><EyeOff onClick={ this.showHideTwo } /></div>
-                        </div>
+                    <label htmlFor="inputPassword-2-label" className="col-form-label" style={{ textAlign: "left" }}>Confirm Password</label>
+                    <div className="input-group mb-2">
+                      <input type="password" id="password2" name="password2" className="form-control" placeholder="Confirm Password" aria-label="Password2" aria-describedby="basic-addon6" autoComplete="off" minLength="4" maxLength="12" />
+                      <div className="input-group-prepend">
+                        <div className="input-group-text"><EyeOff onClick={ this.showHideTwo } /></div>
                       </div>
+                    </div>
                   </div>                   
                 </div>              
               </div>
@@ -193,7 +193,7 @@ class Register extends React.Component {
  showHideTwo = (event) => {
     event.preventDefault()
     document.querySelector('#password2').type === 'password' ? document.querySelector('#password2').type = 'text' : document.querySelector('#password2').type = 'password'
-  }   
+  }
 
   loginBack = (event) => {
     event.preventDefault()
