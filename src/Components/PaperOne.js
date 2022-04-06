@@ -29,12 +29,14 @@ class PaperOne extends React.Component {
     formData.append('sub_tema_text', this.state.sub_tema)
     formData.append('kategori', this.state.kategori)
     formData.append('keikutsertaan', this.state.keikutsertaan)    
-    formData.append("judul", this.state.judul)    
+    formData.append("judul", this.state.judul)
 
-    if( (this.state.jenis_paper_index === 'General' || this.state.jenis_paper_index === 'Sharia') && (this.state.judul !== '' || this.state.paper_status === false || this.state.cv_status === false || this.state.pernyataan_status === false) ) {
+    console.log(this.state)
+
+    if( this.state.jenis_paper_index === 'General' && this.state.lampiran_status === false && ( this.state.judul === '' || this.state.paper_status === false || this.state.cv_status === false || this.state.pernyataan_status === false ) ) {
       Swal.fire({
         title: 'Error!',
-        text: 'Pastikan Kembali Pengisian Anda!',
+        text: 'Pastikan Kembali Pengisian Anda! Error1',
         icon: 'error',
         confirmButtonText: 'Okay',
         confirmButtonColor: 'Orange',
@@ -55,32 +57,32 @@ class PaperOne extends React.Component {
           localStorage.removeItem('keikutsertaan');
           window.location.href = '/home'
         }
-      })     
-    } else if ( (this.state.jenis_paper_index === 'Modeling' || this.state.jenis_paper_index === 'Sharia') && (this.state.judul !== '' || this.state.paper_status === false || this.state.cv_status === false || this.state.pernyataan_status === false || this.state.lampiran_status === false) ) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Pastikan Kembali Pengisian Anda!',
-        icon: 'error',
-        confirmButtonText: 'Okay',
-        confirmButtonColor: 'Orange',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false            
-      }).then(result =>  {
-        if(result.isConfirmed) {
-          // console.log(this.state)
-          // for(let pair of formData.entries()) {
-          //   console.log(pair[0]+ ', ' + pair[1]); 
-          // }
-          localStorage.removeItem('jenis_paper_index');
-          localStorage.removeItem('jenis_paper_text');
-          localStorage.removeItem('sub_tema_index');
-          localStorage.removeItem('sub_tema_text');
-          localStorage.removeItem('kategori');
-          localStorage.removeItem('keikutsertaan');
-          window.location.href = '/home'
-        }
-      })         
+      }) 
+    } else if( this.state.jenis_paper_index === 'Modeling' && (this.state.judul === '' || this.state.paper_status === false || this.state.cv_status === false || this.state.pernyataan_status === false || this.state.lampiran_status === false) ) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Pastikan Kembali Pengisian Anda! Error2',
+          icon: 'error',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false            
+        }).then(result =>  {
+          if(result.isConfirmed) {
+            // console.log(this.state)
+            // for(let pair of formData.entries()) {
+            //   console.log(pair[0]+ ', ' + pair[1]); 
+            // }
+            localStorage.removeItem('jenis_paper_index');
+            localStorage.removeItem('jenis_paper_text');
+            localStorage.removeItem('sub_tema_index');
+            localStorage.removeItem('sub_tema_text');
+            localStorage.removeItem('kategori');
+            localStorage.removeItem('keikutsertaan');
+            window.location.href = '/home'
+          }
+        })    
     } else {
       /* send to the server */
       const datax = await Axios({
@@ -89,23 +91,46 @@ class PaperOne extends React.Component {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        data: formData,   
-        onUploadProgress: function(progressEvent) {
-          Math.round( (progressEvent.loaded * 100) / progressEvent.total )
-        }
+        data: formData,
       })      
 
       /* response from the server */
-      if( datax !== null ) {
-        localStorage.removeItem('jenis_paper_index');
-        localStorage.removeItem('jenis_paper_text');
-        localStorage.removeItem('sub_tema_index');
-        localStorage.removeItem('sub_tema_text');
-        localStorage.removeItem('kategori');
-        localStorage.removeItem('keikutsertaan');
-        window.location.href = '/home'
+      if( datax.data.status === 'success' ) {
+        Swal.fire({
+          title: 'Success!',
+          text: datax.data.message,
+          icon: 'success',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false            
+        }).then(result =>  {
+          if(result.isConfirmed) {
+          localStorage.removeItem('jenis_paper_index');
+          localStorage.removeItem('jenis_paper_text');
+          localStorage.removeItem('sub_tema_index');
+          localStorage.removeItem('sub_tema_text');
+          localStorage.removeItem('kategori');
+          localStorage.removeItem('keikutsertaan');
+          window.location.href = '/home'
+          }
+        })
       } else {
-
+        Swal.fire({
+          title: 'Error!',
+          text: datax.data.message,
+          icon: 'error',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false            
+        }).then(result =>  {
+          if(result.isConfirmed) {
+            window.location.reload()
+          }
+        })
       }      
     }
 
@@ -118,34 +143,42 @@ class PaperOne extends React.Component {
 
     if( event.target.value !== null || event.target.value !== '' ) {
       this.setState({ judul: event.target.value })
+      console.log(this.state.judul)
     }
   }
 
   paper_file_change = (event) => {
     event.preventDefault()
 
-    if( event.target.files[0] ) {
-      formData.append('paper_file', event.target.files[0])
-      this.setState({ paper_status: true })
-    }
+    console.log(event.target)
 
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
+      this.setState({ paper_status: true }, () => {
+        console.log(this.state.paper_status)
+      })      
+      formData.append('paper_file', event.target.files[0])
+    }
   }
 
   cv_file_change = (event) => {
     event.preventDefault()
-
-    if( event.target.files[0] ) {
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
       formData.append('cv_file', event.target.files[0])
-      this.setState({ cv_status: true })
+      this.setState({ cv_status: true }, () => {
+        console.log(this.state.cv_status)
+      })
     }
+
   }
 
   pernyataan_file_change = (event) => {
     event.preventDefault()
 
-    if( event.target.files[0] ) {
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
       formData.append('pernyataan_file', event.target.files[0])
-      this.setState({ pernyataan_status: true })
+      this.setState({ pernyataan_status: true }, () => {
+        console.log(this.state.pernyataan_status)
+      })
     }
 
   }
@@ -153,10 +186,13 @@ class PaperOne extends React.Component {
   lampiran_file_change = (event) => {
     event.preventDefault()
 
-    if( event.target.files[0] ) {
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
       formData.append('lampiran_file', event.target.files[0])
-      this.setState({ lampiran_status: true })
+      this.setState({ lampiran_status: true }, () => {
+        console.log(this.state.lampiran_status)        
+      })
     }
+
   }
 
   render() {

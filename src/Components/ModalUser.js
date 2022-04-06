@@ -92,7 +92,7 @@ class ModalUser extends React.Component {
               if(result.isConfirmed) {
                 window.location.reload()
               }
-            })        
+            })
           } else {
             Swal.fire({
               title: 'Error!',

@@ -2,6 +2,9 @@ import React from 'react'
 import Navbar from './Navbar'
 import ModalForm from './ModalForm'
 import { Search, XCircle, RefreshCw } from 'react-feather'
+import Axios from 'axios'
+import Cookies from 'universal-cookie'
+const cookies = new Cookies()
 
 class PesertaDash extends React.Component {
   state = {
@@ -10,78 +13,54 @@ class PesertaDash extends React.Component {
 
   openModal = () => this.setState({ isOpen: true });
   closeModal = () => this.setState({ isOpen: false });
+
   handleSubmit = (event) => {
     event.preventDefault()
   }
 
-  clearFilter = (event) => {
-    event.preventDefault()
-    document.querySelector('#search').value = ''
+  componentDidMount() {
+    Axios({
+      url: 'http://localhost:2020/fetchTable/',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({ 
+        data_email: cookies.get('udatxu').email,
+        data_active: cookies.get('udatxu').user_status,
+      })                   
+    }).then(response => {
+      console.log(response)
+    })
   }
     
   render() {
     return(
-      <>
+      <React.Fragment>
         <Navbar />
 
         <div className="wrapper-navigation d-flex my-3">
-          <div className="navigation-add p-0 col-md-2">
+          <div className="navigation-add p-0 col-md-4">
             <form className="form-inline">
-              <button
-                type="button"
-                name="btnAdd"
-                id="btnAdd"
-                className="btn btn-md btn-outline-primary mr-4"
-                onClick={ this.openModal }  
-              >
+              <button type="button" name="btnAdd" id="btnAdd" className="btn btn-md btn-outline-primary mr-4" onClick={ this.openModal }>
                 Add Paper
               </button>
-              { this.state.isOpen ? 
-                <ModalForm 
-                  closeModal={ this.closeModal } 
-                  isOpen={ this.state.isOpen } 
-                  handleSubmit={ this.handleSubmit }
-                /> 
-                : 
-                null 
-              }
+              { this.state.isOpen ? <ModalForm closeModal={ this.closeModal } isOpen={ this.state.isOpen } handleSubmit={ this.handleSubmit } /> : null }
             </form>
           </div>
 
-          <div className="navigation-search p-0 col-md-6">
+          <div className="navigation-search p-0 col-md-4">
             <form className="form-inline justify-content-center">
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control search"
-                  id="search"
-                  name="search"
-                  placeholder="Search Paper Here.."
-                />
+                <input type="text" className="form-control search" id="search" name="search" placeholder="Search Paper Here.." />
                 <div className="wrapper-button-navigation">
-                  <button
-                    type="button"
-                    name="btnSearch"
-                    id="btnSearch"
-                    className="btn btn-md btn-outline-secondary mx-2"
-                  >
+                  <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-outline-secondary mx-2">
                     <Search />
                   </button>
-                  <button
-                    type="button"
-                    name="btnReset"
-                    id="btnReset"
-                    className="btn btn-md btn-outline-danger"
-                    onClick= {this.clearFilter}
-                  >
+                  <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-outline-danger" onClick= {this.clearFilter}>
                     <XCircle />
                   </button>
-                  <button
-                    type="button"
-                    name="btnRefresh"
-                    id="btnRefresh"
-                    className="btn btn-md btn-outline-success mx-2"
-                  >
+                  <button type="button" name="btnRefresh" id="btnRefresh" className="btn btn-md btn-outline-success mx-2" onClick= {this.refreshPage}>
                     <RefreshCw />
                   </button>  
                 </div>                 
@@ -101,10 +80,7 @@ class PesertaDash extends React.Component {
           </div>
         </div>        
 
-        <div
-          className="wrapper-table-product table-responsive my-3"
-          style={{ overflow: "auto", height: "550px" }}
-        >
+        <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "550px" }}>
           <table className="table table-bordered table-hover table-light mb-0">
             <thead className="thead-light">
               <tr>
@@ -117,11 +93,23 @@ class PesertaDash extends React.Component {
                 <th scope="col" className="text-center" style={{ width: "10%" }}>Action</th>
               </tr>
             </thead>
-            <tbody className="table-body" id="table-body"></tbody>
+            <tbody className="table-body" id="table-body">
+
+            </tbody>
           </table>
         </div>            
-      </>      
+      </React.Fragment>      
     )
+  }
+
+  clearFilter = (event) => {
+    event.preventDefault()
+    document.querySelector('#search').value = ''
+  }
+  
+  refreshPage = (event) => {
+    event.preventDefault()
+    window.location.reload()
   }
 }
 
