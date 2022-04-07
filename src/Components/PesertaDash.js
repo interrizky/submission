@@ -1,7 +1,8 @@
 import React from 'react'
 import Navbar from './Navbar'
 import ModalForm from './ModalForm'
-import { Search, XCircle, RefreshCw } from 'react-feather'
+import Swal from 'sweetalert2'
+import { FilePlus, Search, XCircle, RefreshCw, Edit3, Send } from 'react-feather'
 import Axios from 'axios'
 import Cookies from 'universal-cookie'
 const cookies = new Cookies()
@@ -9,6 +10,7 @@ const cookies = new Cookies()
 class PesertaDash extends React.Component {
   state = {
     isOpen: false,
+    dataMap: []
   }
 
   openModal = () => this.setState({ isOpen: true });
@@ -18,6 +20,27 @@ class PesertaDash extends React.Component {
     event.preventDefault()
   }
 
+  editPaper = (parameter) => (event) => {
+    event.preventDefault()
+    window.location.href = '/editpaper/'+parameter
+  }  
+
+  submitPaper = (parameter) => (event) => {
+    event.preventDefault()
+
+    Swal.fire({
+      title: 'Success!',
+      text: parameter,
+      icon: 'success',
+      confirmButtonText: 'Okay',
+      confirmButtonColor: 'Orange',
+      allowOutsideClick: true,
+      backdrop: true,
+      allowEscapeKey: true,
+      allowEnterKey: true            
+    })    
+  }   
+
   componentDidMount() {
     Axios({
       url: 'http://localhost:2020/fetchTable/',
@@ -26,11 +49,12 @@ class PesertaDash extends React.Component {
         'Content-Type': 'application/json',
       },
       data: JSON.stringify({ 
-        data_email: cookies.get('udatxu').email,
-        data_active: cookies.get('udatxu').user_status,
+        data_userid: cookies.get('udatxu').userid_code
       })                   
     }).then(response => {
-      console.log(response)
+      this.setState({ dataMap: response.data.result }, () => {
+        console.log(this.state.dataMap)
+      })
     })
   }
     
@@ -43,7 +67,7 @@ class PesertaDash extends React.Component {
           <div className="navigation-add p-0 col-md-4">
             <form className="form-inline">
               <button type="button" name="btnAdd" id="btnAdd" className="btn btn-md btn-outline-primary mr-4" onClick={ this.openModal }>
-                Add Paper
+                Add Paper &nbsp; <FilePlus />
               </button>
               { this.state.isOpen ? <ModalForm closeModal={ this.closeModal } isOpen={ this.state.isOpen } handleSubmit={ this.handleSubmit } /> : null }
             </form>
@@ -54,13 +78,13 @@ class PesertaDash extends React.Component {
               <div className="input-group">
                 <input type="text" className="form-control search" id="search" name="search" placeholder="Search Paper Here.." />
                 <div className="wrapper-button-navigation">
-                  <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-outline-secondary mx-2">
+                  <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-secondary mx-2">
                     <Search />
                   </button>
-                  <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-outline-danger" onClick= {this.clearFilter}>
+                  <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-danger" onClick= {this.clearFilter}>
                     <XCircle />
                   </button>
-                  <button type="button" name="btnRefresh" id="btnRefresh" className="btn btn-md btn-outline-success mx-2" onClick= {this.refreshPage}>
+                  <button type="button" name="btnRefresh" id="btnRefresh" className="btn btn-md btn-success mx-2" onClick= {this.refreshPage}>
                     <RefreshCw />
                   </button>  
                 </div>                 
@@ -84,17 +108,67 @@ class PesertaDash extends React.Component {
           <table className="table table-bordered table-hover table-light mb-0">
             <thead className="thead-light">
               <tr>
-                <th scope="col" className="text-center" style={{ width: "5%" }}>#</th>
-                <th scope="col" className="text-center">Judul</th>              
-                <th scope="col" className="text-center" style={{ width: "10%" }}>Nama Kelompok</th>              
+                <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
+                <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
+                <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>
+                <th scope="col" className="text-center" style={{ width: "15%" }}>Sub Tema</th>                
+                <th scope="col" className="text-center" style={{ width: "20%" }}>Judul</th>              
+                <th scope="col" className="text-center" style={{ width: "15%" }}>Nama Peserta</th>              
                 <th scope="col" className="text-center" style={{ width: "10%" }}>Kategori</th>
-                <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis</th>
-                <th scope="col" className="text-center" style={{ width: "10%" }}>Status</th>
-                <th scope="col" className="text-center" style={{ width: "10%" }}>Action</th>
+                <th scope="col" className="text-center" style={{ width: "15%" }}>Action</th>
               </tr>
             </thead>
             <tbody className="table-body" id="table-body">
+            {
+              this.state.dataMap.length > 0 ? 
+              this.state.dataMap.map((result, index) => {
+                return(
+                  <tr key={ index }>
+                    <td className="text-center">{ index+1 }</td>
+                    <td className="text-center">{ result.paper_code }</td> 
+                    <td className="text-center">{ result.paper_type }</td>
+                    <td className="text-left">{ result.sub_theme }</td>                                        
+                    <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
+                    {
+                      ( !result.name_2 && !result.name_3 ) ? 
+                      <td className="text-center">{ result.name_1 }</td> : 
+                      <td className="text-left">
+                          <ol className="text-left">
+                            <li className="text-left">{ result.name_1 }</li>
+                            { ( result.name_2 ) ? <li className="text-left">{ result.name_2 }</li> : null }
+                            { ( result.name_3 ) ? <li className="text-left">{ result.name_3 }</li> : null }
+                          </ol>
+                      </td>
+                    }
+                    <td className="text-center">{ result.category }</td>
+                    <td className="text-center">
+                    { ( !result.submission_date ) ? 
+                      <div className="form-group wrapper-action">
+                        <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                          <button onClick={ this.editPaper(result.paper_code) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
+                            Edit &nbsp; <Edit3 />
+                          </button>
+                        </div>
+                        <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                          <button onClick={ this.submitPaper(result.paper_code) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
+                            Submit &nbsp; <Send />
+                          </button>                        
+                        </div>
+                      </div> :
+                      <div className="form-group wrapper-action">
+                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Pendaftaran Telah Selesai</p>
+                        { (result.submit_status === 'submit' && result.paper_status !== '-') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: </p> }
+                        { (result.submit_status === 'submit' && result.paper_status === 'lolos') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Tidak Lolos</p> }
+                      </div>
+                    }
+                    </td>
+                  </tr>                  
+                )
+              }) : 
+              <tr>
 
+              </tr>
+            }
             </tbody>
           </table>
         </div>            

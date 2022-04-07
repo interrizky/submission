@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
+import {  User } from 'react-feather'
 
 /* components */
 import ModalUser from './ModalUser'
@@ -29,17 +30,17 @@ class Navbar extends React.Component {
     return(
       <React.Fragment>
         <nav className="navbar" style={{ backgroundColor: "rgb(255, 167, 52)" }}>
-          <a className="navbar-brand" href="/home">
+          <a className="navbar-brand" href="/">
             <img src={ NavbarLogo } width="90" height="30" className="d-inline-block align-top" alt="EJAVEC Logo" style={{ marginLeft: "10%" }} />
           </a>
 
           <form className="form-inline" style={{ justifyContent: "end", marginRight: "15px"}}>
-            <DropdownButton id="dropdown-basic-button" title="User Menu" variant="outline-dark">
+            <DropdownButton title={<span><User /></span>} id="dropdown-basic-button" variant="outline-dark">
               <Dropdown.Item onClick={ this.openModalUser }>Change Password</Dropdown.Item>
               { this.state.isOpen ? <ModalUser closeModalUser={ this.closeModalUser } isOpenUser={ this.state.isOpen } handleSubmitUser={ this.handleSubmit }/> : null }
               <Dropdown.Divider />
               <Dropdown.Item onClick={ this.clickLogout }>Logout</Dropdown.Item>
-            </DropdownButton>                        
+            </DropdownButton>                                            
           </form>
         </nav>    
 

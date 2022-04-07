@@ -1,9 +1,11 @@
 import React from 'react'
 import Axios from 'axios'
 import Swal from 'sweetalert2'
+import Cookies from 'universal-cookie'
 
 /* import components */
 import Navbar from './Navbar'
+const cookies = new Cookies()
 
 let formData = new FormData()
 
@@ -20,6 +22,63 @@ class PaperOne extends React.Component {
     cv_status: false,
     pernyataan_status: false,
     lampiran_status: false
+  }
+
+  judul_change = (event) => {
+    event.preventDefault()
+
+    if( event.target.value !== null || event.target.value !== '' ) {
+      this.setState({ judul: event.target.value })
+      console.log(this.state.judul)
+    }
+  }
+
+  paper_file_change = (event) => {
+    event.preventDefault()
+
+    console.log(event.target)
+
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
+      this.setState({ paper_status: true }, () => {
+        console.log(this.state.paper_status)
+      })      
+      formData.append('paper_file', event.target.files[0])
+    }
+  }
+
+  cv_file_change = (event) => {
+    event.preventDefault()
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
+      formData.append('cv_file', event.target.files[0])
+      this.setState({ cv_status: true }, () => {
+        console.log(this.state.cv_status)
+      })
+    }
+
+  }
+
+  pernyataan_file_change = (event) => {
+    event.preventDefault()
+
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
+      formData.append('pernyataan_file', event.target.files[0])
+      this.setState({ pernyataan_status: true }, () => {
+        console.log(this.state.pernyataan_status)
+      })
+    }
+
+  }
+
+  lampiran_file_change = (event) => {
+    event.preventDefault()
+
+    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
+      formData.append('lampiran_file', event.target.files[0])
+      this.setState({ lampiran_status: true }, () => {
+        console.log(this.state.lampiran_status)        
+      })
+    }
+
   }
 
   onSubmit = async(event) => {
@@ -92,6 +151,12 @@ class PaperOne extends React.Component {
           "Content-Type": "multipart/form-data",
         },
         data: formData,
+        params: {
+          userid_code: this.useridInput.value,
+          name: this.nameInput.value,
+          phone: this.phoneInput.value,
+          organization: this.organizationInput.value
+        }
       })      
 
       /* response from the server */
@@ -128,7 +193,13 @@ class PaperOne extends React.Component {
           allowEnterKey: false            
         }).then(result =>  {
           if(result.isConfirmed) {
-            window.location.reload()
+            localStorage.removeItem('jenis_paper_index');
+            localStorage.removeItem('jenis_paper_text');
+            localStorage.removeItem('sub_tema_index');
+            localStorage.removeItem('sub_tema_text');
+            localStorage.removeItem('kategori');
+            localStorage.removeItem('keikutsertaan');
+            window.location.href = '/home'
           }
         })
       }      
@@ -136,75 +207,19 @@ class PaperOne extends React.Component {
 
     /* reset form input */
     document.querySelector('#paperone').reset()
-  }
-
-  judul_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' ) {
-      this.setState({ judul: event.target.value })
-      console.log(this.state.judul)
-    }
-  }
-
-  paper_file_change = (event) => {
-    event.preventDefault()
-
-    console.log(event.target)
-
-    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
-      this.setState({ paper_status: true }, () => {
-        console.log(this.state.paper_status)
-      })      
-      formData.append('paper_file', event.target.files[0])
-    }
-  }
-
-  cv_file_change = (event) => {
-    event.preventDefault()
-    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
-      formData.append('cv_file', event.target.files[0])
-      this.setState({ cv_status: true }, () => {
-        console.log(this.state.cv_status)
-      })
-    }
-
-  }
-
-  pernyataan_file_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
-      formData.append('pernyataan_file', event.target.files[0])
-      this.setState({ pernyataan_status: true }, () => {
-        console.log(this.state.pernyataan_status)
-      })
-    }
-
-  }
-
-  lampiran_file_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
-      formData.append('lampiran_file', event.target.files[0])
-      this.setState({ lampiran_status: true }, () => {
-        console.log(this.state.lampiran_status)        
-      })
-    }
-
-  }
+  }  
 
   render() {
     return(
       <React.Fragment>
         <Navbar />
-        <form id="paperone" action="/post-individu" method="POST" encType="multipart/form-data">
+        {/* <form id="paperone" action="/post-individu" method="POST" encType="multipart/form-data"> */}
+        <form id="paperone">
           <div className="wrapper-form">
             <div className="row row-satu mb-2">
               <div className="form-group col-lg-4 col-md-4 col-sm-4">
                 <label htmlFor="jenis_paper">Jenis Paper</label>
-                <input type="text" className="form-control" id="jenis_paper" name="jenis_paper" value={localStorage.getItem('jenis_paper_text')} disabled />              
+                <input type="text" className="form-control" id="jenis_paper" name="jenis_paper" value={localStorage.getItem('jenis_paper_text')} disabled />
               </div>          
               <div className="form-group col-lg-4 col-md-4 col-sm-4">
                 <label htmlFor="kategori">Kategori</label>
@@ -222,6 +237,10 @@ class PaperOne extends React.Component {
             <div className="form-group mb-4">
               <label htmlFor="judul">Judul Paper</label>
               <textarea autoFocus type="text" className="form-control" id="judul" name="judul" value={this.state.judul} onChange={this.judul_change} required />
+              <input type="hidden" name="userid" id="userid" value={cookies.get('udatxu').userid_code} ref={(input) => { this.useridInput = input }} />
+              <input type="hidden" name="name" id="name" value={cookies.get('udatxu').name} ref={(input) => { this.nameInput = input }} />
+              <input type="hidden" name="phone" id="phone" value={cookies.get('udatxu').phone} ref={(input) => { this.phoneInput = input }} />
+              <input type="hidden" name="organization" id="organization" value={cookies.get('udatxu').organization} ref={(input) => { this.organizationInput = input }} />
             </div> 
             <div className="form-group mb-2">
               <label htmlFor="select-files-1">File Paper (Max 8MB), format file .pdf., .doc atau .docx</label>
