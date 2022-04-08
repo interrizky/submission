@@ -1,11 +1,13 @@
 import React from 'react'
 import Axios from 'axios'
 import Swal from 'sweetalert2'
+import Cookies from 'universal-cookie'
 import { saveAs } from "file-saver"
 import { Download } from 'react-feather'
 import Navbar from './Navbar'
 
 let formData = new FormData()
+const cookies = new Cookies()
 
 class EditPaperOne extends React.Component {
   state = {
@@ -81,75 +83,93 @@ class EditPaperOne extends React.Component {
   onSubmit = async(event) => {
     event.preventDefault()
 
-    if( this.state.temp_judul !== this.state.title && this.state.temp_judul !== '' && this.state.temp_judul !== null ) {      
-      formData.append('temp_title', this.state.temp_judul)
-    }
-
-    formData.append('userid_code', this.state.userid_code)
-    formData.append('paper_code', this.state.paper_code)
-    formData.append('paper_type', this.state.paper_type)
-
-    let res = Array.from(formData.entries(), ([key, prop]) => (
-      { [key]: { "ContentLength": typeof prop === "string" ? prop.length : prop.size }}
-    ))
-
-    if( res.length === 0 ) {
+    if( !cookies.get('udatxu') ) {
       Swal.fire({
         title: 'Info!',
-        text: 'Tidak Ada Perubahan Data',
+        text: 'Login Expired. Kindly Re-Login',
         icon: 'info',
         confirmButtonText: 'Okay',
         confirmButtonColor: 'Orange',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
       }).then(result =>  {
-        if(result.isConfirmed) {
-          window.location.href = '/home'
+        if(result.isConfirmed) {          
+          window.location.reload()
         }
       })
     } else {
-      const datax = await Axios({
-        url: 'http://localhost:2020/updatePaperOne',
-        method: 'POST',
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        data: formData
-      })
-
-      if( datax.data.status === 'success' ) {
-        Swal.fire({
-          title: 'Success!',
-          text: datax.data.message,
-          icon: 'success',
-          confirmButtonText: 'Okay',
-          confirmButtonColor: 'Orange',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          allowEnterKey: false
-        }).then(result =>  {
-          if(result.isConfirmed) {
-            window.location.href = '/home'
-          }
-        })        
-      } else {
-        Swal.fire({
-          title: 'Error!',
-          text: datax.data.message,
-          icon: 'error',
-          confirmButtonText: 'Okay',
-          confirmButtonColor: 'Orange',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          allowEnterKey: false
-        }).then(result =>  {
-          if(result.isConfirmed) {
-            window.location.href = '/home'
-          }
-        })        
+      if( this.state.temp_judul !== this.state.title && this.state.temp_judul !== '' && this.state.temp_judul !== null ) {      
+        formData.append('temp_title', this.state.temp_judul)
       }
-    }
+
+      formData.append('userid_code', this.state.userid_code)
+      formData.append('paper_code', this.state.paper_code)
+      formData.append('paper_type', this.state.paper_type)
+
+      let res = Array.from(formData.entries(), ([key, prop]) => (
+        { [key]: { "ContentLength": typeof prop === "string" ? prop.length : prop.size }}
+      ))
+
+      if( res.length === 0 ) {
+        Swal.fire({
+          title: 'Info!',
+          text: 'Tidak Ada Perubahan Data',
+          icon: 'info',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false
+        }).then(result =>  {
+          if(result.isConfirmed) {
+            window.location.href = '/home'
+          }
+        })
+      } else {
+        const datax = await Axios({
+          url: 'http://localhost:2020/updatePaperOne',
+          method: 'POST',
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          data: formData
+        })
+
+        if( datax.data.status === 'success' ) {
+          Swal.fire({
+            title: 'Success!',
+            text: datax.data.message,
+            icon: 'success',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: 'Orange',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+          }).then(result =>  {
+            if(result.isConfirmed) {
+              window.location.href = '/home'
+            }
+          })        
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: datax.data.message,
+            icon: 'error',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: 'Orange',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+          }).then(result =>  {
+            if(result.isConfirmed) {
+              window.location.href = '/home'
+            }
+          })        
+        }
+      }
+    }    
   }
 
   handleDownload = (file_path_to_download, file_name_to_download) => (event) => {

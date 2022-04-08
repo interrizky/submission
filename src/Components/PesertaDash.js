@@ -17,7 +17,28 @@ class PesertaDash extends React.Component {
     dataMap: []
   }
 
-  openModal = () => this.setState({ isOpen: true });
+  openModal = () => {
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })  
+    } else {
+      this.setState({ isOpen: true });      
+    }
+  }
+  
   closeModal = () => this.setState({ isOpen: false });
 
   handleSubmit = (event) => {
@@ -27,29 +48,65 @@ class PesertaDash extends React.Component {
   editPaper = (paper_code, participation_type) => (event) => {
     event.preventDefault()
 
-    if(participation_type === 'Individu'){
-      localStorage.setItem('userid_code', paper_code)      
-      localStorage.setItem('participation_type', participation_type)
-      window.location.href = '/editone/'+paper_code
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })      
     } else {
-      window.location.href = '/editgroup/'+paper_code 
+      if(participation_type === 'Individu'){
+        localStorage.setItem('userid_code', paper_code)      
+        localStorage.setItem('participation_type', participation_type)
+        window.location.href = '/editone/'+paper_code
+      } else {
+        window.location.href = '/editgroup/'+paper_code 
+      }
     }
   }  
 
   submitPaper = (parameter) => (event) => {
     event.preventDefault()
 
-    Swal.fire({
-      title: 'Success!',
-      text: parameter,
-      icon: 'success',
-      confirmButtonText: 'Okay',
-      confirmButtonColor: 'Orange',
-      allowOutsideClick: true,
-      backdrop: true,
-      allowEscapeKey: true,
-      allowEnterKey: true            
-    })    
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })  
+    } else {
+      Swal.fire({
+        title: 'Success!',
+        text: parameter,
+        icon: 'success',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      })    
+    }
   }   
 
   componentDidMount() {

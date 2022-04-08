@@ -106,7 +106,7 @@ class Login extends React.Component {
               /* set cookies */
               cookies.set('udatxu', JSON.stringify(datax.data.result), { 
                 path: '/',
-                maxAge: 86400,
+                maxAge: 3600,
               })              
               /* redirect page to USER dashboard page */  
               window.location.href = '/home'

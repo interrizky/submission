@@ -2,6 +2,9 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Modal, Button} from 'react-bootstrap'
 import Swal from 'sweetalert2'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 let lookup = {
   'General': [
@@ -38,28 +41,46 @@ class ModalForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if( document.querySelector('#jenis_paper').value !== '' || document.querySelector('#sub_tema').value !== '' || document.querySelector('#kategori').value !== '' || document.querySelector('#keikutsertaan').value !== '' ) {
-      localStorage.setItem('jenis_paper_index', document.querySelector('#jenis_paper').value);
-      localStorage.setItem('jenis_paper_text', document.querySelector('#jenis_paper').options[document.querySelector('#jenis_paper').selectedIndex].text);
-      localStorage.setItem('sub_tema_index', document.querySelector('#sub_tema').value);
-      localStorage.setItem('sub_tema_text', document.querySelector('#sub_tema').options[document.querySelector('#sub_tema').selectedIndex].text);
-      localStorage.setItem('keikutsertaan', document.querySelector('#keikutsertaan').value);
-
-      this.state.dataValue === 'General' ? localStorage.setItem('kategori', document.querySelector('#kategori').value) : localStorage.setItem('kategori', 'Umum');
-
-      if( document.querySelector('#keikutsertaan').value === 'Individu' ) {
-        window.location.href = '/submissionone'
-      } else {
-        window.location.href = '/submissiongrup'
-      }
-    } else {
+    if( !cookies.get('udatxu') ) {
       Swal.fire({
-        title: 'Error!',
-        text: 'Recheck Your Input And Repeat The Process',
-        icon: 'error',
-        confirmButtonText: 'OKAY',
-        confirmButtonColor: 'orange',            
-      })
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })  
+    } else {
+      if( document.querySelector('#jenis_paper').value !== '' || document.querySelector('#sub_tema').value !== '' || document.querySelector('#kategori').value !== '' || document.querySelector('#keikutsertaan').value !== '' ) {
+        localStorage.setItem('jenis_paper_index', document.querySelector('#jenis_paper').value);
+        localStorage.setItem('jenis_paper_text', document.querySelector('#jenis_paper').options[document.querySelector('#jenis_paper').selectedIndex].text);
+        localStorage.setItem('sub_tema_index', document.querySelector('#sub_tema').value);
+        localStorage.setItem('sub_tema_text', document.querySelector('#sub_tema').options[document.querySelector('#sub_tema').selectedIndex].text);
+        localStorage.setItem('keikutsertaan', document.querySelector('#keikutsertaan').value);
+
+        this.state.dataValue === 'General' ? localStorage.setItem('kategori', document.querySelector('#kategori').value) : localStorage.setItem('kategori', 'Umum');
+
+        if( document.querySelector('#keikutsertaan').value === 'Individu' ) {
+          window.location.href = '/submissionone'
+        } else {
+          window.location.href = '/submissiongrup'
+        }
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Recheck Your Input And Repeat The Process',
+          icon: 'error',
+          confirmButtonText: 'OKAY',
+          confirmButtonColor: 'orange',            
+        })
+      }
     }
   }
 

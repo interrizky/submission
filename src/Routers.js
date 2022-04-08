@@ -19,10 +19,10 @@ import EditPaperGroup from './Components/EditPaperGroup'
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
 
+const cookies = new Cookies()
+
 class Routers extends React.Component {
   render() {
-    const cookies = new Cookies()
-
     if( !cookies.get('udatxu') ) {
       return(
         <BrowserRouter>
