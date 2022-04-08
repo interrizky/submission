@@ -40,8 +40,6 @@ class Login extends React.Component {
         })                   
       })
 
-      console.log(datax)
-
       /* data user ditemukan: role peserta active dan inactive, admin gas pol */
       if( datax.data.message === "OK" && datax.data.result.role === "admin" ) {
         // swallfire panjang + bikin cookies

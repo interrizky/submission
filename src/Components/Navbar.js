@@ -30,7 +30,7 @@ class Navbar extends React.Component {
     return(
       <React.Fragment>
         <nav className="navbar" style={{ backgroundColor: "rgb(255, 167, 52)" }}>
-          <a className="navbar-brand" href="/">
+          <a className="navbar-brand" href="true">
             <img src={ NavbarLogo } width="90" height="30" className="d-inline-block align-top" alt="EJAVEC Logo" style={{ marginLeft: "10%" }} />
           </a>
 

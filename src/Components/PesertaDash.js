@@ -2,10 +2,14 @@ import React from 'react'
 import Navbar from './Navbar'
 import ModalForm from './ModalForm'
 import Swal from 'sweetalert2'
-import { FilePlus, Search, XCircle, RefreshCw, Edit3, Send } from 'react-feather'
+import { FilePlus, Search, XCircle, Edit3, Send } from 'react-feather'
 import Axios from 'axios'
 import Cookies from 'universal-cookie'
+import date from 'date-and-time';
+
 const cookies = new Cookies()
+const now = new Date()
+const submission_deadline = new Date(2022, 4, 2, 0, 0, 1)
 
 class PesertaDash extends React.Component {
   state = {
@@ -20,9 +24,16 @@ class PesertaDash extends React.Component {
     event.preventDefault()
   }
 
-  editPaper = (parameter) => (event) => {
+  editPaper = (paper_code, participation_type) => (event) => {
     event.preventDefault()
-    window.location.href = '/editpaper/'+parameter
+
+    if(participation_type === 'Individu'){
+      localStorage.setItem('userid_code', paper_code)      
+      localStorage.setItem('participation_type', participation_type)
+      window.location.href = '/editone/'+paper_code
+    } else {
+      window.location.href = '/editgroup/'+paper_code 
+    }
   }  
 
   submitPaper = (parameter) => (event) => {
@@ -52,9 +63,7 @@ class PesertaDash extends React.Component {
         data_userid: cookies.get('udatxu').userid_code
       })                   
     }).then(response => {
-      this.setState({ dataMap: response.data.result }, () => {
-        console.log(this.state.dataMap)
-      })
+      this.setState({ dataMap: response.data.result })
     })
   }
     
@@ -64,7 +73,7 @@ class PesertaDash extends React.Component {
         <Navbar />
 
         <div className="wrapper-navigation d-flex my-3">
-          <div className="navigation-add p-0 col-md-4">
+          <div className="navigation-add p-0 col-xs-2 col-sm-2 col-md-4 col-lg-4">
             <form className="form-inline">
               <button type="button" name="btnAdd" id="btnAdd" className="btn btn-md btn-outline-primary mr-4" onClick={ this.openModal }>
                 Add Paper &nbsp; <FilePlus />
@@ -73,7 +82,7 @@ class PesertaDash extends React.Component {
             </form>
           </div>
 
-          <div className="navigation-search p-0 col-md-4">
+          <div className="navigation-search p-0 cols-xs-8 col-sm-8 col-md-4 col-lg-4">
             <form className="form-inline justify-content-center">
               <div className="input-group">
                 <input type="text" className="form-control search" id="search" name="search" placeholder="Search Paper Here.." />
@@ -84,15 +93,12 @@ class PesertaDash extends React.Component {
                   <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-danger" onClick= {this.clearFilter}>
                     <XCircle />
                   </button>
-                  <button type="button" name="btnRefresh" id="btnRefresh" className="btn btn-md btn-success mx-2" onClick= {this.refreshPage}>
-                    <RefreshCw />
-                  </button>  
                 </div>                 
               </div>           
             </form>
           </div>
 
-          <div className="pagination justify-content-end col-md-4 p-0">
+          <div className="pagination justify-content-end p-0 col-xs-2 col-sm-2 col-md-4 col-lg-4">
             <ul className="pagination pagination-list pagination-md m-0 p-0">
               <li className="page-item">
                 <a className="page-link" href="/#">Previous</a>
@@ -104,7 +110,7 @@ class PesertaDash extends React.Component {
           </div>
         </div>        
 
-        <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "550px" }}>
+        <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "500px" }}>
           <table className="table table-bordered table-hover table-light mb-0">
             <thead className="thead-light">
               <tr>
@@ -142,10 +148,10 @@ class PesertaDash extends React.Component {
                     }
                     <td className="text-center">{ result.category }</td>
                     <td className="text-center">
-                    { ( !result.submission_date ) ? 
+                    { ( date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss') ) ? 
                       <div className="form-group wrapper-action">
                         <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                          <button onClick={ this.editPaper(result.paper_code) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
+                          <button onClick={ this.editPaper(result.paper_code, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
                             Edit &nbsp; <Edit3 />
                           </button>
                         </div>
@@ -156,7 +162,7 @@ class PesertaDash extends React.Component {
                         </div>
                       </div> :
                       <div className="form-group wrapper-action">
-                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Pendaftaran Telah Selesai</p>
+                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Pendaftaran Telah Selesai!</p>
                         { (result.submit_status === 'submit' && result.paper_status !== '-') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: </p> }
                         { (result.submit_status === 'submit' && result.paper_status === 'lolos') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Tidak Lolos</p> }
                       </div>
@@ -179,11 +185,7 @@ class PesertaDash extends React.Component {
   clearFilter = (event) => {
     event.preventDefault()
     document.querySelector('#search').value = ''
-  }
-  
-  refreshPage = (event) => {
-    event.preventDefault()
-    window.location.reload()
+    window.location.reload()    
   }
 }
 

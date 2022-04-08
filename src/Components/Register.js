@@ -65,9 +65,9 @@ class Register extends React.Component {
             'Content-Type': 'application/json',
           },
           data: JSON.stringify({ 
-            data_nama: document.querySelector('#nama').value,
+            data_nama: document.querySelector('#nama').value.toUpperCase(),
             data_handphone: document.querySelector('#handphone').value,
-            data_organisasi: document.querySelector('#organisasi').value,
+            data_organisasi: document.querySelector('#organisasi').value.toUpperCase(),
             data_email: document.querySelector('#email').value,
             data_password: document.querySelector('#password2').value,
           })                   

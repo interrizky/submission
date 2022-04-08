@@ -13,6 +13,8 @@ import Verification from './Components/Verification'
 import Code from './Components/Code'
 import PaperOne from './Components/PaperOne'
 import PaperGroup from './Components/PaperGroup'
+import EditPaperOne from './Components/EditPaperOne'
+import EditPaperGroup from './Components/EditPaperGroup'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -46,6 +48,8 @@ class Routers extends React.Component {
                 <Route exact path="/home" element= { <PesertaDash /> } />
                 <Route exact path="/submissionone" element= { <PaperOne /> } />
                 <Route exact path="/submissiongrup" element= { <PaperGroup /> } />
+                <Route exact path="/editone/:userid_code" element= { <EditPaperOne /> } />
+                <Route exact path="/editgroup/:userid_code" element= { <EditPaperGroup /> } />
                 <Route path="*" element= { <Navigate to={'/home'} /> } />
               </Routes>
               {/* Routes */}
