@@ -75,7 +75,7 @@ class PesertaDash extends React.Component {
     }
   }  
 
-  submitPaper = (parameter) => (event) => {
+  submitPaper = (paper_code, participation_type) => async(event) => {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
@@ -95,17 +95,52 @@ class PesertaDash extends React.Component {
         }
       })  
     } else {
-      Swal.fire({
-        title: 'Success!',
-        text: parameter,
-        icon: 'success',
-        confirmButtonText: 'Okay',
-        confirmButtonColor: 'Orange',
-        allowOutsideClick: true,
-        backdrop: true,
-        allowEscapeKey: true,
-        allowEnterKey: true            
-      })    
+      const datax = await Axios({
+        url: 'http://localhost:2020/submitPaper',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          data_papercode: paper_code,
+          data_participationtype: participation_type,
+          data_email: cookies.get('udatxu').email
+        })
+      })
+
+      if( datax !== null ) {
+        Swal.fire({
+          title: 'Success!',
+          text: paper_code + ' is Successfully Submitted',
+          icon: 'success',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',
+          allowOutsideClick: true,
+          backdrop: true,
+          allowEscapeKey: true,
+          allowEnterKey: true            
+        }).then(result =>  {
+          if(result.isConfirmed) {
+            window.location.reload()
+          }
+        }) 
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: `Can't Submit This Paper With Code: ` + paper_code,
+          icon: 'error',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'Orange',
+          allowOutsideClick: true,
+          backdrop: true,
+          allowEscapeKey: true,
+          allowEnterKey: true            
+        }).then(result =>  {
+          if(result.isConfirmed) {
+            window.location.reload()
+          }
+        })         
+      }
     }
   }   
 
@@ -205,7 +240,7 @@ class PesertaDash extends React.Component {
                     }
                     <td className="text-center">{ result.category }</td>
                     <td className="text-center">
-                    { ( date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss') ) ? 
+                    { (date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss') && (result.submission_date === '-') && (result.submit_status === '-') ) ? 
                       <div className="form-group wrapper-action">
                         <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
                           <button onClick={ this.editPaper(result.paper_code, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
@@ -213,15 +248,20 @@ class PesertaDash extends React.Component {
                           </button>
                         </div>
                         <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                          <button onClick={ this.submitPaper(result.paper_code) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
+                          <button onClick={ this.submitPaper(result.paper_code, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
                             Submit &nbsp; <Send />
                           </button>                        
                         </div>
                       </div> :
                       <div className="form-group wrapper-action">
-                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Pendaftaran Telah Selesai!</p>
-                        { (result.submit_status === 'submit' && result.paper_status !== '-') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: </p> }
-                        { (result.submit_status === 'submit' && result.paper_status === 'lolos') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Tidak Lolos</p> }
+                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Selesai!</p>
+                        { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
+                        { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
+                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
+                          (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
+                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
+                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Tidak Lolos</p> 
+                        }
                       </div>
                     }
                     </td>
