@@ -65,9 +65,9 @@ class PesertaDash extends React.Component {
         }
       })      
     } else {
-      if(participation_type === 'Individu'){
-        localStorage.setItem('userid_code', paper_code)      
-        localStorage.setItem('participation_type', participation_type)
+      localStorage.setItem('userid_code', paper_code)      
+      localStorage.setItem('participation_type', participation_type)      
+      if( participation_type === 'Individu' ){
         window.location.href = '/editone/'+paper_code
       } else {
         window.location.href = '/editgroup/'+paper_code 
@@ -189,7 +189,7 @@ class PesertaDash extends React.Component {
                   <tr key={ index }>
                     <td className="text-center">{ index+1 }</td>
                     <td className="text-center">{ result.paper_code }</td> 
-                    <td className="text-center">{ result.paper_type }</td>
+                    <td className="text-left">{ result.paper_type }</td>
                     <td className="text-left">{ result.sub_theme }</td>                                        
                     <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
                     {
@@ -197,9 +197,9 @@ class PesertaDash extends React.Component {
                       <td className="text-center">{ result.name_1 }</td> : 
                       <td className="text-left">
                           <ol className="text-left">
-                            <li className="text-left">{ result.name_1 }</li>
-                            { ( result.name_2 ) ? <li className="text-left">{ result.name_2 }</li> : null }
-                            { ( result.name_3 ) ? <li className="text-left">{ result.name_3 }</li> : null }
+                            <li className="text-left">{ result.name_1 + " (" + result.organization_1 + ")" } </li>
+                            { ( result.name_2 ) ? <li className="text-left">{ result.name_2 + " (" + result.organization_2 + ")" }</li> : null }
+                            { ( result.name_3 !== '-' ) ? <li className="text-left">{ result.name_3 + " (" + result.organization_3 + ")" }</li> : null }
                           </ol>
                       </td>
                     }

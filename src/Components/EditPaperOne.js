@@ -112,7 +112,7 @@ class EditPaperOne extends React.Component {
         { [key]: { "ContentLength": typeof prop === "string" ? prop.length : prop.size }}
       ))
 
-      if( res.length === 0 ) {
+      if( res.length === 3 ) {
         Swal.fire({
           title: 'Info!',
           text: 'Tidak Ada Perubahan Data',
@@ -183,7 +183,7 @@ class EditPaperOne extends React.Component {
     localStorage.removeItem('participation_type')
 
     Axios({
-      url: 'http://localhost:2020/fetchPaperOne',
+      url: 'http://localhost:2020/fetchPaper',
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json' 
