@@ -248,6 +248,7 @@ class PaperGroup extends React.Component {
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: 'Bearer ' + cookies.get('udatxu').token
           },
           data: formData,
           params: {

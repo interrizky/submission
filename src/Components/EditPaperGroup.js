@@ -179,10 +179,10 @@ class EditPaperGroup extends React.Component {
         allowEscapeKey: true,
         allowEnterKey: true            
       }).then(result =>  {
-        if(result.isConfirmed) {          
+        if(result.isConfirmed) {
           window.location.reload()
         }
-      })
+      })  
     } else {
       if( this.state.temp_judul !== this.state.title && this.state.temp_judul !== '' && this.state.temp_judul !== null ) {      
         formData.append('temp_title', this.state.temp_judul)
@@ -245,6 +245,7 @@ class EditPaperGroup extends React.Component {
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: 'Bearer ' + cookies.get('udatxu').token
           },
           data: formData
         })
@@ -298,7 +299,8 @@ class EditPaperGroup extends React.Component {
       url: 'http://localhost:2020/fetchPaper',
       method: 'POST',
       headers: { 
-        'Content-Type': 'application/json' 
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + cookies.get('udatxu').token        
       },
       data: JSON.stringify({
         data_userid_code: this.state.userid_code,

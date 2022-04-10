@@ -68,7 +68,7 @@ class PaperOne extends React.Component {
   }
 
   onSubmit = async(event) => {
-    event.preventDefault()
+    event.preventDefault()    
 
     if( !cookies.get('udatxu') ) {
       Swal.fire({
@@ -148,6 +148,7 @@ class PaperOne extends React.Component {
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: 'Bearer ' + cookies.get('udatxu').token
           },
           data: formData,
           params: {

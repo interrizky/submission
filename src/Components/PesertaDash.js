@@ -99,7 +99,8 @@ class PesertaDash extends React.Component {
         url: 'http://localhost:2020/submitPaper',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + cookies.get('udatxu').token
         },
         data: JSON.stringify({
           data_papercode: paper_code,
@@ -108,7 +109,7 @@ class PesertaDash extends React.Component {
         })
       })
 
-      if( datax !== null ) {
+      if( datax.data.status === 'success' ) {
         Swal.fire({
           title: 'Success!',
           text: paper_code + ' is Successfully Submitted',
@@ -127,7 +128,7 @@ class PesertaDash extends React.Component {
       } else {
         Swal.fire({
           title: 'Error!',
-          text: `Can't Submit This Paper With Code: ` + paper_code,
+          text: paper_code + ' is Not Submitted',
           icon: 'error',
           confirmButtonText: 'Okay',
           confirmButtonColor: 'Orange',
@@ -150,6 +151,7 @@ class PesertaDash extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + cookies.get('udatxu').token        
       },
       data: JSON.stringify({ 
         data_userid: cookies.get('udatxu').userid_code

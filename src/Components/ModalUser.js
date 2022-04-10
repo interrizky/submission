@@ -13,21 +13,21 @@ class ModalUser extends React.Component {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
-      /* cek apakah masi ada cookies dan localStorage */
       Swal.fire({
-        title: 'Error!',
-        text: 'Silahkan Login Kembali!',
-        icon: 'error',
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
         confirmButtonText: 'Okay',
         confirmButtonColor: 'Orange',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false            
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
       }).then(result =>  {
         if(result.isConfirmed) {
           window.location.reload()
         }
-      })
+      })  
     } else {
       if( document.querySelector('#pass_baru_1').value === '' || document.querySelector('#pass_baru_2').value === '' ) {
         /* kalo inputannya kosongan */
@@ -69,6 +69,7 @@ class ModalUser extends React.Component {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + cookies.get('udatxu').token            
           },
           data: JSON.stringify({ 
             data_email: cookies.get('udatxu').email,
