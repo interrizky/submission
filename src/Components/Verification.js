@@ -14,7 +14,7 @@ class Verification extends React.Component {
     event.preventDefault()
 
     const datax = await Axios({
-      url: 'http://localhost:2020/verify',
+      url: 'https://submission-back.herokuapp.com/verify',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

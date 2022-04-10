@@ -38,7 +38,7 @@ class Register extends React.Component {
     } else {
       /* check email */
       const datax_email = await Axios({
-        url: 'http://localhost:2020/checkmail',
+        url: 'https://submission-back.herokuapp.com/checkmail',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ class Register extends React.Component {
         })        
       } else {
         const datax = Axios({
-          url: 'http://localhost:2020/register',
+          url: 'https://submission-back.herokuapp.com/register',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

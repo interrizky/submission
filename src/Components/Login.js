@@ -29,7 +29,7 @@ class Login extends React.Component {
       })
     } else {
       const datax = await Axios({
-        url: 'http://localhost:2020/auth',
+        url: 'https://submission-back.herokuapp.com/auth',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
