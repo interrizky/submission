@@ -220,7 +220,7 @@ class PaperGroup extends React.Component {
         formData.append("phone_3", this.state.phone_3)
 
         const datax = await Axios({
-          url: 'https://submission-back.herokuapp.com/savePaperGroup',
+          url: 'http://submission-back.herokuapp.com/savePaperGroup',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
