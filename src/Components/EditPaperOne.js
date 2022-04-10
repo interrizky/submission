@@ -129,7 +129,7 @@ class EditPaperOne extends React.Component {
         })
       } else {
         const datax = await Axios({
-          url: 'http://submission-back.herokuapp.com/updatePaperOne',
+          url: 'https://submission-back.herokuapp.com/updatePaperOne',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
@@ -176,7 +176,7 @@ class EditPaperOne extends React.Component {
   handleDownload = (file_path_to_download, file_name_to_download) => (event) => {
     event.preventDefault()
 
-    saveAs('http://submission-back.herokuapp.com/'+file_path_to_download, file_name_to_download)
+    saveAs('https://submission-back.herokuapp.com/'+file_path_to_download, file_name_to_download)
   }
 
   componentDidMount() {
@@ -184,7 +184,7 @@ class EditPaperOne extends React.Component {
     localStorage.removeItem('participation_type')
 
     Axios({
-      url: 'http://submission-back.herokuapp.com/fetchPaper',
+      url: 'https://submission-back.herokuapp.com/fetchPaper',
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
