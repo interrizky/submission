@@ -109,7 +109,7 @@ class PesertaDash extends React.Component {
         })
       })
 
-      if( datax.data.status === 'success' ) {
+      if( datax !== null || datax !== undefined ) {
         Swal.fire({
           title: 'Success!',
           text: paper_code + ' is Successfully Submitted',
