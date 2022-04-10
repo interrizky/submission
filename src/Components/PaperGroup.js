@@ -155,13 +155,7 @@ class PaperGroup extends React.Component {
         allowEscapeKey: true,
         allowEnterKey: true            
       }).then(result =>  {
-        if(result.isConfirmed) {
-          localStorage.removeItem('jenis_paper_index')
-          localStorage.removeItem('jenis_paper_text')
-          localStorage.removeItem('sub_tema_index')
-          localStorage.removeItem('sub_tema_text')
-          localStorage.removeItem('kategori')
-          localStorage.removeItem('keikutsertaan')          
+        if(result.isConfirmed) {          
           window.location.reload()
         }
       })  
@@ -178,12 +172,6 @@ class PaperGroup extends React.Component {
           allowEnterKey: false
         }).then(result =>  {
           if(result.isConfirmed) {
-            localStorage.removeItem('jenis_paper_index');
-            localStorage.removeItem('jenis_paper_text');
-            localStorage.removeItem('sub_tema_index');
-            localStorage.removeItem('sub_tema_text');
-            localStorage.removeItem('kategori');
-            localStorage.removeItem('keikutsertaan');
             window.location.href = '/home'
           }
         }) 
@@ -199,12 +187,6 @@ class PaperGroup extends React.Component {
             allowEnterKey: false            
           }).then(result =>  {
             if(result.isConfirmed) {
-              localStorage.removeItem('jenis_paper_index');
-              localStorage.removeItem('jenis_paper_text');
-              localStorage.removeItem('sub_tema_index');
-              localStorage.removeItem('sub_tema_text');
-              localStorage.removeItem('kategori');
-              localStorage.removeItem('keikutsertaan');
               window.location.href = '/home'
             }
           })    
@@ -220,12 +202,6 @@ class PaperGroup extends React.Component {
             allowEnterKey: false            
           }).then(result =>  {
             if(result.isConfirmed) {
-              localStorage.removeItem('jenis_paper_index');
-              localStorage.removeItem('jenis_paper_text');
-              localStorage.removeItem('sub_tema_index');
-              localStorage.removeItem('sub_tema_text');
-              localStorage.removeItem('kategori');
-              localStorage.removeItem('keikutsertaan');
               window.location.href = '/home'
             }
           })    
@@ -311,6 +287,13 @@ class PaperGroup extends React.Component {
   }  
 
   render() {
+    localStorage.removeItem('jenis_paper_index')
+    localStorage.removeItem('jenis_paper_text')
+    localStorage.removeItem('sub_tema_index')
+    localStorage.removeItem('sub_tema_text')
+    localStorage.removeItem('kategori')
+    localStorage.removeItem('keikutsertaan')
+
     return(
       <React.Fragment>
         <Navbar />
@@ -323,20 +306,20 @@ class PaperGroup extends React.Component {
                 <div className="row row-satu mb-2">
                   <div className="form-group col-lg-4 col-md-4 col-sm-4">
                     <label htmlFor="jenis_paper">Jenis Paper</label>
-                    <input type="text" className="form-control" id="jenis_paper" name="jenis_paper" value={localStorage.getItem('jenis_paper_text')} disabled />
+                    <input type="text" className="form-control" id="jenis_paper" name="jenis_paper" defaultValue={this.state.jenis_paper} disabled />
                   </div>          
                   <div className="form-group col-lg-4 col-md-4 col-sm-4">
                     <label htmlFor="kategori">Kategori</label>
-                    <input type="text" className="form-control" id="kategori" name="kategori" value={localStorage.getItem('kategori')} disabled />
+                    <input type="text" className="form-control" id="kategori" name="kategori" defaultValue={this.state.kategori} disabled />
                   </div>
                   <div className="form-group col-lg-4 col-md-4 col-sm-4">
                     <label htmlFor="keikutsertaan">Keikutsertaan</label>
-                    <input type="text" className="form-control" id="keikutsertaan" name="keikutsertaan" value={localStorage.getItem('keikutsertaan')} disabled />
+                    <input type="text" className="form-control" id="keikutsertaan" name="keikutsertaan" defaultValue={this.state.keikutsertaan} disabled />
                   </div>  
                 </div>
                 <div className="form-group mb-2">
                   <label htmlFor="sub_tema">Sub Tema</label>
-                  <textarea type="text" className="form-control" id="sub_tema" name="sub_tema" value={localStorage.getItem('sub_tema_text')} disabled />
+                  <textarea type="text" className="form-control" id="sub_tema" name="sub_tema" defaultValue={this.state.sub_tema} disabled />
                 </div>            
                 <div className="form-group mb-4">
                   <label htmlFor="judul">Judul Paper</label>
@@ -364,7 +347,7 @@ class PaperGroup extends React.Component {
                 <div className="form-group mb-2">
                   <input className="form-control" type="file" name="pernyataan_file" id="pernyataan_file" onChange={this.pernyataan_file_change} required />
                 </div> 
-                { localStorage.getItem('jenis_paper_text') === 'Regional Economic Modeling Paper' ? 
+                { this.state.jenis_paper === 'Regional Economic Modeling Paper' ? 
                   <React.Fragment>
                     <div className="form-group mb-2">
                       <label htmlFor="select-files-3">File Lampiran (Max 8MB), format file .pdf, .doc atau .docx</label>
@@ -445,13 +428,7 @@ class PaperGroup extends React.Component {
 
   clickBack = (event) => {
     event.preventDefault()
-
-    localStorage.removeItem('jenis_paper_index')
-    localStorage.removeItem('jenis_paper_text')
-    localStorage.removeItem('sub_tema_index')
-    localStorage.removeItem('sub_tema_text')
-    localStorage.removeItem('kategori')
-    localStorage.removeItem('keikutsertaan')
+    
     window.location.href = '/home'
   }  
 }
