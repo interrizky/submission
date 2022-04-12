@@ -65,7 +65,7 @@ class ModalUser extends React.Component {
         })
       } else {
         Axios({
-          url: 'https://submission-back.herokuapp.com/getMyPassword',
+          url: 'https://submissionback.ejavec.net/getMyPassword',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

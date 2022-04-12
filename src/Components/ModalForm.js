@@ -109,7 +109,7 @@ class ModalForm extends React.Component {
               <select className="form-control" id="jenis_paper" onChange={ this.handleJenisPaperChange }>
                 <option value="General">General Paper</option>
                 <option value="Modeling">Regional Economic Modeling Paper</option>
-                <option value="Sharia">Java Sharia Business Model</option>
+                {/* <option value="Sharia">Java Sharia Business Model</option> */}
               </select>
             </div>
             <div className="form-group mb-2">
