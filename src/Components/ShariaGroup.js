@@ -9,7 +9,7 @@ const cookies = new Cookies()
 
 let formData = new FormData()
 
-class PaperGroup extends React.Component {
+class ShariaGroup extends React.Component {
   state = {
     jenis_paper: localStorage.getItem('jenis_paper_text'),
     jenis_paper_index: localStorage.getItem('jenis_paper_index'),
@@ -25,11 +25,7 @@ class PaperGroup extends React.Component {
     nama_2: '',
     instansi_2: '',
     phone_2: '',
-    cv_2_status: false,
-    nama_3: '',
-    instansi_3: '',
-    phone_3: '',
-    cv_3_status: false
+    cv_2_status: false
   }
 
   judul_change = (event) => {
@@ -107,39 +103,6 @@ class PaperGroup extends React.Component {
     }
   }
   
-  nama_3_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' ) {
-      this.setState({ nama_3: event.target.value })
-    }
-  }
-
-  instansi_3_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' ) {
-      this.setState({ instansi_3: event.target.value })
-    }
-  }
-
-  phone_3_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' ) {
-      this.setState({ phone_3: event.target.value })
-    }
-  }  
-  
-  cv_3_file_change = (event) => {
-    event.preventDefault()
-    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
-      formData.append('cv_3_file', event.target.files[0])
-      this.setState({ cv_3_status: true })
-    }
-  }  
-  
-
   onSubmit = async(event) => {
     event.preventDefault()
 
@@ -160,37 +123,7 @@ class PaperGroup extends React.Component {
         }
       })  
     } else {
-      if( this.state.jenis_paper_index === 'General' && this.state.lampiran_status === false && (this.state.judul === '' || this.state.paper_status === false || this.state.cv_status === false || this.state.pernyataan_status === false) ) {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Pastikan Kembali Pengisian Anda! Error1',
-          icon: 'error',
-          confirmButtonText: 'Okay',
-          confirmButtonColor: 'Orange',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          allowEnterKey: false
-        }).then(result =>  {
-          if(result.isConfirmed) {
-            window.location.href = '/home'
-          }
-        }) 
-      } else if( this.state.jenis_paper_index === 'Modeling' && (this.state.judul === '' || this.state.paper_status === false || this.state.cv_status === false || this.state.pernyataan_status === false || this.state.lampiran_status === false) ) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Pastikan Kembali Pengisian Anda! Error2',
-            icon: 'error',
-            confirmButtonText: 'Okay',
-            confirmButtonColor: 'Orange',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false            
-          }).then(result =>  {
-            if(result.isConfirmed) {
-              window.location.href = '/home'
-            }
-          })    
-      } else if( this.state.nama_2 === '' || this.state.instansi_2 === '' || this.state.phone_2 === '' || this.state.cv_2_status === false ) {
+      if( this.state.nama_2 === '' || this.state.instansi_2 === '' || this.state.phone_2 === '' || this.state.cv_2_status === false ) {
           Swal.fire({
             title: 'Error!',
             text: 'Pastikan Kembali Pengisian Anda! Error3',
@@ -215,9 +148,6 @@ class PaperGroup extends React.Component {
         formData.append("nama_2", this.state.nama_2.toUpperCase())
         formData.append("instansi_2", this.state.instansi_2)
         formData.append("phone_2", this.state.phone_2)
-        formData.append("nama_3", this.state.nama_3.toUpperCase())
-        formData.append("instansi_3", this.state.instansi_3)
-        formData.append("phone_3", this.state.phone_3)
 
         const datax = await Axios({
           url: 'http://localhost:8080/savePaperGroup',
@@ -347,63 +277,30 @@ class PaperGroup extends React.Component {
                 <div className="form-group mb-2">
                   <input className="form-control" type="file" name="pernyataan_file" id="pernyataan_file" onChange={this.pernyataan_file_change} required />
                 </div> 
-                { this.state.jenis_paper === 'Regional Economic Modeling Paper' ? 
-                  <React.Fragment>
-                    <div className="form-group mb-2">
-                      <label htmlFor="select-files-3">File Lampiran (Max 8MB), format file .pdf, .doc atau .docx</label>
-                    </div>
-                    <div className="form-group mb-2">
-                      <input className="form-control" type="file" name="lampiran_file" id="lampiran_file" onChange={this.lampiran_file_change} required />
-                    </div>            
-                  </React.Fragment> : null        
-                }
                 <div id="row-alert" className="alert alert-info show my-4" role="alert">
-                  Field Peserta Kedua <i><b>Wajib</b></i> Diisi, Sedangkan Field Peserta Ketiga <i><b>Opsional</b></i>
+                  Field Peserta Kedua <i><b>Wajib</b></i> Diisi
                 </div>                
-                <div className="row wrapper-peserta-group">
-                  <div className="wrapper-peserta-2 col-md-6 col-lg-6">
-                    <h4 className="header-peserta-2" style={{ textAlign: "center" }}> Peserta Kedua </h4>
-                    <div className="form-group mb-2">
-                      <label htmlFor="nama_2">Nama Peserta Kedua</label>
-                      <input required type="text" className="form-control" id="nama_2" name="nama_2" value={this.state.nama_2} onChange={this.nama_2_change} />
-                    </div>                  
-                    <div className="form-group mb-2">
-                      <label htmlFor="instansi_2">Nama Instansi Peserta Kedua</label>
-                      <input required type="text" className="form-control" id="instansi_2" name="instansi_2" value={this.state.instansi_2} onChange={this.instansi_2_change} />
-                    </div>                                         
-                    <div className="form-group mb-2">
-                      <label htmlFor="phone_2">Nomor Handphone Aktif Peserta Kedua</label>
-                      <input required type="text" className="form-control" id="phone_2" name="phone_2" value={this.state.phone_2} onChange={this.phone_2_change} />
-                    </div>                                                             
-                    <div className="form-group mb-2">
-                      <label htmlFor="select-cv-files-2">File CV Peserta Kedua, format file .pdf, .doc atau .docx</label>
-                    </div>
-                    <div className="form-group mb-2">
-                      <input required className="form-control" type="file" name="cv_2_file" id="cv_2_file" onChange={this.cv_2_file_change} />
-                    </div>                       
+                <div className="wrapper-peserta-2">
+                  <h4 className="header-peserta-2" style={{ textAlign: "center" }}> Peserta Kedua </h4>
+                  <div className="form-group mb-2">
+                    <label htmlFor="nama_2">Nama Peserta Kedua</label>
+                    <input required type="text" className="form-control" id="nama_2" name="nama_2" value={this.state.nama_2} onChange={this.nama_2_change} />
+                  </div>                  
+                  <div className="form-group mb-2">
+                    <label htmlFor="instansi_2">Nama Instansi Peserta Kedua</label>
+                    <input required type="text" className="form-control" id="instansi_2" name="instansi_2" value={this.state.instansi_2} onChange={this.instansi_2_change} />
+                  </div>                                         
+                  <div className="form-group mb-2">
+                    <label htmlFor="phone_2">Nomor Handphone Aktif Peserta Kedua</label>
+                    <input required type="text" className="form-control" id="phone_2" name="phone_2" value={this.state.phone_2} onChange={this.phone_2_change} />
+                  </div>                                                             
+                  <div className="form-group mb-2">
+                    <label htmlFor="select-cv-files-2">File CV Peserta Kedua, format file .pdf, .doc atau .docx</label>
                   </div>
-                  <div className="wrapper-peserta-3 col-md-6 col-lg-6">
-                    <h4 className="header-peserta-2" style={{ textAlign: "center" }}> Peserta Ketiga </h4>
-                    <div className="form-group mb-2">
-                      <label htmlFor="nama_3">Nama Peserta Ketiga</label>
-                      <input required type="text" className="form-control" id="nama_3" name="nama_3" value={this.state.nama_3} onChange={this.nama_3_change} />
-                    </div>                  
-                    <div className="form-group mb-2">
-                      <label htmlFor="instansi_3">Nama Instansi Peserta Ketiga</label>
-                      <input required type="text" className="form-control" id="instansi_3" name="instansi_3" value={this.state.instansi_3} onChange={this.instansi_3_change} />
-                    </div>                                         
-                    <div className="form-group mb-2">
-                      <label htmlFor="phone_3">Nomor Handphone Aktif Peserta Ketiga</label>
-                      <input required type="text" className="form-control" id="phone_3" name="phone_3" value={this.state.phone_3} onChange={this.phone_3_change} />
-                    </div>                                                             
-                    <div className="form-group mb-2">
-                      <label htmlFor="select-cv-files-3">File CV Peserta Ketiga, format file .pdf, .doc atau .docx</label>
-                    </div>
-                    <div className="form-group mb-2">
-                      <input required className="form-control" type="file" name="cv_3_file" id="cv_3_file" onChange={this.cv_3_file_change} />
-                    </div>   
-                  </div>
-                </div>                            
+                  <div className="form-group mb-2">
+                    <input required className="form-control" type="file" name="cv_2_file" id="cv_2_file" onChange={this.cv_2_file_change} />
+                  </div>                       
+                </div>            
               </div>
             </form>
           </div>
@@ -433,4 +330,4 @@ class PaperGroup extends React.Component {
   }  
 }
 
-export default PaperGroup
+export default ShariaGroup

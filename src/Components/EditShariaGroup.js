@@ -9,7 +9,7 @@ import Navbar from './Navbar'
 let formData = new FormData()
 const cookies = new Cookies()
 
-class EditPaperGroup extends React.Component {
+class EditShariaGroup extends React.Component {
   state = {
     userid_code: localStorage.getItem('userid_code'),
     participation_type: localStorage.getItem('participation_type'),
@@ -45,20 +45,10 @@ class EditPaperGroup extends React.Component {
     cv_filePath_2: '',
     cv_fileType_2: '',
     cv_fileSize_2: '',
-    name_3: '',
-    phone_3: '',
-    organization_3: '',
-    cv_fileName_3: '',
-    cv_filePath_3: '',
-    cv_fileType_3: '',
-    cv_fileSize_3: '',    
     temp_judul: '',
-    temp_name_2: '',
-    temp_name_3: '',    
+    temp_name_2: '',   
     temp_phone_2: '',
-    temp_phone_3: '',    
-    temp_organization_2: '',    
-    temp_organization_3: '',        
+    temp_organization_2: '',          
 
   }
 
@@ -132,37 +122,6 @@ class EditPaperGroup extends React.Component {
       formData.append('cv_2_file', event.target.files[0])
     }
   }
-  
-  name_3_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' || this.state.name_3 !==  event.target.value ) {
-      this.setState({ temp_name_3: event.target.value })
-    }
-  }
-
-  organization_3_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' || this.state.organization_3 !==  event.target.value ) {
-      this.setState({ temp_organization_3: event.target.value })
-    }
-  }
-
-  phone_3_change = (event) => {
-    event.preventDefault()
-
-    if( event.target.value !== null || event.target.value !== '' || this.state.phone_3 !==  event.target.value ) {
-      this.setState({ temp_phone_3: event.target.value })
-    }
-  }  
-  
-  cv_3_file_change = (event) => {
-    event.preventDefault()
-    if( event.target.files[0] !== null || event.target.files[0] !== ''  ) {
-      formData.append('cv_3_file', event.target.files[0])
-    }
-  }   
 
   onSubmit = async(event) => {
     event.preventDefault()
@@ -192,25 +151,13 @@ class EditPaperGroup extends React.Component {
         formData.append('temp_name_2', this.state.temp_name_2)
       }
 
-      if( this.state.temp_name_3 !== this.state.name_3 && this.state.temp_name_3 !== '' && this.state.temp_name_3 !== null ) {      
-        formData.append('temp_name_3', this.state.temp_name_3)
-      }
-
       if( this.state.temp_organization_2 !== this.state.organization_2 && this.state.temp_organization_2 !== '' && this.state.temp_organization_2 !== null ) {      
         formData.append('temp_organization_2', this.state.temp_organization_2)
       }
 
-      if( this.state.temp_organization_3 !== this.state.organization_3 && this.state.temp_organization_3 !== '' && this.state.temp_organization_3 !== null ) {      
-        formData.append('temp_organization_3', this.state.temp_organization_3)
-      }      
-
       if( this.state.temp_phone_2 !== this.state.phone_2 && this.state.temp_phone_2 !== '' && this.state.temp_phone_2 !== null ) {      
         formData.append('temp_phone_2', this.state.temp_phone_2)
       }
-
-      if( this.state.temp_phone_3 !== this.state.phone_3 && this.state.temp_phone_3 !== '' && this.state.temp_phone_3 !== null ) {      
-        formData.append('temp_phone_3', this.state.temp_phone_3)
-      }      
 
       formData.append('userid_code', this.state.userid_code)
       formData.append('paper_code', this.state.paper_code)
@@ -340,14 +287,7 @@ class EditPaperGroup extends React.Component {
         cv_fileName_2: resp.data.result.cv_fileName_2,
         cv_filePath_2: resp.data.result.cv_filePath_2,
         cv_fileType_2: resp.data.result.cv_fileType_2,
-        cv_fileSize_2: resp.data.result.cv_fileSize_2,
-        name_3: resp.data.result.name_3,
-        phone_3: resp.data.result.phone_3,
-        organization_3: resp.data.result.organization_3,
-        cv_fileName_3: resp.data.result.cv_fileName_3,
-        cv_filePath_3: resp.data.result.cv_filePath_3,
-        cv_fileType_3: resp.data.result.cv_fileType_3,
-        cv_fileSize_3: resp.data.result.cv_fileSize_3,      
+        cv_fileSize_2: resp.data.result.cv_fileSize_2     
       })   
     })
   }  
@@ -446,40 +386,28 @@ class EditPaperGroup extends React.Component {
                     <div className="form-group mb-2">
                       <input className="form-control" type="file" name="pernyataan_file" id="pernyataan_file" onChange={this.pernyataan_file_change} />
                     </div> 
-                    { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
-                      <React.Fragment>
-                        <div className="form-group mb-2">
-                          <label htmlFor="select-files-4">File Lampiran (Max 8MB), format file .pdf, .doc atau .docx</label>
-                        </div>
-                        <div className="form-group mb-2">
-                          <input className="form-control" type="file" name="lampiran_file" id="lampiran_file" onChange={this.lampiran_file_change} />
-                        </div>           
-                      </React.Fragment> : null        
-                    }  
                   </div>
                 </div>
 
-                <div className="row wrapper-peserta-group my-4">
-                  <div className="wrapper-peserta-kedua col-md-6">
-                    <div className="header-peserta-kedua">
-                      <h4 style={{ textAlign: 'center' }}>Peserta Kedua</h4>
-                    </div>
-                    <div className="row wrapper-form-kedua">
-                      <div className="wrapper-form-kedua-kiri col-md-6">
-                        <div className="form-group mb-2">
-                          <label htmlFor="nama_2">Nama Peserta Kedua</label>
-                          <input required type="text" className="form-control" id="name_2" name="name_2" defaultValue={this.state.name_2} onChange={this.name_2_change} />
-                        </div>                    
-                        <div className="form-group mb-2">
-                          <label htmlFor="instansi_2">Nama Instansi Peserta Kedua</label>
-                          <input required type="text" className="form-control" id="organization_2" name="organization_2" defaultValue={this.state.organization_2} onChange={this.organization_2_change} />
-                        </div>                                         
-                        <div className="form-group mb-2">
-                          <label htmlFor="phone_2">Nomor Handphone Aktif Peserta Kedua</label>
-                          <input required type="text" className="form-control" id="phone_2" name="phone_2" defaultValue={this.state.phone_2} onChange={this.phone_2_change} />
-                        </div>                        
-                      </div>
-                      <div className="wrapper-form-kedua-kanan col-md-6">
+                <div className="wrapper-peserta-kedua">
+                  <div className="header-peserta-kedua">
+                    <h4 style={{ textAlign: 'center' }}>Peserta Kedua</h4>
+                  </div>
+                  <div className="row wrapper-form-kedua">
+                      <div className="form-group mb-2">
+                        <label htmlFor="nama_2">Nama Peserta Kedua</label>
+                        <input required type="text" className="form-control" id="name_2" name="name_2" defaultValue={this.state.name_2} onChange={this.name_2_change} />
+                      </div>                    
+                      <div className="form-group mb-2">
+                        <label htmlFor="instansi_2">Nama Instansi Peserta Kedua</label>
+                        <input required type="text" className="form-control" id="organization_2" name="organization_2" defaultValue={this.state.organization_2} onChange={this.organization_2_change} />
+                      </div>                                         
+                      <div className="form-group mb-2">
+                        <label htmlFor="phone_2">Nomor Handphone Aktif Peserta Kedua</label>
+                        <input required type="text" className="form-control" id="phone_2" name="phone_2" defaultValue={this.state.phone_2} onChange={this.phone_2_change} />
+                      </div>                        
+                    <div className="row wrapper-file-kedua">
+                      <div className="wrapper-terupload col-md-6">
                         <div className="form-group mb-2">
                           <label htmlFor="files-2">File CV Peserta Kedua Terupload</label>
                         </div>
@@ -487,7 +415,9 @@ class EditPaperGroup extends React.Component {
                           <button type="button" id="btnCv2Download" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.cv_filePath_2, this.state.cv_fileName_2) }>
                             Download File CV Peserta Kedua &nbsp; <Download />
                           </button>
-                        </div>                                                               
+                        </div>                                    
+                      </div>
+                      <div className="wrapper-new-upload col-md-6">
                         <div className="form-group mb-2">
                           <label htmlFor="select-cv-files-2">Edit File CV Peserta Kedua, format file .pdf, .doc atau .docx</label>
                         </div>
@@ -495,51 +425,8 @@ class EditPaperGroup extends React.Component {
                           <input required className="form-control" type="file" name="cv_2_file" id="cv_2_file" onChange={this.cv_2_file_change} />
                         </div> 
                       </div>
-                    </div>                 
+                    </div>             
                   </div>  
-
-                  <div className="wrapper-peserta-ketiga col-md-6">
-                    <div className="header-peserta-ketiga">
-                      <h4 style={{ textAlign: 'center' }}>Peserta Ketiga</h4>
-                    </div>
-                    <div className="row wrapper-form-ketiga">
-                      <div className="wrapper-form-ketiga-kiri col-md-6">
-                        <div className="form-group mb-2">
-                          <label htmlFor="nama_2">Nama Peserta Ketiga</label>
-                          <input required type="text" className="form-control" id="name_3" name="name_3" defaultValue={this.state.name_3} onChange={this.name_3_change} />
-                        </div>                    
-                        <div className="form-group mb-2">
-                          <label htmlFor="instansi_2">Nama Instansi Peserta Ketiga</label>
-                          <input required type="text" className="form-control" id="organization_3" name="organization_3" defaultValue={this.state.organization_3} onChange={this.organization_3_change} />
-                        </div>                                         
-                        <div className="form-group mb-2">
-                          <label htmlFor="phone_2">Nomor Handphone Aktif Peserta Ketiga</label>
-                          <input required type="text" className="form-control" id="phone_3" name="phone_3" defaultValue={this.state.phone_3} onChange={this.phone_3_change} />
-                        </div>                        
-                      </div>
-                      <div className="wrapper-form-ketiga-kanan col-md-6">                      
-                      { 
-                        (this.state.cv_fileName_3 !== '-' && this.state.cv_filePath_3 !== '-' && this.state.cv_fileSize_3 !== '-' && this.state.cv_fileSize_3 !== '-') ? 
-                        <React.Fragment>
-                        <div className="form-group mb-2">
-                          <label htmlFor="files-2">File CV Peserta Ketiga Terupload</label>
-                        </div>
-                        <div className="form-group mb-4">
-                          <button type="button" id="btnCv3Download" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.cv_filePath_3, this.state.cv_fileName_3) }>
-                            Download File CV Peserta Ketiga &nbsp; <Download />
-                          </button>
-                        </div>
-                        </React.Fragment> : null
-                      }                   
-                        <div className="form-group mb-2">
-                          <label htmlFor="select-cv-files-3">Edit File CV Peserta Ketiga, format file .pdf, .doc atau .docx</label>
-                        </div>
-                        <div className="form-group mb-2">
-                          <input required className="form-control" type="file" name="cv_3_file" id="cv_3_file" onChange={this.cv_3_file_change} />
-                        </div> 
-                      </div>
-                    </div>                 
-                  </div>        
                 </div>
 
               </div>
@@ -571,4 +458,4 @@ class EditPaperGroup extends React.Component {
   }
 }
 
-export default EditPaperGroup
+export default EditShariaGroup

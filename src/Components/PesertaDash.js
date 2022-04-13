@@ -10,6 +10,7 @@ import date from 'date-and-time';
 const cookies = new Cookies()
 const now = new Date()
 const submission_deadline = new Date(2022, 4, 2, 0, 0, 1)
+const sharia_deadline = new Date(2022, 7, 9, 0, 0, 1)
 
 class PesertaDash extends React.Component {
   state = {
@@ -45,7 +46,7 @@ class PesertaDash extends React.Component {
     event.preventDefault()
   }
 
-  editPaper = (paper_code, participation_type) => (event) => {
+  editPaper = (paper_code, paper_type, participation_type) => (event) => {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
@@ -70,12 +71,17 @@ class PesertaDash extends React.Component {
       if( participation_type === 'Individu' ){
         window.location.href = '/editone/'+paper_code
       } else {
-        window.location.href = '/editgroup/'+paper_code 
+        if( paper_type === 'Java Sharia Business Model' ) {
+          window.location.href = '/editgroupsharia/'+paper_code 
+        } else {
+          window.location.href = '/editgroup/'+paper_code 
+        }
+
       }
     }
   }  
 
-  submitPaper = (paper_code, participation_type) => async(event) => {
+  submitPaper = (paper_code, paper_type, participation_type) => async(event) => {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
@@ -96,7 +102,7 @@ class PesertaDash extends React.Component {
       })  
     } else {
       const datax = await Axios({
-        url: 'https://submissionback.ejavec.net/submitPaper',
+        url: 'http://localhost:8080/submitPaper',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,6 +111,7 @@ class PesertaDash extends React.Component {
         data: JSON.stringify({
           data_papercode: paper_code,
           data_participationtype: participation_type,
+          data_papertype: paper_type,
           data_email: cookies.get('udatxu').email
         })
       })
@@ -147,7 +154,7 @@ class PesertaDash extends React.Component {
 
   componentDidMount() {
     Axios({
-      url: 'https://submissionback.ejavec.net/fetchTable/',
+      url: 'http://localhost:8080/fetchTable/',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -242,15 +249,18 @@ class PesertaDash extends React.Component {
                     }
                     <td className="text-center">{ result.category }</td>
                     <td className="text-center">
-                    { (date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss') && (result.submission_date === '-') && (result.submit_status === '-') ) ? 
+                    { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss')) 
+                    || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(sharia_deadline, 'DD/MM/YYYY HH:mm:ss')) ) 
+                    && (result.submission_date === '-') 
+                    && (result.submit_status === '-')  ? 
                       <div className="form-group wrapper-action">
                         <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                          <button onClick={ this.editPaper(result.paper_code, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
+                          <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
                             Edit &nbsp; <Edit3 />
                           </button>
                         </div>
                         <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                          <button onClick={ this.submitPaper(result.paper_code, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
+                          <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
                             Submit &nbsp; <Send />
                           </button>                        
                         </div>

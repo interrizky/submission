@@ -13,8 +13,10 @@ import Verification from './Components/Verification'
 import Code from './Components/Code'
 import PaperOne from './Components/PaperOne'
 import PaperGroup from './Components/PaperGroup'
+import ShariaGroup from './Components/ShariaGroup'
 import EditPaperOne from './Components/EditPaperOne'
 import EditPaperGroup from './Components/EditPaperGroup'
+import EditShariaGroup from './Components/EditShariaGroup'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -43,16 +45,16 @@ class Routers extends React.Component {
         return(
           <BrowserRouter>
             <Container fluid id="user-main-bg">
-              {/* Routes */}
               <Routes>
                 <Route exact path="/home" element= { <PesertaDash /> } />
                 <Route exact path="/submissionone" element= { <PaperOne /> } />
                 <Route exact path="/submissiongrup" element= { <PaperGroup /> } />
-                <Route exact path="/editone/:userid_code" element= { <EditPaperOne /> } />
-                <Route exact path="/editgroup/:userid_code" element= { <EditPaperGroup /> } />
+                <Route exact path="/submissiongrupsharia" element= { <ShariaGroup /> } />
+                <Route exact path="/editone/:paper_code" element= { <EditPaperOne /> } />
+                <Route exact path="/editgroup/:paper_code" element= { <EditPaperGroup /> } />
+                <Route exact path="/editgroupsharia/:paper_code" element= { <EditShariaGroup /> } />
                 <Route path="*" element= { <Navigate to={'/home'} /> } />
               </Routes>
-              {/* Routes */}
             </Container> 
           </BrowserRouter>
         )

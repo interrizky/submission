@@ -126,7 +126,7 @@ class PaperOne extends React.Component {
       } else {
         /* send to the server */
         const datax = await Axios({
-          url: 'https://submissionback.ejavec.net/savePaperOne',
+          url: 'http://localhost:8080/savePaperOne',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",

@@ -25,7 +25,13 @@ let lookup = {
     { id: '13', text: 'Fundamental pertumbuhan ekonomi Jawa Timur ke depan' }
   ],
   'Sharia': [
-
+    { id: '14', text: 'Food' },
+    { id: '15', text: 'Fashion'},
+    { id: '16', text: 'Finance (meliputi juga instrumen keuangan syariah'},
+    { id: '17', text: 'Integrated Farming'},
+    { id: '18', text: 'Renewable Energy'},
+    { id: '19', text: 'Fundutainment (industri kreatif meliputi aplikasi, games, film, musik, arsitektur, desain dan seni pertunjukan)'},
+    { id: '20', text: 'Funtrepreneur (jasa/properti/socialpreneur/travel dll)'}
   ],
 }
 
@@ -70,7 +76,11 @@ class ModalForm extends React.Component {
         if( document.querySelector('#keikutsertaan').value === 'Individu' ) {
           window.location.href = '/submissionone'
         } else {
-          window.location.href = '/submissiongrup'
+          if( this.state.dataValue === 'Sharia' ) {
+            window.location.href = '/submissiongrupsharia'
+          } else {
+            window.location.href = '/submissiongrup'
+          }
         }
       } else {
         Swal.fire({
@@ -94,6 +104,7 @@ class ModalForm extends React.Component {
           <Modal.Title>Paper atau Full Proposal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          { this.state.dataValue === 'General' || this.state.dataValue === 'Modeling' ? 
           <div className="wrapper-tema">
             Tema Umum: <p className="tema-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
               Akselerasi Pemulihan Ekonomi dan Sosial Jawa Timur Pada Era Normal Baru              
@@ -103,13 +114,19 @@ class ModalForm extends React.Component {
               Jawa Timur dan Ketekaitannya dengan Provinsi Lain.
             </p>            
           </div>
+          : <div className="wrapper-tema">
+            Tema Umum: <p className="tema-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
+              Membangun Ekonomi Syariah sebagai Sumber Pertumbuhan Baru dalam Rangka Percepatan Pemulihan Perekonomian Jawa Timur.
+            </p> 
+            </div>
+          }
           <div className="wrapper-dropdown">
             <div className="form-group mb-2">
               <label htmlFor="select1">Jenis Paper</label>
               <select className="form-control" id="jenis_paper" onChange={ this.handleJenisPaperChange }>
                 <option value="General">General Paper</option>
                 <option value="Modeling">Regional Economic Modeling Paper</option>
-                {/* <option value="Sharia">Java Sharia Business Model</option> */}
+                <option value="Sharia">Java Sharia Business Model</option>
               </select>
             </div>
             <div className="form-group mb-2">

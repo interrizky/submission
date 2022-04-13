@@ -67,7 +67,7 @@ class Forgot extends React.Component {
     } else {
       /* check email */
       const datax_email = await Axios({
-        url: 'https://submissionback.ejavec.net/checkmail',
+        url: 'http://localhost:8080/checkmail',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ class Forgot extends React.Component {
       /* kalo emailnya udah ada */
       if( datax_email.data.status === 'Email Exist' ) {
         const datax = Axios({
-          url: 'https://submissionback.ejavec.net/forgotpwd',
+          url: 'http://localhost:8080/forgotpwd',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
