@@ -220,7 +220,7 @@ class PaperGroup extends React.Component {
         formData.append("phone_3", this.state.phone_3)
 
         const datax = await Axios({
-          url: 'http://localhost:8080/savePaperGroup',
+          url: 'https://submissionback.ejavec.net/savePaperGroup',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",

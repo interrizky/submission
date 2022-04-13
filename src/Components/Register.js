@@ -38,7 +38,7 @@ class Register extends React.Component {
     } else {
       /* check email */
       const datax_email = await Axios({
-        url: 'http://localhost:8080/checkmail',
+        url: 'https://submissionback.ejavec.net/checkmail',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ class Register extends React.Component {
         })        
       } else {
         const datax = Axios({
-          url: 'http://localhost:8080/register',
+          url: 'https://submissionback.ejavec.net/register',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

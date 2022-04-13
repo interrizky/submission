@@ -129,7 +129,7 @@ class EditPaperOne extends React.Component {
         })
       } else {
         const datax = await Axios({
-          url: 'http://localhost:8080/updatePaperOne',
+          url: 'https://submissionback.ejavec.net/updatePaperOne',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
@@ -176,7 +176,7 @@ class EditPaperOne extends React.Component {
   handleDownload = (file_path_to_download, file_name_to_download) => (event) => {
     event.preventDefault()
 
-    saveAs('http://localhost:8080/'+file_path_to_download, file_name_to_download)
+    saveAs('https://submissionback.ejavec.net/'+file_path_to_download, file_name_to_download)
   }
 
   componentDidMount() {
@@ -184,7 +184,7 @@ class EditPaperOne extends React.Component {
     localStorage.removeItem('participation_type')
 
     Axios({
-      url: 'http://localhost:8080/fetchPaper',
+      url: 'https://submissionback.ejavec.net/fetchPaper',
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',

@@ -29,7 +29,7 @@ class Login extends React.Component {
       })
     } else {
       const datax = await Axios({
-        url: 'http://localhost:8080/auth',
+        url: 'https://submissionback.ejavec.net/auth',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
