@@ -67,7 +67,7 @@ class Code extends React.Component {
     } else {
       /* check email */
       const datax_email = await Axios({
-        url: 'http://localhost:8000/submission-back/checkmail',
+        url: 'http://localhost:8000/checkmail',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ class Code extends React.Component {
       /* kalo emailnya udah ada */
       if( datax_email.data.status === 'Email Exist' ) {
         const datax = Axios({
-          url: 'http://localhost:8000/submission-back/sendcode',
+          url: 'http://localhost:8000/sendcode',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

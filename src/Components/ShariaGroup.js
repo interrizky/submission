@@ -150,7 +150,7 @@ class ShariaGroup extends React.Component {
         formData.append("phone_2", this.state.phone_2)
 
         const datax = await Axios({
-          url: 'http://localhost:8000/submission-back/savePaperGroup',
+          url: 'http://localhost:8000/savePaperGroup',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",

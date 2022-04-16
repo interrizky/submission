@@ -102,7 +102,7 @@ class PesertaDash extends React.Component {
       })  
     } else {
       const datax = await Axios({
-        url: 'http://localhost:8000/submission-back/submitPaper',
+        url: 'http://localhost:8000/submitPaper',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ class PesertaDash extends React.Component {
 
   componentDidMount() {
     Axios({
-      url: 'http://localhost:8000/submission-back/fetchTable/',
+      url: 'http://localhost:8000/fetchTable/',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
