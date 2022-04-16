@@ -188,7 +188,7 @@ class EditShariaGroup extends React.Component {
         })
       } else {
         const datax = await Axios({
-          url: 'https://submissionback.ejavec.net/updatePaperGroup',
+          url: 'http://localhost:8000/submission-back/updatePaperGroup',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
@@ -235,7 +235,7 @@ class EditShariaGroup extends React.Component {
   handleDownload = (file_path_to_download, file_name_to_download) => (event) => {
     event.preventDefault()
 
-    saveAs('https://submissionback.ejavec.net/'+file_path_to_download, file_name_to_download)
+    saveAs('http://localhost:8000/submission-back/'+file_path_to_download, file_name_to_download)
   }
 
   componentDidMount() {
@@ -243,7 +243,7 @@ class EditShariaGroup extends React.Component {
     localStorage.removeItem('participation_type')
 
     Axios({
-      url: 'https://submissionback.ejavec.net/fetchPaper',
+      url: 'http://localhost:8000/submission-back/fetchPaper',
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
