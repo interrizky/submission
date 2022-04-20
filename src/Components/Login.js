@@ -29,7 +29,7 @@ class Login extends React.Component {
       })
     } else {
       const datax = await Axios({
-        url: 'http://localhost:8000/auth',
+        url: 'https://submission-api.ejavec.org/auth',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,9 +42,39 @@ class Login extends React.Component {
 
       /* data user ditemukan: role peserta active dan inactive, admin gas pol */
       if( datax.data.message === "OK" && datax.data.result.role === "admin" ) {
-        // swallfire panjang + bikin cookies
-        // swallfire panjang + bikin cookies
-        // swallfire panjang + bikin cookies
+          // swallfire panjang + bikin cookies
+          let timerInterval
+          Swal.fire({
+            title: 'Success!',
+            text: 'Login Succeed',
+            icon: 'success',
+            confirmButtonText: 'COOL',
+            confirmButtonColor: 'orange',
+            html: 'Welcome! Will be redirected to Admin Page in <b></b> milliseconds.',
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft()
+                }, 100)
+              },
+              willClose: () => {
+                clearInterval(timerInterval)
+              }
+            }).then((result) => {
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+              }
+              /* set cookies */
+              cookies.set('udatxu', JSON.stringify(datax.data.result), { 
+                path: '/',
+                maxAge: 3600,
+              })              
+              /* redirect page to ADMIN dashboard page */  
+              window.location.href = '/dashboard'
+            })
       } else if( datax.data.message === "OK" && datax.data.result.role === "peserta" && datax.data.result.user_status === "inactive" ) {
           let timerInterval
           Swal.fire({
@@ -82,11 +112,11 @@ class Login extends React.Component {
           let timerInterval
           Swal.fire({
             title: 'Success!',
-            text: 'Check Your Email For The New Password Code',
+            text: 'Login Succeed',
             icon: 'success',
             confirmButtonText: 'COOL',
             confirmButtonColor: 'orange',
-            html: 'Welcome! Will be redirected to Login Page in <b></b> milliseconds.',
+            html: 'Welcome! Will be redirected to Home Page in <b></b> milliseconds.',
               timer: 3000,
               timerProgressBar: true,
               didOpen: () => {

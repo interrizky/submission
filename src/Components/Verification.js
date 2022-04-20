@@ -14,7 +14,7 @@ class Verification extends React.Component {
     event.preventDefault()
 
     const datax = await Axios({
-      url: 'http://localhost:8000/verify',
+      url: 'https://submission-api.ejavec.org/verify',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

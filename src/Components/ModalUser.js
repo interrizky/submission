@@ -65,11 +65,11 @@ class ModalUser extends React.Component {
         })
       } else {
         Axios({
-          url: 'http://localhost:8000/getMyPassword',
+          url: 'https://submission-api.ejavec.org/getMyPassword',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + cookies.get('udatxu').token            
+            "Authorization": 'Bearer ' + cookies.get('udatxu').token            
           },
           data: JSON.stringify({ 
             data_email: cookies.get('udatxu').email,
@@ -152,11 +152,6 @@ class ModalUser extends React.Component {
         </Modal.Footer>
       </Modal>
     )
-  }
-
-  showHideOld = (event) => {
-    event.preventDefault()
-    document.querySelector('#pass_lama').type === 'password' ? document.querySelector('#pass_lama').type = 'text' : document.querySelector('#pass_lama').type = 'password'
   }
 
   showHideOne = (event) => {

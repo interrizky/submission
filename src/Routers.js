@@ -17,6 +17,10 @@ import ShariaGroup from './Components/ShariaGroup'
 import EditPaperOne from './Components/EditPaperOne'
 import EditPaperGroup from './Components/EditPaperGroup'
 import EditShariaGroup from './Components/EditShariaGroup'
+import NavbarAdmin from './Components/NavbarAdmin'
+import DashAdmin from './Components/DashAdmin'
+import PaperFull from './Components/PaperFull'
+import Sharia from './Components/Sharia'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -59,7 +63,20 @@ class Routers extends React.Component {
           </BrowserRouter>
         )
       } else {
-
+        return(
+          <BrowserRouter>
+            <Container fluid id="admin-main-bg" style={{ padding: 0, margin: 0 }}>
+              <NavbarAdmin />
+              <Routes>
+                <Route exact path="/dashboard" element= { <DashAdmin /> } />
+                <Route exact path="/fullpaper" element= { <PaperFull /> } />
+                <Route exact path="/sharia" element= { <Sharia /> } />
+                <Route exact path="/report" element= { <Login /> } />
+                <Route path="*" element= { <Navigate to={'/dashboard'} /> } />
+              </Routes>
+            </Container>
+          </BrowserRouter>
+        )
       }
     }
   }

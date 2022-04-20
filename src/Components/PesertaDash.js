@@ -102,11 +102,11 @@ class PesertaDash extends React.Component {
       })  
     } else {
       const datax = await Axios({
-        url: 'http://localhost:8000/submitPaper',
+        url: 'https://submission-api.ejavec.org/submitPaper',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + cookies.get('udatxu').token
+          "Authorization": 'Bearer ' + cookies.get('udatxu').token
         },
         data: JSON.stringify({
           data_papercode: paper_code,
@@ -154,11 +154,11 @@ class PesertaDash extends React.Component {
 
   componentDidMount() {
     Axios({
-      url: 'http://localhost:8000/fetchTable/',
+      url: 'https://submission-api.ejavec.org/fetchTable/',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + cookies.get('udatxu').token        
+        "Authorization": 'Bearer ' + cookies.get('udatxu').token        
       },
       data: JSON.stringify({ 
         data_userid: cookies.get('udatxu').userid_code

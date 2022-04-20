@@ -241,11 +241,11 @@ class EditPaperGroup extends React.Component {
         })
       } else {
         const datax = await Axios({
-          url: 'http://localhost:8000/updatePaperGroup',
+          url: 'https://submission-api.ejavec.org/updatePaperGroup',
           method: 'POST',
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: 'Bearer ' + cookies.get('udatxu').token
+            "Authorization": 'Bearer ' + cookies.get('udatxu').token
           },
           data: formData
         })
@@ -288,7 +288,7 @@ class EditPaperGroup extends React.Component {
   handleDownload = (file_path_to_download, file_name_to_download) => (event) => {
     event.preventDefault()
 
-    saveAs('http://localhost:8000/'+file_path_to_download, file_name_to_download)
+    saveAs('https://submission-api.ejavec.org/'+file_path_to_download, file_name_to_download)
   }
 
   componentDidMount() {
@@ -296,11 +296,11 @@ class EditPaperGroup extends React.Component {
     localStorage.removeItem('participation_type')
 
     Axios({
-      url: 'http://localhost:8000/fetchPaper',
+      url: 'https://submission-api.ejavec.org/fetchPaper',
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + cookies.get('udatxu').token        
+        "Authorization": 'Bearer ' + cookies.get('udatxu').token        
       },
       data: JSON.stringify({
         data_userid_code: this.state.userid_code,
