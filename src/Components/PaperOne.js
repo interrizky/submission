@@ -136,6 +136,7 @@ class PaperOne extends React.Component {
           params: {
             userid_code: this.useridInput.value,
             name: this.nameInput.value,
+            email: this.emailInput.value,            
             phone: this.phoneInput.value,
             organization: this.organizationInput.value
           }
@@ -220,6 +221,7 @@ class PaperOne extends React.Component {
                   <textarea autoFocus required type="text" className="form-control" id="judul" name="judul" value={this.state.judul} onChange={this.judul_change} />
                   <input type="hidden" name="userid" id="userid" value={cookies.get('udatxu').userid_code} ref={(input) => { this.useridInput = input }} />
                   <input type="hidden" name="name" id="name" value={cookies.get('udatxu').name} ref={(input) => { this.nameInput = input }} />
+                  <input type="hidden" name="email" id="email" value={cookies.get('udatxu').email} ref={(input) => { this.emailInput = input }} />                  
                   <input type="hidden" name="phone" id="phone" value={cookies.get('udatxu').phone} ref={(input) => { this.phoneInput = input }} />
                   <input type="hidden" name="organization" id="organization" value={cookies.get('udatxu').organization} ref={(input) => { this.organizationInput = input }} />
                 </div> 
