@@ -49,12 +49,14 @@ class Sharia extends React.Component {
               <tr>
                 <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
                 <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
+                <th scope="col" className="text-center" style={{ width: "10%" }}>Nama</th>
+                <th scope="col" className="text-center" style={{ width: "10%" }}>Email</th>
                 <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>
-                <th scope="col" className="text-center" style={{ width: "30%" }}>Sub Tema</th>                
-                <th scope="col" className="text-center" style={{ width: "35%" }}>Judul</th>                          
+                <th scope="col" className="text-center" style={{ width: "20%" }}>Sub Tema</th>                
+                <th scope="col" className="text-center" style={{ width: "25%" }}>Judul</th>                          
                 <th scope="col" className="text-center" style={{ width: "5%" }}>Kategori/Partisipasi</th>
                 <th scope="col" className="text-center" style={{ width: "5%" }}>Tanggal Submit</th>
-                <th scope="col" className="text-center" style={{ width: "10%" }}>File Paper</th>             
+                <th scope="col" className="text-center" style={{ width: "10%" }}>File Paper</th>                  
               </tr>
             </thead>
             <tbody className="table-body" id="table-body">
@@ -65,8 +67,10 @@ class Sharia extends React.Component {
                   <tr key={ index }>
                     <td className="text-center">{ index+1 }</td>
                     <td className="text-center">{ result.paper_code }</td> 
+                    <td className="text-left">{ result.name_1 }</td> 
+                    <td className="text-left">{ result.email_1 }</td> 
                     <td className="text-left">{ result.paper_type }</td>
-                    <td className="text-left">{ result.sub_theme }</td>                                        
+                    <td className="text-left">{ result.sub_theme }</td>                                      
                     <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
                     <td className="text-center">{ result.category + " / " + result.participation_type }</td>
                     <td className="text-center">{ result.submission_date }</td>
