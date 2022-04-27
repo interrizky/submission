@@ -21,6 +21,7 @@ import NavbarAdmin from './Components/NavbarAdmin'
 import DashAdmin from './Components/DashAdmin'
 import PaperFull from './Components/PaperFull'
 import Sharia from './Components/Sharia'
+import FileDetails from './Components/FileDetails'
 
 /* Custom CSS */
 import '../src/Assets/CSS/Login.css'
@@ -72,6 +73,7 @@ class Routers extends React.Component {
                 <Route exact path="/fullpaper" element= { <PaperFull /> } />
                 <Route exact path="/sharia" element= { <Sharia /> } />
                 <Route exact path="/report" element= { <Login /> } />
+                <Route exact path="/details/:paper_code" element= { <FileDetails /> } />
                 <Route path="*" element= { <Navigate to={'/dashboard'} /> } />
               </Routes>
             </Container>

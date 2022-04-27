@@ -27,7 +27,7 @@ class DashAdmin extends React.Component {
                 All Paper By Paper Type
               </div>
               <div className="card-body" style={{ height: '350px' }}>
-                <BarPaperAll />
+                <BarPaperAll style={{ height:'100%' }}/>
               </div>
             </div>            
           </div>

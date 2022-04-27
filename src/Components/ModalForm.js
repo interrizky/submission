@@ -27,7 +27,7 @@ let lookup = {
   'Sharia': [
     { id: '14', text: 'Food' },
     { id: '15', text: 'Fashion'},
-    { id: '16', text: 'Finance (meliputi juga instrumen keuangan syariah'},
+    { id: '16', text: 'Finance (meliputi juga instrumen keuangan syariah)'},
     { id: '17', text: 'Integrated Farming'},
     { id: '18', text: 'Renewable Energy'},
     { id: '19', text: 'Fundutainment (industri kreatif meliputi aplikasi, games, film, musik, arsitektur, desain dan seni pertunjukan)'},

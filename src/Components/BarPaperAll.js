@@ -48,7 +48,8 @@ class BarPaperAll extends React.Component {
 
   render() {
     const options = {
-      responsive: true,
+      // responsive: true,
+      maintainAspectRatio : false,
       barThickness: 100,
       borderSkipped: 'start',
       plugins: {
@@ -70,12 +71,12 @@ class BarPaperAll extends React.Component {
         {
           label: 'General Paper',
           data: [this.state.angkaGP],
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
         {
           label: 'Regional Economic Modeling Paper',
           data: [this.state.angkaREM],
-          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',          
         },
         {
           label: 'Java Sharia Business Model',
