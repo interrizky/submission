@@ -9,8 +9,8 @@ import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2022, 4, 3, 0, 0, 1)
-const sharia_deadline = new Date(2022, 6, 9, 0, 0, 1)
+const submission_deadline = new Date(2022, 4, 1, 23, 59, 59)
+const sharia_deadline = new Date(2022, 6, 8, 23, 59, 59)
 
 class PesertaDash extends React.Component {
   state = {
@@ -286,10 +286,10 @@ class PesertaDash extends React.Component {
                     }
                     <td className="text-center">{ result.category }</td>
                     <td className="text-center">
-                    { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss')) 
-                    || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') > date.format(sharia_deadline, 'DD/MM/YYYY HH:mm:ss')) ) 
-                    && (result.submission_date === '-') 
-                    && (result.submit_status === '-')  ? 
+                    { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss')) 
+                    || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(sharia_deadline, 'DD/MM/YYYY HH:mm:ss')) ) 
+                    && (result.submission_date === '-') && (result.submit_status === '-')  
+                    ? 
                       <div className="form-group wrapper-action">
                         <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
                           <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
