@@ -53,7 +53,7 @@ class FileDetails extends React.Component {
     return(
       <React.Fragment>
         <div className="card">
-          <h5 className="card-header text-center">All Paper Files - { this.state.paper_code }</h5>
+          <h5 className="card-header text-center">{ this.state.paper_code }</h5>
           <div className="card-body">
             <div className="row wrapper-isian">
               <div className="wrapper-kiri col-md-6">

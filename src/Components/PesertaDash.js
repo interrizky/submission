@@ -10,7 +10,7 @@ import date from 'date-and-time';
 const cookies = new Cookies()
 const now = new Date()
 const submission_deadline = new Date(2022, 4, 2, 0, 0, 1)
-const sharia_deadline = new Date(2022, 7, 9, 0, 0, 1)
+const sharia_deadline = new Date(2022, 6, 9, 0, 0, 1)
 
 class PesertaDash extends React.Component {
   state = {
@@ -152,6 +152,43 @@ class PesertaDash extends React.Component {
     }
   }   
 
+  handleFilter = (event) => {
+    event.preventDefault()
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })  
+    } else {
+      Axios({
+        url: 'https://submission-api.ejavec.org/fetchTable/',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": 'Bearer ' + cookies.get('udatxu').token        
+        },
+        data: JSON.stringify({ 
+          data_fetch: 'search',
+          data_userid: cookies.get('udatxu').userid_code,
+          data_keyword: document.querySelector('#search').value
+        })                   
+      }).then(response => {
+        this.setState({ dataMap: response.data.result })
+      })   
+    } 
+  }
+
   componentDidMount() {
     Axios({
       url: 'https://submission-api.ejavec.org/fetchTable/',
@@ -186,9 +223,9 @@ class PesertaDash extends React.Component {
           <div className="navigation-search p-0 cols-xs-8 col-sm-8 col-md-4 col-lg-4">
             <form className="form-inline justify-content-center">
               <div className="input-group">
-                <input type="text" className="form-control search" id="search" name="search" placeholder="Search Paper Here.." />
+                <input type="text" className="form-control search" id="search" name="search" placeholder="Search Judul Here.." />
                 <div className="wrapper-button-navigation">
-                  <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-secondary mx-2">
+                  <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-secondary mx-2" onClick= {this.handleFilter}>
                     <Search />
                   </button>
                   <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-danger" onClick= {this.clearFilter}>
