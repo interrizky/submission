@@ -195,10 +195,11 @@ class PesertaDash extends React.Component {
       html:
         'Klik Button \n' +
         '<button type="button" class="btn btn-md btn-warning" title="Edit Paper">Edit</button> \n' + 
-        'Untuk Melakukan Edit Paper dan ' +      
+        'Untuk Edit Paper ' +      
+        '<br />' +
         'Klik Button \n' +
         '<button type="button" class="btn btn-md btn-danger" title="Submit Paper">Submit</button> \n' + 
-        'Untuk Melakukan Paper Submission',      
+        'Untuk Paper Submission',      
       confirmButtonText: 'Okay'
     })
 
