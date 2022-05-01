@@ -316,13 +316,13 @@ class PesertaDash extends React.Component {
                         </div>
                       </div> :
                       <div className="form-group wrapper-action">
-                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Selesai!</p>
+                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p>
                         { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
                         { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
                           <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
                           (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
                           <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
-                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Tidak Lolos</p> 
+                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
                         }
                       </div>
                     }
