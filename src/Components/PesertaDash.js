@@ -190,6 +190,18 @@ class PesertaDash extends React.Component {
   }
 
   componentDidMount() {
+    Swal.fire({
+      icon: 'info',
+      html:
+        'Klik Button \n' +
+        '<button type="button" class="btn btn-md btn-warning" title="Edit Paper">Edit</button> \n' + 
+        'Untuk Melakukan Edit Paper dan ' +      
+        'Klik Button \n' +
+        '<button type="button" class="btn btn-md btn-danger" title="Submit Paper">Submit</button> \n' + 
+        'Untuk Melakukan Paper Submission',      
+      confirmButtonText: 'Okay'
+    })
+
     Axios({
       url: 'https://submission-api.ejavec.org/fetchTable/',
       method: 'POST',
