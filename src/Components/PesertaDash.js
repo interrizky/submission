@@ -116,7 +116,7 @@ class PesertaDash extends React.Component {
         })
       })
 
-      if( datax !== null || datax !== undefined ) {
+      if( datax.data.status === 'success' ) {
         Swal.fire({
           title: 'Success!',
           text: paper_code + ' is Successfully Submitted',
@@ -135,7 +135,7 @@ class PesertaDash extends React.Component {
       } else {
         Swal.fire({
           title: 'Error!',
-          text: paper_code + ' is Not Submitted',
+          text: datax.data.message + '. ' + paper_code + ' is Not Submitted. ',
           icon: 'error',
           confirmButtonText: 'Okay',
           confirmButtonColor: 'Orange',
