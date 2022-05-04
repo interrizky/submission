@@ -1,4 +1,5 @@
 import React from 'react'
+import { Accordion } from 'react-bootstrap'
 import Navbar from './Navbar'
 import ModalForm from './ModalForm'
 import Swal from 'sweetalert2'
@@ -9,7 +10,7 @@ import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2022, 4, 1, 23, 59, 59)
+const submission_deadline = new Date(2022, 4, 27, 23, 59, 59)
 const sharia_deadline = new Date(2022, 6, 8, 23, 59, 59)
 
 class PesertaDash extends React.Component {
@@ -76,7 +77,6 @@ class PesertaDash extends React.Component {
         } else {
           window.location.href = '/editgroup/'+paper_code 
         }
-
       }
     }
   }  
@@ -192,6 +192,7 @@ class PesertaDash extends React.Component {
   componentDidMount() {
     Swal.fire({
       icon: 'info',
+      title: '- Untuk Diperhatikan -',
       html:
         'Klik Button \n' +
         '<button type="button" class="btn btn-md btn-warning" title="Edit Paper">Edit</button> \n' + 
@@ -200,7 +201,8 @@ class PesertaDash extends React.Component {
         'Klik Button \n' +
         '<button type="button" class="btn btn-md btn-danger" title="Submit Paper">Submit</button> \n' + 
         'Untuk Paper Submission',      
-      confirmButtonText: 'Okay'
+      confirmButtonText: 'Okay',
+      footer: '<h4 style="text-align: center">Three Hours Too Soon Is Better Than A Minute Too Late - William Shakespeare</h4>'
     })
 
     Axios({
@@ -261,82 +263,89 @@ class PesertaDash extends React.Component {
           </div>
         </div>        
 
-        <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "500px" }}>
-          <table className="table table-bordered table-hover table-light mb-0">
-            <thead className="thead-light">
-              <tr>
-                <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
-                <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
-                <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>
-                <th scope="col" className="text-center" style={{ width: "15%" }}>Sub Tema</th>                
-                <th scope="col" className="text-center" style={{ width: "20%" }}>Judul</th>              
-                <th scope="col" className="text-center" style={{ width: "15%" }}>Nama Peserta</th>              
-                <th scope="col" className="text-center" style={{ width: "10%" }}>Kategori</th>
-                <th scope="col" className="text-center" style={{ width: "15%" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody className="table-body" id="table-body">
-            {
-              this.state.dataMap.length > 0 ? 
-              this.state.dataMap.map((result, index) => {
-                return(
-                  <tr key={ index }>
-                    <td className="text-center">{ index+1 }</td>
-                    <td className="text-center">{ result.paper_code }</td> 
-                    <td className="text-left">{ result.paper_type }</td>
-                    <td className="text-left">{ result.sub_theme }</td>                                        
-                    <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
-                    {
-                      ( !result.name_2 && !result.name_3 ) ? 
-                      <td className="text-center">{ result.name_1 }</td> : 
-                      <td className="text-left">
-                          <ol className="text-left">
-                            <li className="text-left">{ result.name_1 + " (" + result.organization_1 + ")" } </li>
-                            { ( result.name_2 ) ? <li className="text-left">{ result.name_2 + " (" + result.organization_2 + ")" }</li> : null }
-                            { ( result.name_3 !== '-' ) ? <li className="text-left">{ result.name_3 + " (" + result.organization_3 + ")" }</li> : null }
-                          </ol>
-                      </td>
-                    }
-                    <td className="text-center">{ result.category }</td>
-                    <td className="text-center">
-                    { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss')) 
-                    || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(sharia_deadline, 'DD/MM/YYYY HH:mm:ss')) ) 
-                    && (result.submission_date === '-') && (result.submit_status === '-')  
-                    ? 
-                      <div className="form-group wrapper-action">
-                        <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                          <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
-                            Edit &nbsp; <Edit3 />
-                          </button>
-                        </div>
-                        <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                          <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
-                            Submit &nbsp; <Send />
-                          </button>                        
-                        </div>
-                      </div> :
-                      <div className="form-group wrapper-action">
-                        <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p>
-                        { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
-                        { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
-                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
-                          (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
-                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
-                          <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
-                        }
-                      </div>
-                    }
-                    </td>
-                  </tr>                  
-                )
-              }) : 
-              <tr>
+        <Accordion defaultActiveKey="0">
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>List Paper</Accordion.Header>
+            <Accordion.Body>
+              <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "500px" }}>
+                <table className="table table-bordered table-hover table-light mb-0">
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
+                      <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
+                      <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>
+                      <th scope="col" className="text-center" style={{ width: "15%" }}>Sub Tema</th>                
+                      <th scope="col" className="text-center" style={{ width: "20%" }}>Judul</th>              
+                      <th scope="col" className="text-center" style={{ width: "15%" }}>Nama Peserta</th>              
+                      <th scope="col" className="text-center" style={{ width: "10%" }}>Kategori</th>
+                      <th scope="col" className="text-center" style={{ width: "15%" }}>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="table-body" id="table-body">
+                  {
+                    this.state.dataMap.length > 0 ? 
+                    this.state.dataMap.map((result, index) => {
+                      return(
+                        <tr key={ index }>
+                          <td className="text-center">{ index+1 }</td>
+                          <td className="text-center">{ result.paper_code }</td> 
+                          <td className="text-left">{ result.paper_type }</td>
+                          <td className="text-left">{ result.sub_theme }</td>                                        
+                          <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
+                          {
+                            ( !result.name_2 && !result.name_3 ) ? 
+                            <td className="text-center">{ result.name_1 }</td> : 
+                            <td className="text-left">
+                                <ol className="text-left">
+                                  <li className="text-left">{ result.name_1 + " (" + result.organization_1 + ")" } </li>
+                                  { ( result.name_2 ) ? <li className="text-left">{ result.name_2 + " (" + result.organization_2 + ")" }</li> : null }
+                                  { ( result.name_3 !== '-' ) ? <li className="text-left">{ result.name_3 + " (" + result.organization_3 + ")" }</li> : null }
+                                </ol>
+                            </td>
+                          }
+                          <td className="text-center">{ result.category }</td>
+                          <td className="text-center">
+                          { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss')) 
+                          || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(sharia_deadline, 'DD/MM/YYYY HH:mm:ss')) ) 
+                          && (result.submission_date === '-') && (result.submit_status === '-')  
+                          ? 
+                            <div className="form-group wrapper-action">
+                              <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                                <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
+                                  Edit &nbsp; <Edit3 />
+                                </button>
+                              </div>
+                              <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                                <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
+                                  Submit &nbsp; <Send />
+                                </button>                        
+                              </div>
+                            </div> :
+                            <div className="form-group wrapper-action">
+                              <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p>
+                              { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
+                              { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
+                                <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
+                                (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
+                                <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
+                                <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
+                              }
+                            </div>
+                          }
+                          </td>
+                        </tr>                  
+                      )
+                    }) : 
+                    <tr>
 
-              </tr>
-            }
-            </tbody>
-          </table>
-        </div>            
+                    </tr>
+                  }
+                  </tbody>
+                </table>
+              </div>      
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>      
       </React.Fragment>      
     )
   }

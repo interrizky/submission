@@ -29,7 +29,7 @@ class ModalUser extends React.Component {
         }
       })  
     } else {
-      if( document.querySelector('#pass_baru_1').value === '' || document.querySelector('#pass_baru_2').value === '' ) {
+      if( document.querySelector('#pass_baru_1').value === '' || document.querySelector('#pass_baru_2').value === '' || (document.querySelector('#pass_baru_1').value !== document.querySelector('#pass_baru_2').value) ) {
         /* kalo inputannya kosongan */
         Swal.fire({
           title: 'Error!',

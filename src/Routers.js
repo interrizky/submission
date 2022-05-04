@@ -18,7 +18,7 @@ import EditPaperOne from './Components/EditPaperOne'
 import EditPaperGroup from './Components/EditPaperGroup'
 import EditShariaGroup from './Components/EditShariaGroup'
 import NavbarAdmin from './Components/NavbarAdmin'
-import DashAdmin from './Components/DashAdmin'
+import AdminDash from './Components/AdminDash'
 import PaperFull from './Components/PaperFull'
 import Sharia from './Components/Sharia'
 import FileDetails from './Components/FileDetails'
@@ -69,7 +69,7 @@ class Routers extends React.Component {
             <Container fluid id="admin-main-bg" style={{ padding: 0, margin: 0 }}>
               <NavbarAdmin />
               <Routes>
-                <Route exact path="/dashboard" element= { <DashAdmin /> } />
+                <Route exact path="/dashboard" element= { <AdminDash /> } />
                 <Route exact path="/fullpaper" element= { <PaperFull /> } />
                 <Route exact path="/sharia" element= { <Sharia /> } />
                 <Route exact path="/report" element= { <Login /> } />

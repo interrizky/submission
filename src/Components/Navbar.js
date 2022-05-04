@@ -1,15 +1,11 @@
 import React from 'react'
 import { Dropdown, DropdownButton } from 'react-bootstrap'
-import {  User } from 'react-feather'
-
-/* components */
-import ModalUser from './ModalUser'
-/* logo */
-import NavbarLogo from '../Assets/Images/ejavec-logo.svg'
-/* Universal Cookie */
+import { User } from 'react-feather'
 import Cookies from 'universal-cookie'
-const cookies = new Cookies()
+import ModalUser from './ModalUser'
+import NavbarLogo from '../Assets/Images/ejavec-logo.svg'
 
+const cookies = new Cookies()
 
 class Navbar extends React.Component {
   state = {
