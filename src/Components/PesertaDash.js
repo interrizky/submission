@@ -305,8 +305,8 @@ class PesertaDash extends React.Component {
                           }
                           <td className="text-center">{ result.category }</td>
                           <td className="text-center">
-                          { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(submission_deadline, 'DD/MM/YYYY HH:mm:ss')) 
-                          || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'DD/MM/YYYY HH:mm:ss') < date.format(sharia_deadline, 'DD/MM/YYYY HH:mm:ss')) ) 
+                          { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(submission_deadline, 'YYYY/MM/DD HH:mm:ss')) 
+                          || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(sharia_deadline, 'YYYY/MM/DD HH:mm:ss')) ) 
                           && (result.submission_date === '-') && (result.submit_status === '-')  
                           ? 
                             <div className="form-group wrapper-action">
