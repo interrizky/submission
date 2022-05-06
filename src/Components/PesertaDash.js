@@ -192,19 +192,26 @@ class PesertaDash extends React.Component {
   componentDidMount() {
     Swal.fire({
       icon: 'info',
-      title: '- Untuk Diperhatikan -',
+      title: 'Perhatian!',
       html:
+        'Klik Button \n' +
+        '<button type="button" class="btn btn-md btn-outline-primary" title="Add Paper">Add Paper</button> \n' + 
+        'Untuk Membuat Paper ' +      
+        '<br />' +      
         'Klik Button \n' +
         '<button type="button" class="btn btn-md btn-warning" title="Edit Paper">Edit</button> \n' + 
         'Untuk Edit Paper ' +      
         '<br />' +
         'Klik Button \n' +
         '<button type="button" class="btn btn-md btn-danger" title="Submit Paper">Submit</button> \n' + 
-        'Untuk Paper Submission',      
-      confirmButtonText: 'Okay',
-      footer: '<h4 style="text-align: center">Three Hours Too Soon Is Better Than A Minute Too Late - William Shakespeare</h4>'
+        'Untuk Mengirimkan / Submit Paper',
+      showConfirmButton: false,
+      allowOutsideClick: true,
+      backdrop: true,
+      allowEscapeKey: true,      
+      footer: '<i><p style="text-align: center; font-size: 16px; font-weight: bold;">Three Hours Too Soon Is Better Than A Minute Too Late - William Shakespeare</p></i>'
     })
-
+    
     Axios({
       url: 'https://submission-api.ejavec.org/fetchTable/',
       method: 'POST',
@@ -220,7 +227,7 @@ class PesertaDash extends React.Component {
     })
   }
     
-  render() {
+  render() {    
     return(
       <React.Fragment>
         <Navbar />
@@ -246,7 +253,7 @@ class PesertaDash extends React.Component {
                   <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-danger" onClick= {this.clearFilter}>
                     <XCircle />
                   </button>
-                </div>                 
+                </div>
               </div>           
             </form>
           </div>
@@ -322,7 +329,7 @@ class PesertaDash extends React.Component {
                               </div>
                             </div> :
                             <div className="form-group wrapper-action">
-                              <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p>
+                              { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Paper Telah Tersubmit!</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p> } 
                               { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
                               { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
                                 <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
