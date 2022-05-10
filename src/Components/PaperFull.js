@@ -53,7 +53,7 @@ class PaperFull extends React.Component {
     }
   }
 
-  handleSuccess = (email_1, paper_code) => async(event) => {
+  handleSuccess = (name_1, email_1, title, sub_theme, paper_code) => async(event) => {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
@@ -81,6 +81,9 @@ class PaperFull extends React.Component {
           "Authorization": 'Bearer ' + cookies.get('udatxu').token
         },
         data: JSON.stringify({ 
+          data_name: name_1,
+          data_title: title,
+          data_subtheme: sub_theme,
           data_papercode: paper_code,
           data_email: email_1
         })
@@ -122,7 +125,7 @@ class PaperFull extends React.Component {
     }    
   }
 
-  handleFailed = (email_1, paper_code) => async(event) => {
+  handleFailed = (name_1, email_1, title, sub_theme, paper_code) => async(event) => {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
@@ -150,6 +153,9 @@ class PaperFull extends React.Component {
           "Authorization": 'Bearer ' + cookies.get('udatxu').token
         },
         data: JSON.stringify({
+          data_name: name_1,
+          data_title: title,
+          data_subtheme: sub_theme,
           data_papercode: paper_code,
           data_email: email_1
         })
