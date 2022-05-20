@@ -1,5 +1,6 @@
 import React from 'react'
 import { Accordion } from 'react-bootstrap'
+import ReactPaginate from 'react-paginate'
 import Axios from 'axios'
 import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie'
@@ -9,11 +10,15 @@ const cookies = new Cookies()
 
 class PaperFull extends React.Component {
   state = {
+    paperNumber: 0, //count paper number - place it on card
+    entries: '',    
     dataMap: [],
-    paperNumber: 0
-  }
+    perPage: 5,
+    offset: 0,      
+    currentPage: 0    
+  }  
 
-  handleInfo = (paper_code,userid_code,paper_type,paper_filePath_1,paper_fileName_1,pernyataan_filePath_1,pernyataan_fileName_1,lampiran_filePath_1,lampiran_fileName_1,cv_filePath_1,cv_fileName_1,cv_filePath_2,cv_fileName_2,cv_filePath_3,cv_fileName_3) => (event) => {
+  handleInfo = (paper_code, userid_code, paper_type, paper_filePath_1, paper_fileName_1, pernyataan_filePath_1, pernyataan_fileName_1, lampiran_filePath_1, lampiran_fileName_1, cv_filePath_1, cv_fileName_1, cv_filePath_2, cv_fileName_2, cv_filePath_3, cv_fileName_3) => (event) => {
     event.preventDefault()
 
     if( !cookies.get('udatxu') ) {
@@ -197,6 +202,12 @@ class PaperFull extends React.Component {
     }    
   }  
 
+  handleClearFilter = (event) => {
+    event.preventDefault()
+
+    window.location.reload()
+  }  
+
   handleFilter = (event) => {
     event.preventDefault()
 
@@ -231,19 +242,138 @@ class PaperFull extends React.Component {
           data_keyword: document.querySelector('#keyword').value
         })                   
       }).then(response => {
-        this.setState({ dataMap: response.data.result, paperNumber: response.data.number })
-      }) 
+        const data = response.data.result
+        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        const postData = slice.map((result, index) => {
+          return(
+            <tr key={ this.state.offset+index+1 }>
+              <td className="text-center">{ this.state.offset+index+1 }</td>
+              <td className="text-center">{ result.paper_code }</td> 
+              <td className="text-left">
+                { result.name_1 } 
+                <br/>
+                { '(' + result.email_1 + ')' }
+              </td> 
+              <td className="text-left">
+                <div className="wrapper-judul" style={{ fontStyle: 'italic' }}> { result.title } </div>
+                <hr/>
+                <b>Sub Tema : </b> { result.sub_theme }                      
+              </td>
+              <td className="text-center">
+                <button type="button" id="btnPaperDownload" className="btn-success form-control" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                  <Download />
+                </button>                      
+              </td>                    
+              <td className="text-left">{ result.paper_type }</td>                                                                  
+              <td className="text-center">
+                { result.category }
+                <hr/>
+                { result.participation_type }                      
+              </td>
+              <td className="text-center">{ result.submission_date }</td>
+              <td className="text-center">
+                {
+                  (result.paper_status === '-') ? 
+                  <React.Fragment>
+                    <button type="button" id="btnLolos" className="btn-warning form-control" onClick={ this.handleSuccess(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
+                      Lolos? <CheckSquare />
+                    </button>
+                    <hr/>    
+                    <button type="button" id="btnTidakLolos" className="btn-outline-danger form-control" onClick={ this.handleFailed(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
+                      Tidak? <XSquare />
+                    </button>   
+                  </React.Fragment> : 
+                  <React.Fragment>
+                    Status Paper : { result.paper_status === 'lolos' ? "LOLOS" : "TIDAK LOLOS" }
+                  </React.Fragment>                        
+                }
+              </td>
+            </tr>                  
+          )        
+        })
+
+        this.setState({
+          entries: 'search',
+          paperNumber: response.data.number,
+          pageCount: Math.ceil(data.length / this.state.perPage),
+          postData
+        })      
+      })       
     }       
   }
-  
-  handleClearFilter = (event) => {
-    event.preventDefault()
 
-    window.location.reload()
-  }
+  receivedData() {
+    this.state.entries === 'search' ? Axios({
+        url: 'https://submission-api.ejavec.org/fetchPaperTable',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": 'Bearer ' + cookies.get('udatxu').token        
+        },
+        data: JSON.stringify({
+          data_fetch: 'search', 
+          data_role: cookies.get('udatxu').role,
+          data_filter: document.querySelector('#filter').value,
+          data_keyword: document.querySelector('#keyword').value
+        })                   
+      }).then(response => {
+        const data = response.data.result
+        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        const postData = slice.map((result, index) => {
+          return(
+            <tr key={ this.state.offset+index+1 }>
+              <td className="text-center">{ this.state.offset+index+1 }</td>
+              <td className="text-center">{ result.paper_code }</td> 
+              <td className="text-left">
+                { result.name_1 } 
+                <br/>
+                { '(' + result.email_1 + ')' }
+              </td> 
+              <td className="text-left">
+                <div className="wrapper-judul" style={{ fontStyle: 'italic' }}> { result.title } </div>
+                <hr/>
+                <b>Sub Tema : </b> { result.sub_theme }                      
+              </td>
+              <td className="text-center">
+                <button type="button" id="btnPaperDownload" className="btn-success form-control" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                  <Download />
+                </button>                      
+              </td>                    
+              <td className="text-left">{ result.paper_type }</td>                                                                  
+              <td className="text-center">
+                { result.category }
+                <hr/>
+                { result.participation_type }                      
+              </td>
+              <td className="text-center">{ result.submission_date }</td>
+              <td className="text-center">
+                {
+                  (result.paper_status === '-') ? 
+                  <React.Fragment>
+                    <button type="button" id="btnLolos" className="btn-warning form-control" onClick={ this.handleSuccess(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
+                      Lolos? <CheckSquare />
+                    </button>
+                    <hr/>    
+                    <button type="button" id="btnTidakLolos" className="btn-outline-danger form-control" onClick={ this.handleFailed(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
+                      Tidak? <XSquare />
+                    </button>   
+                  </React.Fragment> : 
+                  <React.Fragment>
+                    Status Paper : { result.paper_status === 'lolos' ? "LOLOS" : "TIDAK LOLOS" }
+                  </React.Fragment>                        
+                }
+              </td>
+            </tr>                  
+          )        
+        })
 
-  componentDidMount() {
-    Axios({
+        this.setState({
+          paperNumber: response.data.number,
+          pageCount: Math.ceil(data.length / this.state.perPage),
+          postData
+        })      
+      })
+     : Axios({
       url: 'https://submission-api.ejavec.org/fetchPaperTable',
       method: 'POST',
       headers: {
@@ -254,13 +384,84 @@ class PaperFull extends React.Component {
         data_role: cookies.get('udatxu').role
       })                   
     }).then(response => {
-      this.setState({ dataMap: response.data.result, paperNumber: response.data.number })
+      const data = response.data.result
+      const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+      const postData = slice.map((result, index) => {
+        return(
+          <tr key={ this.state.offset+index+1 }>
+            <td className="text-center">{ this.state.offset+index+1 }</td>
+            <td className="text-center">{ result.paper_code }</td> 
+            <td className="text-left">
+              { result.name_1 } 
+              <br/>
+              { '(' + result.email_1 + ')' }
+            </td> 
+            <td className="text-left">
+              <div className="wrapper-judul" style={{ fontStyle: 'italic' }}> { result.title } </div>
+              <hr/>
+              <b>Sub Tema : </b> { result.sub_theme }                      
+            </td>
+            <td className="text-center">
+              <button type="button" id="btnPaperDownload" className="btn-success form-control" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                <Download />
+              </button>                      
+            </td>                    
+            <td className="text-left">{ result.paper_type }</td>                                                                  
+            <td className="text-center">
+              { result.category }
+              <hr/>
+              { result.participation_type }                      
+            </td>
+            <td className="text-center">{ result.submission_date }</td>
+            <td className="text-center">
+              {
+                (result.paper_status === '-') ? 
+                <React.Fragment>
+                  <button type="button" id="btnLolos" className="btn-warning form-control" onClick={ this.handleSuccess(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
+                    Lolos? <CheckSquare />
+                  </button>
+                  <hr/>    
+                  <button type="button" id="btnTidakLolos" className="btn-outline-danger form-control" onClick={ this.handleFailed(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
+                    Tidak? <XSquare />
+                  </button>   
+                </React.Fragment> : 
+                <React.Fragment>
+                  Status Paper : { result.paper_status === 'lolos' ? "LOLOS" : "TIDAK LOLOS" }
+                </React.Fragment>                        
+              }
+            </td>
+          </tr>                  
+        )        
+      })
+
+      this.setState({
+        paperNumber: response.data.number,
+        pageCount: Math.ceil(data.length / this.state.perPage),
+        postData
+      })      
     })
+  }  
+
+  handlePageClick = (event) => {
+    const selectedPage = event.selected;
+    const offset = selectedPage * this.state.perPage;
+
+    this.setState({
+      currentPage: selectedPage,
+      offset: offset
+    }, () => {
+        this.receivedData()
+    })
+  }  
+
+  componentDidMount() {
+    this.receivedData()
   }
 
   render() {
     return(
       <React.Fragment>
+        {/* card filter */}
         <div className="wrapper-filter mx-2 my-3">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
@@ -270,7 +471,7 @@ class PaperFull extends React.Component {
                   <div className="form-inline justify-content-center">
                     <div className="input-group">
                       <select className="form-control dropdown mx-2" id="filter" defaultValue={""}>
-                        <option value="" defaultValue="" disabled>-- Pilih Filter Pencarian --</option>
+                        <option value="" defaultValue="" disabled>-- Filter Pencarian --</option>
                         <option value="kodepaper">Kode Paper</option>
                         <option value="nama">Nama</option>
                         <option value="judul">Judul</option>
@@ -291,13 +492,35 @@ class PaperFull extends React.Component {
             </Accordion.Item>
           </Accordion>          
         </div>
+        {/* card filter */}
 
+        {/* card table */}
         <div className="wrapper-table mx-2 my-3">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
               <Accordion.Header><i>Jumlah Full Paper : { this.state.paperNumber } Paper(s)</i></Accordion.Header>
               <Accordion.Body>
                 <div className="wrapper-table-full-paper table-responsive m-2" style={{ overflow: "auto", height: "500px" }}>
+                <ReactPaginate
+                    previousLabel={'Prev'}
+                    nextLabel={'Next'}
+                    pageCount={this.state.pageCount || 0}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}                
+                    // previousLabel={'Prev'}
+                    // nextLabel={'Next'}
+                    // breakLabel={"..."}
+                    // breakClassName={"break-me"}
+                    // pageCount={this.state.pageCount}
+                    // marginPagesDisplayed={2}
+                    // pageRangeDisplayed={5}
+                    // onPageChange={this.handlePageClick}
+                    // containerClassName={"pagination"}
+                    // subContainerClassName={"pages pagination"}
+                    // activeClassName={"active"}
+                  />
+                  <br />
                   <table className="table table-bordered table-hover table-light mb-0">
                     <thead className="thead-light">
                       <tr>
@@ -313,56 +536,7 @@ class PaperFull extends React.Component {
                       </tr>
                     </thead>
                     <tbody className="table-body" id="table-body">
-                    {
-                      this.state.dataMap.length > 0 ? 
-                      this.state.dataMap.map((result, index) => {
-                        return(
-                          <tr key={ index }>
-                            <td className="text-center">{ index+1 }</td>
-                            <td className="text-center">{ result.paper_code }</td> 
-                            <td className="text-left">
-                              { result.name_1 } 
-                              <br/>
-                              { '(' + result.email_1 + ')' }
-                            </td> 
-                            <td className="text-left">
-                              <div className="wrapper-judul" style={{ fontStyle: 'italic' }}> { result.title } </div>
-                              <hr/>
-                              <b>Sub Tema : </b> { result.sub_theme }                      
-                            </td>
-                            <td className="text-center">
-                              <button type="button" id="btnPaperDownload" className="btn-success form-control" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
-                                <Download />
-                              </button>                      
-                            </td>                    
-                            <td className="text-left">{ result.paper_type }</td>                                                                  
-                            <td className="text-center">
-                              { result.category }
-                              <hr/>
-                              { result.participation_type }                      
-                            </td>
-                            <td className="text-center">{ result.submission_date }</td>
-                            <td className="text-center">
-                              {
-                                (result.paper_status === '-') ? 
-                                <React.Fragment>
-                                  <button type="button" id="btnLolos" className="btn-warning form-control" onClick={ this.handleSuccess(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
-                                    Lolos? <CheckSquare />
-                                  </button>
-                                  <hr/>    
-                                  <button type="button" id="btnTidakLolos" className="btn-outline-danger form-control" onClick={ this.handleFailed(result.name_1, result.email_1, result.title, result.sub_theme, result.paper_code) }>
-                                    Tidak? <XSquare />
-                                  </button>   
-                                </React.Fragment> : 
-                                <React.Fragment>
-                                  Status Paper : { result.paper_status === 'lolos' ? "LOLOS" : "TIDAK LOLOS" }
-                                </React.Fragment>                        
-                              }
-                            </td>
-                          </tr>                  
-                        )
-                      }) : null
-                    }
+                    { this.state.postData }
                     </tbody>
                   </table>
                 </div>    
@@ -370,10 +544,9 @@ class PaperFull extends React.Component {
             </Accordion.Item>
           </Accordion>            
         </div>
-
+        {/* card table */}
   
       </React.Fragment>
-
     )
   }
 }
