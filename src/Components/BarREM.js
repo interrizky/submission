@@ -85,9 +85,9 @@ class BarREM extends React.Component {
 
   render() {
     const options = {
-      // responsive: true,
+      responsive: true,
       maintainAspectRatio : false,
-      barThickness: 100,
+      // barThickness: 100,
       borderSkipped: 'start',
       plugins: {
         legend: {
@@ -95,7 +95,7 @@ class BarREM extends React.Component {
         },
         title: {
           display: true,
-          text: 'Regional Economic Modeling Paper By Sub Theme Type Bar Chart',
+          text: 'Submitted Regional Economic Modeling Paper By Sub Theme Type Bar Chart',
         },
       },
     }

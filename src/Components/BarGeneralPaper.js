@@ -25,14 +25,8 @@ const cookies = new Cookies()
 
 class BarGeneralPaper extends React.Component {
   state = {
-    tema1: 0,
-    tema2: 0,
-    tema3: 0,
-    tema4: 0,
-    tema5: 0,
-    tema6: 0,    
-    tema7: 0,
-    tema8: 0
+    arrMhs: [],
+    arrNon: []
   }
 
   componentDidMount() {
@@ -48,23 +42,17 @@ class BarGeneralPaper extends React.Component {
       })                   
     }).then(response => {
       this.setState({ 
-        tema1: response.data.angkaTema1,
-        tema2: response.data.angkaTema2,
-        tema3: response.data.angkaTema3,
-        tema4: response.data.angkaTema4,
-        tema5: response.data.angkaTema5,
-        tema6: response.data.angkaTema6,    
-        tema7: response.data.angkaTema7,
-        tema8: response.data.angkaTema8
+        arrMhs: response.data.angkaMhs,
+        arrNon: response.data.angkaNon,
       })
     })
   }
 
   render() {
     const options = {
-      // responsive: true,
+      responsive: true,
       maintainAspectRatio : false,
-      barThickness: 100,
+      // barThickness: 100,
       borderSkipped: 'start',
       plugins: {
         legend: {
@@ -72,57 +60,25 @@ class BarGeneralPaper extends React.Component {
         },
         title: {
           display: true,
-          text: 'General Paper By Sub Theme Type Bar Chart',
+          text: 'Submitted General Paper By Sub Theme Divided By Category Type Bar Chart',
         },
       },
     }
 
-    const labels = ['General Paper']
-
     const data = {
-      labels,
+      labels: ['Tema 1', 'Tema 2', 'Tema 3', 'Tema 4', 'Tema 5', 'Tema 6', 'Tema 7', 'Tema 8'],
       datasets: [
         {
-          label: 'Tema 1',
-          data: [this.state.tema1],
+          label: "Mahasiswa",
+          data: this.state.arrMhs,
           backgroundColor: 'rgba(255, 99, 132, 0.8)',
         },
         {
-          label: 'Tema 2',
-          data: [this.state.tema2],
+          label: "Umum",
+          data: this.state.arrNon,
           backgroundColor: 'rgba(255, 159, 64, 0.8)',
-        },
-        {
-          label: 'Tema 3',
-          data: [this.state.tema3],
-          backgroundColor: 'rgba(255, 205, 86, 0.8)',
-        },
-        {
-          label: 'Tema 4',
-          data: [this.state.tema4],
-          backgroundColor: 'rgba(75, 192, 192, 0.8)',
-        },   
-        {
-          label: 'Tema 5',
-          data: [this.state.tema5],
-          backgroundColor: 'rgba(54, 162, 235, 0.8)',
-        },
-        {
-          label: 'Tema 6',
-          data: [this.state.tema6],
-          backgroundColor: 'rgba(153, 102, 255, 0.8)',
-        },
-        {
-          label: 'Tema 7',
-          data: [this.state.tema7],
-          backgroundColor: 'rgba(201, 203, 207, 0.8)'
-        },
-        {
-          label: 'Tema 8',
-          data: [this.state.tema8],
-          backgroundColor: 'rgba(202, 54, 107, 0.8)',
-        },                     
-      ],
+        }
+      ]      
     }
 
     return <Bar options={options} data={data} />;

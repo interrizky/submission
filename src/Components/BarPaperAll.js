@@ -48,9 +48,9 @@ class BarPaperAll extends React.Component {
 
   render() {
     const options = {
-      // responsive: true,
+      responsive: true,
       maintainAspectRatio : false,
-      barThickness: 100,
+      // barThickness: 100,
       borderSkipped: 'start',
       plugins: {
         legend: {

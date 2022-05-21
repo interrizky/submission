@@ -70,7 +70,7 @@ class BarSharia extends React.Component {
         },
         title: {
           display: true,
-          text: 'Java Sharia Business Model By Sub Theme Type Bar Chart',
+          text: 'Submitted Java Sharia Business Model By Sub Theme Type Bar Chart',
         },
       },
     }

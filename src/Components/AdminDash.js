@@ -1,5 +1,6 @@
 import React from 'react'
 import { Accordion } from 'react-bootstrap'
+// import { DownloadCloud } from 'react-feather'
 import PieUser from './PieUser'
 import BarPaperAll from './BarPaperAll'
 import UserRegisteredTable from './UserRegisteredTable'
@@ -123,7 +124,7 @@ class AdminDash extends React.Component {
                   <Accordion.Body>
                     <div className="card-body" style={{ height: '350px' }}>
                       <PieSharia />
-                    </div>
+                    </div>                 
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>                    
