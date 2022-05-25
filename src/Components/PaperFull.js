@@ -455,7 +455,25 @@ class PaperFull extends React.Component {
   }  
 
   componentDidMount() {
-    this.receivedData()
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })  
+    } else { 
+      this.receivedData()
+    }    
   }
 
   render() {
