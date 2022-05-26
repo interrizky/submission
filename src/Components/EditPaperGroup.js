@@ -417,7 +417,7 @@ class EditPaperGroup extends React.Component {
                     { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
                       <React.Fragment>
                       <div className="form-group mb-2">
-                        <label className="col-md-6" htmlFor="files-3">File Lampiran Terupload</label>
+                        <label className="col-md-6" htmlFor="files-3">Lampiran File Perhitungan Dari Software Terupload</label>
                       </div>
                       <div className="form-group mb-2">
                         <button type="button" id="btnLampiranDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.lampiran_filePath_1, this.state.lampiran_fileName_1) }>
@@ -449,7 +449,7 @@ class EditPaperGroup extends React.Component {
                     { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
                       <React.Fragment>
                         <div className="form-group mb-2">
-                          <label htmlFor="select-files-4">File Lampiran (Max 8MB), format file .pdf, .doc atau .docx</label>
+                          <label htmlFor="select-files-4">Lampiran File Perhitungan Dari Software (Max 8MB), format file .pdf, .doc atau .docx</label>
                         </div>
                         <div className="form-group mb-2">
                           <input className="form-control" type="file" name="lampiran_file" id="lampiran_file" onChange={this.lampiran_file_change} />
