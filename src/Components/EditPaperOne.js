@@ -291,7 +291,7 @@ class EditPaperOne extends React.Component {
                     { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
                       <React.Fragment>
                       <div className="form-group mb-2">
-                        <label className="col-md-6" htmlFor="files-3">Lampiran File Perhitungan Dari Software Terupload</label>
+                        <label htmlFor="files-3">Lampiran File Perhitungan Dari Software Terupload</label>
                       </div>
                       <div className="form-group mb-2">
                         <button type="button" id="btnLampiranDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.lampiran_filePath_1, this.state.lampiran_fileName_1) }>
