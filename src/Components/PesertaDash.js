@@ -10,7 +10,7 @@ import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2022, 4, 27, 6, 0, 0)
+const submission_deadline = new Date(2022, 4, 28, 6, 0, 0)
 const sharia_deadline = new Date(2022, 6, 8, 23, 59, 59)
 
 class PesertaDash extends React.Component {

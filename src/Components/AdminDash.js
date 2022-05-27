@@ -623,14 +623,7 @@ class AdminDash extends React.Component {
           let workBook = XLSX.utils.book_new()
 
           let ws1 = XLSX.utils.json_to_sheet(this.state.tempObjOne)
-          XLSX.utils.book_append_sheet(workBook, ws1, "General Paper")
 
-          let ws2 = XLSX.utils.json_to_sheet(this.state.tempObjTwo)
-          XLSX.utils.book_append_sheet(workBook, ws2, "Regional Economic Modelling")       
-
-          let ws3 = XLSX.utils.json_to_sheet(this.state.tempObjThree)
-          XLSX.utils.book_append_sheet(workBook, ws3, "Java Sharia") 
-          
           /* calculate column width */
           ws1["!cols"] = [ 
             { wch: 10 }, // A
@@ -653,7 +646,739 @@ class AdminDash extends React.Component {
             { wch: 25 }, // R
             { wch: 25 }, // S
             { wch: 25 }, // T                        
-          ];
+          ]          
+
+          // for( let i = 0; i <= this.state.tempObjOne.length; i++ ) {
+          //   if( i === 0 ) {
+          //     ws1["A"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }
+
+          //     ws1["B"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["C"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["D"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["E"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["F"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }     
+              
+          //     ws1["G"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["H"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["I"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["J"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["K"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }     
+              
+          //     ws1["L"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["M"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["N"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["O"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["P"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }     
+              
+          //     ws1["Q"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }       
+              
+          //     ws1["R"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }     
+              
+          //     ws1["S"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }       
+              
+          //     ws1["T"+(i+1)].s = {
+          //       font: {
+          //         sz: 16,
+          //         bold: true,
+          //         italic: true
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }                    
+          //   } else {
+          //     ws1["A"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }
+
+          //     ws1["B"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "center",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }     
+              
+          //     ws1["C"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["D"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["E"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["F"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["G"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }     
+              
+          //     ws1["H"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["I"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["J"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["K"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["L"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["M"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["N"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["O"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["P"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["Q"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }   
+              
+          //     ws1["R"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }  
+              
+          //     ws1["S"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }    
+              
+          //     ws1["T"+(i+1)].s = {
+          //       font: {
+          //         sz: 12,
+          //       },
+          //       alignment: {
+          //         vertical: "center",
+          //         horizontal: "left",
+          //         wrapText: true
+          //       },
+          //       border: {
+          //         top: { style: "thin" },
+          //         bottom: { style: "thin" },
+          //         left: { style: "thin" },
+          //         right: { style: "thin" }
+          //       }
+          //     }               
+          //   }
+          // }               
+
+          XLSX.utils.book_append_sheet(workBook, ws1, "General Paper")
+
+          let ws2 = XLSX.utils.json_to_sheet(this.state.tempObjTwo)
+          XLSX.utils.book_append_sheet(workBook, ws2, "Regional Economic Modelling")       
+
+          let ws3 = XLSX.utils.json_to_sheet(this.state.tempObjThree)
+          XLSX.utils.book_append_sheet(workBook, ws3, "Java Sharia") 
 
           ws2["!cols"] = [ 
             { wch: 10 }, // A
