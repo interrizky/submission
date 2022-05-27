@@ -14,7 +14,8 @@ import BarGeneralPaper from './BarGeneralPaper'
 import BarREM from './BarREM'
 import BarSharia from './BarSharia'
 
-let XLSX = require("xlsx")
+// let XLSX = require("xlsx")
+const XLSX = require('sheetjs-style')
 const cookies = new Cookies()
 
 class AdminDash extends React.Component {
@@ -62,15 +63,11 @@ class AdminDash extends React.Component {
 
           let workBook = XLSX.utils.book_new()
 
-          let ws1 = XLSX.utils.json_to_sheet(this.state.tempObjOne)         
-          XLSX.utils.book_append_sheet(workBook, ws1, "User Active")
-
-          let ws2 = XLSX.utils.json_to_sheet(this.state.tempObjTwo)
-          XLSX.utils.book_append_sheet(workBook, ws2, "User Inactive")   
+          let ws1 = XLSX.utils.json_to_sheet(this.state.tempObjOne)      
           
           ws1["!cols"] = [ 
             { wch: 10 }, // A
-            { wch: 15 }, // B
+            { wch: 20 }, // B
             { wch: 50 }, // C
             { wch: 50 }, // D
             { wch: 25 }, // E
@@ -78,15 +75,532 @@ class AdminDash extends React.Component {
             { wch: 25 }, // G
           ]       
 
+          for( let i = 0; i <= this.state.tempObjOne.length; i++ ) {
+            if( i === 0 ) {
+              ws1["A"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }
+
+              ws1["B"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }    
+              
+              ws1["C"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }  
+              
+              ws1["D"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }    
+              
+              ws1["E"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }  
+              
+              ws1["F"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }     
+              
+              ws1["G"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }              
+            } else {
+              ws1["A"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }
+
+              ws1["B"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }     
+              
+              ws1["C"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }   
+              
+              ws1["D"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }   
+              
+              ws1["E"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }  
+              
+              ws1["F"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }    
+              
+              ws1["G"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }                 
+            }
+          }     
+
+          XLSX.utils.book_append_sheet(workBook, ws1, "User Active")
+
+          let ws2 = XLSX.utils.json_to_sheet(this.state.tempObjTwo)
+          XLSX.utils.book_append_sheet(workBook, ws2, "User Inactive")   
+
           ws2["!cols"] = [ 
             { wch: 10 }, // A
-            { wch: 15 }, // B
+            { wch: 20 }, // B
             { wch: 50 }, // C
-            { wch: 50 }, // D
+            { wch: 45 }, // D
             { wch: 25 }, // E
-            { wch: 25 }, // F
+            { wch: 30 }, // F
             { wch: 25 }, // G
-          ]                            
+          ]      
+
+          for( let i = 0; i <= this.state.tempObjTwo.length; i++ ) {
+            if( i === 0 ) {
+              ws2["A"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }
+
+              ws2["B"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }    
+              
+              ws2["C"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }  
+              
+              ws2["D"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }    
+              
+              ws2["E"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }  
+              
+              ws2["F"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }     
+              
+              ws2["G"+(i+1)].s = {
+                font: {
+                  sz: 16,
+                  bold: true,
+                  italic: true
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }              
+            } else {
+              ws2["A"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }
+
+              ws2["B"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "center",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }     
+              
+              ws2["C"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }   
+              
+              ws2["D"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }   
+              
+              ws2["E"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }  
+              
+              ws2["F"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }    
+              
+              ws2["G"+(i+1)].s = {
+                font: {
+                  sz: 12,
+                },
+                alignment: {
+                  vertical: "center",
+                  horizontal: "left",
+                  wrapText: true
+                },
+                border: {
+                  top: { style: "thin" },
+                  bottom: { style: "thin" },
+                  left: { style: "thin" },
+                  right: { style: "thin" }
+                }
+              }                 
+            }
+          }     
 
           XLSX.writeFile(workBook, "User Recap.xlsx")
         }
