@@ -58,6 +58,7 @@ class Routers extends React.Component {
                 <Route exact path="/editone/:paper_code" element= { <EditPaperOne /> } />
                 <Route exact path="/editgroup/:paper_code" element= { <EditPaperGroup /> } />
                 <Route exact path="/editgroupsharia/:paper_code" element= { <EditShariaGroup /> } />
+                <Route exact path="/details/:paper_code" element= { <FileDetails /> } />                
                 <Route path="*" element= { <Navigate to={'/home'} /> } />
               </Routes>
             </Container> 

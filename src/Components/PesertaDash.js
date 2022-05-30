@@ -3,14 +3,14 @@ import { Accordion } from 'react-bootstrap'
 import Navbar from './Navbar'
 import ModalForm from './ModalForm'
 import Swal from 'sweetalert2'
-import { FilePlus, Search, XCircle, Edit3, Send } from 'react-feather'
+import { FilePlus, Search, XCircle, Edit3, Send, DownloadCloud } from 'react-feather'
 import Axios from 'axios'
 import Cookies from 'universal-cookie'
 import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2022, 4, 28, 6, 0, 0)
+const submission_deadline = new Date(2022, 4, 30, 6, 0, 0)
 const sharia_deadline = new Date(2022, 6, 8, 23, 59, 59)
 
 class PesertaDash extends React.Component {
@@ -189,6 +189,46 @@ class PesertaDash extends React.Component {
     } 
   }
 
+  handleInfo = (paper_code, userid_code, paper_type, paper_filePath_1, paper_fileName_1, pernyataan_filePath_1, pernyataan_fileName_1, lampiran_filePath_1, lampiran_fileName_1, cv_filePath_1, cv_fileName_1, cv_filePath_2, cv_fileName_2, cv_filePath_3, cv_fileName_3) => (event) => {
+    event.preventDefault()
+
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })      
+    } else {
+      localStorage.setItem('paper_code', paper_code)      
+      localStorage.setItem('userid_code', userid_code)
+      localStorage.setItem('paper_type', paper_type)
+      localStorage.setItem('paper_filePath_1', paper_filePath_1)
+      localStorage.setItem('paper_fileName_1', paper_fileName_1)      
+      localStorage.setItem('pernyataan_filePath_1', pernyataan_filePath_1)
+      localStorage.setItem('pernyataan_fileName_1', pernyataan_fileName_1)            
+      localStorage.setItem('lampiran_filePath_1', lampiran_filePath_1)
+      localStorage.setItem('lampiran_fileName_1', lampiran_fileName_1)                  
+      localStorage.setItem('cv_filePath_1', cv_filePath_1)
+      localStorage.setItem('cv_fileName_1', cv_fileName_1)      
+      localStorage.setItem('cv_filePath_2', cv_filePath_2)
+      localStorage.setItem('cv_fileName_2', cv_fileName_2)            
+      localStorage.setItem('cv_filePath_3', cv_filePath_3)
+      localStorage.setItem('cv_fileName_3', cv_fileName_3)                  
+
+      window.location.href = '/details/'+paper_code
+    }
+  }
+
   componentDidMount() {
     Swal.fire({
       icon: 'info',
@@ -337,6 +377,9 @@ class PesertaDash extends React.Component {
                                 <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
                                 <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
                               }
+                              <button type="button" id="btnPaperDownload" className="btn-success form-control" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                                View Files &nbsp; <DownloadCloud />
+                              </button>                                   
                             </div>
                           }
                           </td>
