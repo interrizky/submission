@@ -10,7 +10,7 @@ import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2022, 4, 30, 6, 0, 0)
+const submission_deadline = new Date(2022, 4, 28, 6, 0, 0)
 const sharia_deadline = new Date(2022, 6, 8, 23, 59, 59)
 
 class PesertaDash extends React.Component {
@@ -225,7 +225,7 @@ class PesertaDash extends React.Component {
       localStorage.setItem('cv_filePath_3', cv_filePath_3)
       localStorage.setItem('cv_fileName_3', cv_fileName_3)                  
 
-      window.location.href = '/details/'+paper_code
+      window.location.href = '/detailpaper/'+paper_code
     }
   }
 

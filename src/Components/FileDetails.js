@@ -153,9 +153,13 @@ class FileDetails extends React.Component {
     localStorage.removeItem('cv_filePath_2')
     localStorage.removeItem('cv_fileName_2')
     localStorage.removeItem('cv_filePath_3')
-    localStorage.removeItem('cv_fileName_3')      
-
-    this.state.paper_type === 'Java Sharia Business Model' ? window.location.href = '/sharia' : window.location.href = '/fullpaper'
+    localStorage.removeItem('cv_fileName_3')     
+    
+    if( cookies.get('udatxu').role === 'peserta' ) {
+      window.location.href = '/home'
+    } else {
+      this.state.paper_type === 'Java Sharia Business Model' ? window.location.href = '/sharia' : window.location.href = '/fullpaper'
+    }    
   }
 }
 
