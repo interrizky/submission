@@ -357,12 +357,12 @@ class PesertaDash extends React.Component {
                           && (result.submission_date === '-') && (result.submit_status === '-')  
                           ? 
                             <div className="form-group wrapper-action">
-                              <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                              <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
                                 <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
                                   Edit &nbsp; <Edit3 />
                                 </button>
                               </div>
-                              <div className="input-group mb-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                              <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
                                 <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
                                   Submit &nbsp; <Send />
                                 </button>                        
@@ -377,9 +377,9 @@ class PesertaDash extends React.Component {
                                 <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
                                 <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
                               }
-                              <button type="button" id="btnPaperDownload" className="btn-success form-control" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
-                                View Files &nbsp; <DownloadCloud />
-                              </button>                                   
+                                <button type="button" id="btnPaperDownload" className="btn btn-md btn-success" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                                  View Files &nbsp; <DownloadCloud />
+                                </button>
                             </div>
                           }
                           </td>

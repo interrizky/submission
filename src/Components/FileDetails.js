@@ -3,6 +3,7 @@ import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie'
 import { Download } from 'react-feather'
 import { saveAs } from 'file-saver'
+import Navbar from './Navbar'
 
 const cookies = new Cookies()
 
@@ -52,6 +53,8 @@ class FileDetails extends React.Component {
   render() {
     return(
       <React.Fragment>
+        { cookies.get('udatxu').role === 'peserta' ? <Navbar /> : null }
+        
         <div className="card">
           <h5 className="card-header text-center">{ this.state.paper_code }</h5>
           <div className="card-body">
