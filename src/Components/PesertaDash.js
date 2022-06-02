@@ -1,5 +1,6 @@
 import React from 'react'
 import { Accordion } from 'react-bootstrap'
+import ReactPaginate from 'react-paginate'
 import Navbar from './Navbar'
 import ModalForm from './ModalForm'
 import Swal from 'sweetalert2'
@@ -16,7 +17,12 @@ const sharia_deadline = new Date(2022, 6, 8, 23, 59, 59)
 class PesertaDash extends React.Component {
   state = {
     isOpen: false,
-    dataMap: []
+    paperNumber: 0, //count paper number - place it on card
+    entries: '',    
+    dataMap: [],
+    perPage: 5,
+    offset: 0,      
+    currentPage: 0    
   }
 
   openModal = () => {
@@ -154,6 +160,7 @@ class PesertaDash extends React.Component {
 
   handleFilter = (event) => {
     event.preventDefault()
+
     if( !cookies.get('udatxu') ) {
       Swal.fire({
         title: 'Info!',
@@ -182,10 +189,72 @@ class PesertaDash extends React.Component {
           data_fetch: 'search',
           data_userid: cookies.get('udatxu').userid_code,
           data_keyword: document.querySelector('#search').value
-        })                   
+        })                      
       }).then(response => {
-        this.setState({ dataMap: response.data.result })
-      })   
+        const data = response.data.result
+        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        const postData = slice.map((result, index) => {
+          return(
+            <tr key={ this.state.offset+index+1 }>
+              <td className="text-center">{ this.state.offset+index+1 }</td>
+              <td className="text-center">{ result.paper_code }</td> 
+              <td className="text-left">{ result.paper_type }</td>
+              <td className="text-left">{ result.sub_theme }</td>                                        
+              <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
+              {
+                ( !result.name_2 && !result.name_3 ) ? 
+                <td className="text-center">{ result.name_1 }</td> : 
+                <td className="text-left">
+                    <ol className="text-left">
+                      <li className="text-left">{ result.name_1 + " (" + result.organization_1 + ")" } </li>
+                      { ( result.name_2 ) ? <li className="text-left">{ result.name_2 + " (" + result.organization_2 + ")" }</li> : null }
+                      { ( result.name_3 !== '-' ) ? <li className="text-left">{ result.name_3 + " (" + result.organization_3 + ")" }</li> : null }
+                    </ol>
+                </td>
+              }
+              <td className="text-center">{ result.category }</td>
+              <td className="text-center">
+              { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(submission_deadline, 'YYYY/MM/DD HH:mm:ss')) 
+              || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(sharia_deadline, 'YYYY/MM/DD HH:mm:ss')) ) 
+              && (result.submission_date === '-') && (result.submit_status === '-')  
+              ? 
+                <div className="form-group wrapper-action">
+                  <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                    <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
+                      Edit &nbsp; <Edit3 />
+                    </button>
+                  </div>
+                  <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                    <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
+                      Submit &nbsp; <Send />
+                    </button>                        
+                  </div>
+                </div> :
+                <div className="form-group wrapper-action">
+                  { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Paper Telah Tersubmit!</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p> } 
+                  { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
+                  { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
+                    <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
+                    (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
+                    <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
+                    <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
+                  }
+                    <button type="button" id="btnPaperDownload" className="btn btn-md btn-success" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                      View Files &nbsp; <DownloadCloud />
+                    </button>
+                </div>
+              }
+              </td>
+            </tr>             
+          )                         
+        })
+
+        this.setState({
+          paperNumber: response.data.number,
+          pageCount: Math.ceil(data.length / this.state.perPage),
+          postData
+        })      
+      })  
     } 
   }
 
@@ -229,6 +298,97 @@ class PesertaDash extends React.Component {
     }
   }
 
+  receivedData = () => {
+    if( this.state.entries !== 'search' ) {
+      Axios({
+      url: 'https://submission-api.ejavec.org/fetchTable/',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": 'Bearer ' + cookies.get('udatxu').token        
+      },
+      data: JSON.stringify({ 
+        data_userid: cookies.get('udatxu').userid_code
+      })                   
+      }).then(response => {
+        const data = response.data.result
+        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+        const postData = slice.map((result, index) => {
+          return(
+            <tr key={ this.state.offset+index+1 }>
+              <td className="text-center">{ this.state.offset+index+1 }</td>
+              <td className="text-center">{ result.paper_code }</td> 
+              <td className="text-left">{ result.paper_type }</td>
+              <td className="text-left">{ result.sub_theme }</td>                                        
+              <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
+              {
+                ( !result.name_2 && !result.name_3 ) ? 
+                <td className="text-center">{ result.name_1 }</td> : 
+                <td className="text-left">
+                    <ol className="text-left">
+                      <li className="text-left">{ result.name_1 + " (" + result.organization_1 + ")" } </li>
+                      { ( result.name_2 ) ? <li className="text-left">{ result.name_2 + " (" + result.organization_2 + ")" }</li> : null }
+                      { ( result.name_3 !== '-' ) ? <li className="text-left">{ result.name_3 + " (" + result.organization_3 + ")" }</li> : null }
+                    </ol>
+                </td>
+              }
+              <td className="text-center">{ result.category }</td>
+              <td className="text-center">
+              { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(submission_deadline, 'YYYY/MM/DD HH:mm:ss')) 
+              || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(sharia_deadline, 'YYYY/MM/DD HH:mm:ss')) ) 
+              && (result.submission_date === '-') && (result.submit_status === '-')  
+              ? 
+                <div className="form-group wrapper-action">
+                  <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                    <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
+                      Edit &nbsp; <Edit3 />
+                    </button>
+                  </div>
+                  <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
+                    <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
+                      Submit &nbsp; <Send />
+                    </button>                        
+                  </div>
+                </div> :
+                <div className="form-group wrapper-action">
+                  { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Paper Telah Tersubmit!</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p> } 
+                  { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
+                  { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
+                    <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
+                    (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
+                    <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
+                    <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
+                  }
+                    <button type="button" id="btnPaperDownload" className="btn btn-md btn-success" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
+                      View Files &nbsp; <DownloadCloud />
+                    </button>
+                </div>
+              }
+              </td>
+            </tr>             
+          )                         
+        })
+        this.setState({
+          paperNumber: response.data.number,
+          pageCount: Math.ceil(data.length / this.state.perPage),
+          postData
+        })      
+      })   
+    }   
+  }
+
+  handlePageClick = (event) => {
+    const selectedPage = event.selected;
+    const offset = selectedPage * this.state.perPage;
+
+    this.setState({
+      currentPage: selectedPage,
+      offset: offset
+    }, () => {
+        this.receivedData()
+    })
+  }    
+
   componentDidMount() {
     Swal.fire({
       icon: 'info',
@@ -252,19 +412,25 @@ class PesertaDash extends React.Component {
       footer: '<i><p style="text-align: center; font-size: 16px; font-weight: bold;">Three Hours Too Soon Is Better Than A Minute Too Late - William Shakespeare</p></i>'
     })
     
-    Axios({
-      url: 'https://submission-api.ejavec.org/fetchTable/',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": 'Bearer ' + cookies.get('udatxu').token        
-      },
-      data: JSON.stringify({ 
-        data_userid: cookies.get('udatxu').userid_code
-      })                   
-    }).then(response => {
-      this.setState({ dataMap: response.data.result })
-    })
+    if( !cookies.get('udatxu') ) {
+      Swal.fire({
+        title: 'Info!',
+        text: 'Login Expired. Kindly Re-Login',
+        icon: 'info',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: 'Orange',
+        allowOutsideClick: true,
+        backdrop: true,
+        allowEscapeKey: true,
+        allowEnterKey: true            
+      }).then(result =>  {
+        if(result.isConfirmed) {
+          window.location.reload()
+        }
+      })  
+    } else { 
+      this.receivedData()
+    }        
   }
     
   render() {    
@@ -272,8 +438,8 @@ class PesertaDash extends React.Component {
       <React.Fragment>
         <Navbar />
 
-        <div className="wrapper-navigation d-flex my-3">
-          <div className="navigation-add p-0 col-xs-2 col-sm-2 col-md-4 col-lg-4">
+        <div className="row wrapper-navigation d-flex my-3">
+          <div className="navigation-add col-md-2">
             <form className="form-inline">
               <button type="button" name="btnAdd" id="btnAdd" className="btn btn-md btn-outline-primary mr-4" onClick={ this.openModal }>
                 Add Paper &nbsp; <FilePlus />
@@ -281,8 +447,7 @@ class PesertaDash extends React.Component {
               { this.state.isOpen ? <ModalForm closeModal={ this.closeModal } isOpen={ this.state.isOpen } handleSubmit={ this.handleSubmit } /> : null }
             </form>
           </div>
-
-          <div className="navigation-search p-0 cols-xs-8 col-sm-8 col-md-4 col-lg-4">
+          <div className="navigation-search col-md-10">
             <form className="form-inline justify-content-center">
               <div className="input-group">
                 <input type="text" className="form-control search" id="search" name="search" placeholder="Search Judul Here.." />
@@ -297,17 +462,6 @@ class PesertaDash extends React.Component {
               </div>           
             </form>
           </div>
-
-          <div className="pagination justify-content-end p-0 col-xs-2 col-sm-2 col-md-4 col-lg-4">
-            <ul className="pagination pagination-list pagination-md m-0 p-0">
-              <li className="page-item">
-                <a className="page-link" href="/#">Previous</a>
-              </li>
-              <li className="page-item"><a className="page-link" href="/#">1</a></li>
-              <li className="page-item"><a className="page-link" href="/#">2</a></li>
-              <li className="page-item"><a className="page-link" href="/#">Next</a></li>
-            </ul>
-          </div>
         </div>        
 
         <Accordion defaultActiveKey="0">
@@ -315,6 +469,15 @@ class PesertaDash extends React.Component {
             <Accordion.Header>List Paper</Accordion.Header>
             <Accordion.Body>
               <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "500px" }}>
+                <ReactPaginate
+                    previousLabel={'Prev'}
+                    nextLabel={'Next'}
+                    pageCount={this.state.pageCount || 0}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}                
+                  />
+                  <br />                
                 <table className="table table-bordered table-hover table-light mb-0">
                   <thead className="thead-light">
                     <tr>
@@ -329,67 +492,7 @@ class PesertaDash extends React.Component {
                     </tr>
                   </thead>
                   <tbody className="table-body" id="table-body">
-                  {
-                    this.state.dataMap.length > 0 ? 
-                    this.state.dataMap.map((result, index) => {
-                      return(
-                        <tr key={ index }>
-                          <td className="text-center">{ index+1 }</td>
-                          <td className="text-center">{ result.paper_code }</td> 
-                          <td className="text-left">{ result.paper_type }</td>
-                          <td className="text-left">{ result.sub_theme }</td>                                        
-                          <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
-                          {
-                            ( !result.name_2 && !result.name_3 ) ? 
-                            <td className="text-center">{ result.name_1 }</td> : 
-                            <td className="text-left">
-                                <ol className="text-left">
-                                  <li className="text-left">{ result.name_1 + " (" + result.organization_1 + ")" } </li>
-                                  { ( result.name_2 ) ? <li className="text-left">{ result.name_2 + " (" + result.organization_2 + ")" }</li> : null }
-                                  { ( result.name_3 !== '-' ) ? <li className="text-left">{ result.name_3 + " (" + result.organization_3 + ")" }</li> : null }
-                                </ol>
-                            </td>
-                          }
-                          <td className="text-center">{ result.category }</td>
-                          <td className="text-center">
-                          { ( (result.paper_type !== 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(submission_deadline, 'YYYY/MM/DD HH:mm:ss')) 
-                          || (result.paper_type === 'Java Sharia Business Model' && date.format(now, 'YYYY/MM/DD HH:mm:ss') < date.format(sharia_deadline, 'YYYY/MM/DD HH:mm:ss')) ) 
-                          && (result.submission_date === '-') && (result.submit_status === '-')  
-                          ? 
-                            <div className="form-group wrapper-action">
-                              <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                                <button onClick={ this.editPaper(result.paper_code, result.paper_type, result.participation_type) } type="button" name="btnEdit" id="btnEdit" className="btn btn-md btn-warning" data-toggle="tooltip" data-placement="right" title="Edit Paper">
-                                  Edit &nbsp; <Edit3 />
-                                </button>
-                              </div>
-                              <div className="input-group my-2" style={{ textAlign: 'center', justifyContent: 'center' }}>
-                                <button onClick={ this.submitPaper(result.paper_code, result.paper_type, result.participation_type) }type="button" name="btnSend" id="btnSend" className="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Submit Paper">
-                                  Submit &nbsp; <Send />
-                                </button>                        
-                              </div>
-                            </div> :
-                            <div className="form-group wrapper-action">
-                              { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Paper Telah Tersubmit!</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Submission Telah Ditutup!</p> } 
-                              { (result.submission_date !== '-' && result.submit_status === 'submit') ? <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: { result.submission_date }</p> : <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Tanggal Submission: -</p> }
-                              { (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === '-') ? 
-                                <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Menunggu Pengumuman</p> : 
-                                (result.submission_date !== '-' && result.submit_status === 'submit') && (result.paper_status === 'lolos') ? 
-                                <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Lolos</p>  :
-                                <p style={{ fontSize: '14px', fontWeight: 'bold' }}>Status: Ditolak</p> 
-                              }
-                                <button type="button" id="btnPaperDownload" className="btn btn-md btn-success" onClick={ this.handleInfo(result.paper_code,result.userid_code,result.paper_type,result.paper_filePath_1,result.paper_fileName_1,result.pernyataan_filePath_1,result.pernyataan_fileName_1,result.lampiran_filePath_1,result.lampiran_fileName_1,result.cv_filePath_1,result.cv_fileName_1,result.cv_filePath_2,result.cv_fileName_2,result.cv_filePath_3,result.cv_fileName_3) }>
-                                  View Files &nbsp; <DownloadCloud />
-                                </button>
-                            </div>
-                          }
-                          </td>
-                        </tr>                  
-                      )
-                    }) : 
-                    <tr>
-
-                    </tr>
-                  }
+                    { this.state.postData }
                   </tbody>
                 </table>
               </div>      
@@ -403,7 +506,8 @@ class PesertaDash extends React.Component {
   clearFilter = (event) => {
     event.preventDefault()
     document.querySelector('#search').value = ''
-    window.location.reload()    
+    // window.location.reload()    
+    this.receivedData()
   }
 }
 
