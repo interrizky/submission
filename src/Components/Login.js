@@ -166,32 +166,34 @@ class Login extends React.Component {
             <p className="login-text" style={{ fontSize: '20px', fontWeight: 'bold', fontStyle: 'italic' }}> L O G I N </p>
           </div>
           <div className="wrapper-form my-3 mx-4">
-            <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
-                <input autoFocus type="text" id="username" name="username" className="form-control" placeholder="Your Username" aria-label="Username" aria-describedby="basic-addon1" />
-            </div>
-            <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
-                <input type="password" id="passwd" name="passwd" className="form-control" placeholder="Your Password" aria-label="Password" aria-describedby="basic-addon2" autoComplete="off" />
-                <div className="input-group-prepend">
-                  <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
-                </div>                  
-            </div>        
-            <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
-              <button type="button" id="btnLogin" className="btn-danger form-control" onClick={ this.clickSubmit }>
-                LOGIN
-              </button>        
-            </div>
-            <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
-              <button type="button" id="btnRegister" className="btn-outline-danger form-control" onClick={ this.clickRegister }>
-                SIGN UP HERE
-              </button>        
-            </div>              
-            <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center", justifyContent: "center" }}>
-              <a href="/forgot" style={{ margin: "0", textDecoration: "none" }}>Forgot Password?</a>
-            </div>
-            <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center", justifyContent: "center" }}>
-              <a href="/code" style={{ margin: "0", textDecoration: "none" }}>Resend The Registration Code</a>
-            </div>                
-          </div>    
+            <form>
+              <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
+                  <input autoFocus type="text" id="username" name="username" className="form-control" placeholder="Your Username" aria-label="Username" aria-describedby="basic-addon1" />
+              </div>
+              <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
+                  <input type="password" id="passwd" name="passwd" className="form-control" placeholder="Your Password" aria-label="Password" aria-describedby="basic-addon2" autoComplete="off" />
+                  <div className="input-group-prepend">
+                    <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
+                  </div>                  
+              </div>        
+              <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
+                <button type="button" id="btnLogin" className="btn-danger form-control" onClick={ this.clickSubmit }>
+                  LOGIN
+                </button>        
+              </div>
+              <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center" }}>
+                <button type="button" id="btnRegister" className="btn-outline-danger form-control" onClick={ this.clickRegister }>
+                  SIGN UP HERE
+                </button>        
+              </div>              
+              <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center", justifyContent: "center" }}>
+                <a href="/forgot" style={{ margin: "0", textDecoration: "none" }}>Forgot Password?</a>
+              </div>
+              <div className="input-group mb-3 w-75 mx-auto" style={{ alignItems: "center", justifyContent: "center" }}>
+                <a href="/code" style={{ margin: "0", textDecoration: "none" }}>Resend The Registration Code</a>
+              </div>                
+            </form>    
+          </div>          
       </div>     
     )
   }

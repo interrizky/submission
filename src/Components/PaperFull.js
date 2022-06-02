@@ -205,7 +205,9 @@ class PaperFull extends React.Component {
   handleClearFilter = (event) => {
     event.preventDefault()
 
-    window.location.reload()
+    document.querySelector('#filter').selectedIndex = 0
+    document.querySelector('#keyword').value = ''
+    this.receivedData()
   }  
 
   handleFilter = (event) => {
