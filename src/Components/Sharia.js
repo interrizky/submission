@@ -522,7 +522,7 @@ class Sharia extends React.Component {
                 <ReactPaginate
                     previousLabel={'Prev'}
                     nextLabel={'Next'}
-                    pageCount={this.state.pageCount}
+                    pageCount={this.state.pageCount || 0}
                     onPageChange={this.handlePageClick}
                     containerClassName={'pagination'}
                     activeClassName={'active'}                
