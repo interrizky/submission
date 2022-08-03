@@ -112,16 +112,16 @@ class FileDetails extends React.Component {
                   </React.Fragment> : null
                 }
                 { 
-                  (this.state.cv_fileName_3 !== "undefined" && this.state.cv_filePath_3 !== "undefined") ? 
+                  ( (this.state.paper_type !== 'Java Sharia Business Model') && ((this.state.cv_fileName_3 !== "undefined" && this.state.cv_filePath_3 !== "undefined") || (this.state.cv_fileName_3 !== "-" && this.state.cv_filePath_3 !== "-")) ) ?
                   <React.Fragment>
-                  <div className="form-group mb-2">
-                    <label htmlFor="files-2">File CV Peserta-3 Terupload</label>
-                  </div>
-                  <div className="form-group mb-2">
-                    <button type="button" id="btnCv3Download" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.cv_filePath_3, this.state.cv_fileName_3) }>
-                      Download File CV Peserta Ketiga &nbsp; <Download />
-                    </button>
-                  </div>
+                    <div className="form-group mb-2">
+                      <label htmlFor="files-2">File CV Peserta-3 Terupload</label>
+                    </div>
+                    <div className="form-group mb-2">
+                      <button type="button" id="btnCv3Download" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.cv_filePath_3, this.state.cv_fileName_3) }>
+                        Download File CV Peserta Ketiga &nbsp; <Download />
+                      </button>
+                    </div>
                   </React.Fragment> : null
                 }                            
               </div>
