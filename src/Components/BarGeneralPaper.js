@@ -66,7 +66,7 @@ class BarGeneralPaper extends React.Component {
     }
 
     const data = {
-      labels: ['Tema 1', 'Tema 2', 'Tema 3', 'Tema 4', 'Tema 5', 'Tema 6', 'Tema 7', 'Tema 8'],
+      labels: ['Tema 1', 'Tema 2', 'Tema 3', 'Tema 4', 'Tema 5'],
       datasets: [
         {
           label: "Mahasiswa",

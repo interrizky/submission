@@ -254,7 +254,6 @@ class PaperOne extends React.Component {
                   </React.Fragment> : null        
                 }                            
               </div>
-
             </form>
           </div>
           <div className="card-footer">

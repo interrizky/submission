@@ -19,10 +19,10 @@ class Code extends React.Component {
         }}>
           <div className="wrapper-header mx-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
             <div className="header mb-2">
-              <h4 style={{ textAlign: "center" }}>Resend The Registration Code</h4>
+              <h4 style={{ textAlign: "center" }}>Resend The Verification Code</h4>
             </div>
             <div className="text mb-2">
-              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Kode Registrasi baru akan dikirimkan ke email anda. Terima kasih.
+              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Kode Verifikasi baru akan dikirimkan ke email anda. Terima kasih.
               </p>              
             </div>         
           </div>
@@ -100,7 +100,7 @@ class Code extends React.Component {
             icon: 'success',
             confirmButtonText: 'COOL',
             confirmButtonColor: 'orange',
-            html: 'Check Your Email For The Registration Code. Will be redirected to Login Page in <b></b> milliseconds.',
+            html: 'Check Your Email For The Verification Code. Will be redirected to Login Page in <b></b> milliseconds.',
               timer: 3000,
               timerProgressBar: true,
               didOpen: () => {

@@ -62,7 +62,7 @@ class Verification extends React.Component {
     } else {
       Swal.fire({
         title: 'Error!',
-        text: 'Terjadi Kesalahan! Kode Registrasi Tidak Sesuai!',
+        text: 'Terjadi Kesalahan! Kode Verifikasi Tidak Sesuai!',
         icon: 'error',
         confirmButtonText: 'Okay',
         confirmButtonColor: 'Orange',            
@@ -87,7 +87,7 @@ class Verification extends React.Component {
               <h4 style={{ textAlign: "center" }}>Activate Your Account</h4>
             </div>
             <div className="text mb-2">
-              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan Kode Registrasi Yang Telah Dikirimkan Ke Email Anda.
+              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan Kode Verifikasi Yang Telah Dikirimkan Ke Email Anda.
               </p>              
             </div>         
           </div>
@@ -103,8 +103,8 @@ class Verification extends React.Component {
                 <input type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon3" defaultValue={ this.state.data_email } disabled/>
               </div>               
               <div className="form-group mb-3">
-                <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Kode Registrasi</label>                  
-                <input autoFocus type="text" id="kode_registrasi" name="kode_registrasi" className="form-control" placeholder="Your Registration Code" aria-label="Kode Registrasi" aria-describedby="basic-addon1" />
+                <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Kode Verifikasi</label>                  
+                <input autoFocus type="text" id="kode_registrasi" name="kode_registrasi" className="form-control" placeholder="Your Registration Code" aria-label="Kode Verifikasi" aria-describedby="basic-addon1" />
               </div>              
             </div>
             <div className="button my-4">

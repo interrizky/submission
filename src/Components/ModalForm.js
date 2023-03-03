@@ -8,30 +8,27 @@ const cookies = new Cookies()
 
 let lookup = {
   'General': [
-    { id: '1', text: 'Strategi dan inovasi pengembangan UMKM untuk masuk dalam Global Value Chain dalam upaya mendorong akselerasi ekspor di Jawa Timur.' },
-    { id: '2', text: 'Peran digitalisasi dalam mendukung akselerasi pemulihan ekonomi Jawa Timur. Diharapkan paper dapat diaplikasikan dan direplikasi, misalnya dengan menghitung dampak digitalisasi (misalnya: dengan adanya digitalisasi, berapa potensi korupsi/ fraud yang hilang, benchmarking dampak digitalasi yang dapat dihitung secara kuantitatif/ kualitatif).' },
-    { id: '3', text: 'Optimalisasi peran Jawa Timur sebagai hub perdagangan kawasan timur Indonesia dan produsen utama perdagangan antar daerah dalam upaya mendorong percepatan pemulihan ekonomi Jawa Timur.' },
-    { id: '4', text: 'Strategi dan inovasi akselerasi daya saing ekspor luar negeri Jawa Timur menuju Lead Export Industri Manufaktur.' },
-    { id: '5', text: 'Optimalisasi kinerja sektor pariwisata (hospitality) Jawa Timur di tengah pandemi COVID-19 dan strategi mendorong pemulihannya.' },
-    { id: '6', text: 'Peningkatan daya saing investasi Jawa Timur di tengah kompetisi global dan potensi divestasi.' },
-    { id: '7', text: 'Strategi mendorong peningkatan pangsa ekonomi syariah di Jawa Timur melalui sinergi para pelaku ekonomi syariah Jawa Timur dan optimalisasi kawasan industri halal.'},
-    { id: '8', text: 'Evaluasi kinerja Industri Pengolahan Jawa Timur dan strategi akselerasi pemulihannya dengan mempertimbangkan konsep green economy.'},
+    { id: '1', text: 'Strategi Penguatan Nilai Tambah Sektor Pertanian Dan Manufaktur Untuk Memperkuat Ketahanan Ekonomi Jawa Timur.' },
+    { id: '2', text: 'Strategi Mendorong Implementasi Green Economy Untuk Mendukung Ketahanan Ekonomi Jawa Timur Yang Berkelanjutan Dan Inklusif.' },
+    { id: '3', text: 'Strategi Dan Inovasi Akselerasi Daya Saing Ekspor Luar Negeri Jawa Timur Di Tengah Peningkatan Ketidakpastian Global.' },
+    { id: '4', text: 'Mendorong Inovasi Pembangunan Ekonomi Syariah di Jawa Timur Yang Inklusif dan Berkelanjutan.' },
+    { id: '5', text: 'Strategi Mendorong Digitalisasi Ekonomi Untuk Mendukung Efisiensi Ekonomi Jawa Timur.' }
   ],
   'Modeling': [
-    { id: '9', text: 'Model proyeksi/forecasting pertumbuhan ekonomi Jawa Timur dan turunannya (Sisi Permintaan)' },
-    { id: '10', text: 'Model proyeksi/forecasting pertumbuhan ekonomi Jawa Timur dan turunannya (Sisi Penawaran)' },
-    { id: '11', text: 'Simulasi berbagai dampak isu strategis terhadap ketahanan perekonomian Jawa Timur' },
-    { id: '12', text: 'Simulasi berbagai opsi kebijakan, baik kebijakan moneter, makroprudensial, mikroprudensial, fiskal, maupun kebijakan pemerintah pusat dan daerah, serta kebijakan negara lain terhadap perekonomian Jawa Timur.' },
-    { id: '13', text: 'Fundamental pertumbuhan ekonomi Jawa Timur ke depan' }
+    { id: '6', text: 'Model Proyeksi/Forecasting/Determinan Pertumbuhan Ekonomi Jawa Timur Dan Turunannya (Sisi Permintaan).' },
+    { id: '7', text: 'Model Proyeksi/Forecasting/Determinan Pertumbuhan Ekonomi Jawa Timur Dan Turunannya (Sisi Penawaran).' },
+    { id: '8', text: 'Simulasi Berbagai Dampak Isu Strategis Terhadap Ketahanan Perekonomian Jawa Timur.' },
+    { id: '9', text: 'Simulasi Berbagai Opsi Kebijakan, Baik Kebijakan Moneter, Makroprudensial, Mikroprudensial, Fiskal, Maupun Kebijakan Pemerintah Pusat Dan Daerah, Serta Kebijakan Negara Lain Terhadap Perekonomian Jawa Timur.' },
+    { id: '10', text: 'Fundamental Pertumbuhan Ekonomi Jawa Timur Saat Ini dan Ke Depan.' }
   ],
   'Sharia': [
-    { id: '14', text: 'Food' },
-    { id: '15', text: 'Fashion'},
-    { id: '16', text: 'Finance (meliputi juga instrumen keuangan syariah)'},
-    { id: '17', text: 'Integrated Farming'},
-    { id: '18', text: 'Renewable Energy'},
-    { id: '19', text: 'Fundutainment (industri kreatif meliputi aplikasi, games, film, musik, arsitektur, desain dan seni pertunjukan)'},
-    { id: '20', text: 'Funtrepreneur (jasa/properti/socialpreneur/travel dll)'}
+    { id: '11', text: 'Food' },
+    { id: '12', text: 'Fashion'},
+    { id: '13', text: 'Finance (meliputi juga instrumen keuangan syariah)'},
+    { id: '14', text: 'Integrated Farming'},
+    { id: '15', text: 'Renewable Energy'},
+    { id: '16', text: 'Fundutainment (industri kreatif meliputi aplikasi, games, film, musik, arsitektur, desain dan seni pertunjukan)'},
+    { id: '17', text: 'Funtrepreneur (jasa/properti/socialpreneur/travel dll)'}
   ],
 }
 
@@ -107,16 +104,16 @@ class ModalForm extends React.Component {
           { this.state.dataValue === 'General' || this.state.dataValue === 'Modeling' ? 
           <div className="wrapper-tema">
             Tema Umum: <p className="tema-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
-              Akselerasi Pemulihan Ekonomi dan Sosial Jawa Timur Pada Era Normal Baru              
+              Mendorong Resiliensi Ekonomi Jawa Timur Yang Inklusif Dan Berkelanjutan Di Tengah Peningkatan Ketidakpastian Global.
             </p>
             Lingkup Penelitian:
             <p className="lingkup-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
-              Jawa Timur dan Ketekaitannya dengan Provinsi Lain.
+              Jawa Timur
             </p>            
           </div>
           : <div className="wrapper-tema">
             Tema Umum: <p className="tema-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
-              Membangun Ekonomi Syariah sebagai Sumber Pertumbuhan Baru dalam Rangka Percepatan Pemulihan Perekonomian Jawa Timur.
+              Memperkuat Peran Ekonomi Syariah Yang Inklusif Dan Berkelanjutan Dalam Mendukung Ketahanan Ekonomi Jawa Timur.
             </p> 
             </div>
           }

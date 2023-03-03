@@ -6,7 +6,7 @@ import { Pie } from 'react-chartjs-2'
 
 const cookies = new Cookies()
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 class PieSharia extends React.Component {
   state = {
