@@ -186,12 +186,10 @@ class Login extends React.Component {
                   SIGN UP HERE
                 </button>        
               </div>              
-              <div className="input-group mx-auto my-2" style={{ alignItems: "center", justifyContent: "center" }}>
-                <a href="/forgot" style={{ margin: "0", textDecoration: "none" }}>Forgot Password?</a>
+              <div className="input-group mx-auto my-2">
+                <a href="/forgot" className="col-sm-12 col-md-6 col-lg-6" style={{ margin: "0", textDecoration: "none", textAlign: "left" }}>Forgot Password?</a>
+                <a href="/code" className="col-sm-12 col-md-6 col-lg-6" style={{ margin: "0", textDecoration: "none", textAlign: "right" }}>Resend The Registration Code</a>
               </div>
-              <div className="input-group mx-auto" style={{ alignItems: "center", justifyContent: "center" }}>
-                <a href="/code" style={{ margin: "0", textDecoration: "none" }}>Resend The Registration Code</a>
-              </div>                
             </form>    
           </div>          
       </div>     

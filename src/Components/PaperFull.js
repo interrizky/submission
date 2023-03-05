@@ -5,8 +5,17 @@ import Axios from 'axios'
 import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie'
 import { Download, CheckSquare, XSquare, Search, XCircle} from 'react-feather'
+import ScaleLoader from "react-spinners/ScaleLoader"
 
+/* style for spinners */
+const override = {
+  position: "fixed", 
+  top: "50%", 
+  left: "50%", 
+  transform: "translate(-50%, -50%)" 
+}
 const cookies = new Cookies()
+
 
 class PaperFull extends React.Component {
   state = {
@@ -15,7 +24,8 @@ class PaperFull extends React.Component {
     dataMap: [],
     perPage: 5,
     offset: 0,      
-    currentPage: 0    
+    currentPage: 0,
+    loader_status: true  
   }  
 
   handleInfo = (paper_code, userid_code, paper_type, paper_filePath_1, paper_fileName_1, pernyataan_filePath_1, pernyataan_fileName_1, lampiran_filePath_1, lampiran_fileName_1, cv_filePath_1, cv_fileName_1, cv_filePath_2, cv_fileName_2, cv_filePath_3, cv_fileName_3) => (event) => {
@@ -300,7 +310,9 @@ class PaperFull extends React.Component {
           pageCount: Math.ceil(data.length / this.state.perPage),
           postData
         })      
-      })       
+      }).finally(() => {
+        this.setState({ loader_status: false })
+      })           
     }       
   }
 
@@ -374,6 +386,8 @@ class PaperFull extends React.Component {
           pageCount: Math.ceil(data.length / this.state.perPage),
           postData
         })      
+      }).finally(() => {
+        this.setState({ loader_status: false })
       })
      : Axios({
       url: 'https://submission-api.ejavec.org/fetchPaperTable',
@@ -441,7 +455,9 @@ class PaperFull extends React.Component {
         pageCount: Math.ceil(data.length / this.state.perPage),
         postData
       })      
-    })
+    }).finally(() => {
+      this.setState({ loader_status: false })
+    })    
   }  
 
   handlePageClick = (event) => {
@@ -518,49 +534,43 @@ class PaperFull extends React.Component {
         <div className="wrapper-table mx-2 my-3">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
-              <Accordion.Header><i>Jumlah Full Paper : { this.state.paperNumber } Paper(s)</i></Accordion.Header>
-              <Accordion.Body>
-                <div className="wrapper-table-full-paper table-responsive m-2" style={{ overflow: "auto", height: "500px" }}>
-                <ReactPaginate
-                    previousLabel={'Prev'}
-                    nextLabel={'Next'}
-                    pageCount={this.state.pageCount || 0}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination'}
-                    activeClassName={'active'}                
-                    // previousLabel={'Prev'}
-                    // nextLabel={'Next'}
-                    // breakLabel={"..."}
-                    // breakClassName={"break-me"}
-                    // pageCount={this.state.pageCount}
-                    // marginPagesDisplayed={2}
-                    // pageRangeDisplayed={5}
-                    // onPageChange={this.handlePageClick}
-                    // containerClassName={"pagination"}
-                    // subContainerClassName={"pages pagination"}
-                    // activeClassName={"active"}
-                  />
-                  <br />
-                  <table className="table table-bordered table-hover table-light mb-0">
-                    <thead className="thead-light">
-                      <tr>
-                        <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
-                        <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
-                        <th scope="col" className="text-center" style={{ width: "10%" }}>Nama & Email</th>
-                        <th scope="col" className="text-center" style={{ width: "30%" }}>Judul & Sub Tema</th>
-                        <th scope="col" className="text-center" style={{ width: "5%" }}>Paper Files</th>                    
-                        <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>                        
-                        <th scope="col" className="text-center" style={{ width: "5%" }}>Kategori & Partisipasi</th>
-                        <th scope="col" className="text-center" style={{ width: "10%" }}>Tanggal Submit</th>
-                        <th scope="col" className="text-center" style={{ width: "15%" }}>Action</th>         
-                      </tr>
-                    </thead>
-                    <tbody className="table-body" id="table-body">
-                    { this.state.postData }
-                    </tbody>
-                  </table>
-                </div>    
-              </Accordion.Body>
+            { (this.state.loader_status) ? 
+                <ScaleLoader color="green" loading="true" height="50" width="50" cssOverride={ override } aria-label="Loading Spinner" data-testid="loader" speedMultiplier={ 1 } />
+              : <React.Fragment>
+                  <Accordion.Header><i>Jumlah Full Paper : { this.state.paperNumber } Paper(s)</i></Accordion.Header>
+                  <Accordion.Body>
+                    <div className="wrapper-table-full-paper table-responsive m-2" style={{ overflow: "auto", height: "500px" }}>
+                    <ReactPaginate
+                        previousLabel={'Prev'}
+                        nextLabel={'Next'}
+                        pageCount={this.state.pageCount || 0}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                      />
+                      <br />
+                      <table className="table table-bordered table-hover table-light mb-0">
+                        <thead className="thead-light">
+                          <tr>
+                            <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
+                            <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
+                            <th scope="col" className="text-center" style={{ width: "10%" }}>Nama & Email</th>
+                            <th scope="col" className="text-center" style={{ width: "30%" }}>Judul & Sub Tema</th>
+                            <th scope="col" className="text-center" style={{ width: "5%" }}>Paper Files</th>                    
+                            <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>                        
+                            <th scope="col" className="text-center" style={{ width: "5%" }}>Kategori & Partisipasi</th>
+                            <th scope="col" className="text-center" style={{ width: "10%" }}>Tanggal Submit</th>
+                            <th scope="col" className="text-center" style={{ width: "15%" }}>Action</th>         
+                          </tr>
+                        </thead>
+                        <tbody className="table-body" id="table-body">
+                        { this.state.postData }
+                        </tbody>
+                      </table>
+                    </div>    
+                  </Accordion.Body>
+                </React.Fragment>
+            }              
             </Accordion.Item>
           </Accordion>            
         </div>

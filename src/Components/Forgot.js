@@ -7,49 +7,85 @@ import Swal from 'sweetalert2'
 class Forgot extends React.Component {
   render() {
     return(
-      <div className="row forgot-page d-flex align-items-center">
-        <div className="wrapper-forgot mx-auto" id="forgot" style={{
-          backgroundColor: 'white', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          // textAlign: 'center', 
-          width: '480px', 
-          height: '480px',                 
-          borderRadius: '15px'
-        }}>
-          <div className="wrapper-header mx-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
-            <div className="header mb-2">
-              <h4 style={{ textAlign: "center" }}>Forgot Password</h4>
+      <React.Fragment>
+        {/* <div className="row forgot-page d-flex align-items-center">
+          <div className="wrapper-forgot mx-auto" id="forgot" style={{
+            backgroundColor: 'white', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            // textAlign: 'center', 
+            width: '480px', 
+            height: '480px',                 
+            borderRadius: '15px'
+          }}>
+            <div className="wrapper-header mx-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
+              <div className="header mb-2">
+                <h4 style={{ textAlign: "center" }}>Forgot Password</h4>
+              </div>
+              <div className="text mb-2">
+                <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Password baru akan dikirimkan ke email anda. Terima kasih.
+                </p>              
+              </div>         
             </div>
-            <div className="text mb-2">
-              <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Password baru akan dikirimkan ke email anda. Terima kasih.
-              </p>              
-            </div>         
+
+            <div className="wrapper-form mx-5 my-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
+              <div className="form mb-2">
+                <div className="form-group mb-3">
+                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
+                  <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
+                </div>
+              </div>
+              <div className="button my-4">
+                <div className="input-group mb-3">
+                  <button type="button" id="btnResend" className="btn-success form-control" onClick={ this.clickResend } >
+                    RESEND NEW PASSWORD
+                  </button>
+                </div>
+                <div className="input-group mb-3">
+                  <button type="button" id="btnBack" className="btn-outline-success form-control" onClick={ this.loginBack }>
+                    CANCEL
+                  </button>           
+                </div>
+              </div>             
+            </div>          
+
+          </div>        
+        </div> */}
+
+        <div className="content w-50">
+          <div className="card" style={{ borderRadius: "15px" }}>
+            <div className="card-body">
+              <div className="row wrapper-header g-2">
+                <h4 className="text-center">Forgot Password</h4>
+                <div className="wrapper-sub-heading">
+                  <p style={{ fontSize: "13px", textAlign: "justify" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Password baru akan dikirimkan ke email anda. Terima kasih.</p>                
+                </div>
+              </div>
+
+              <form>
+                <div className="form-group">
+                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
+                  <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
+                </div>
+              </form>
+            </div>
+            <div className="card-footer">
+              <div className="row wrapper-button g-2">
+                <div className="input-group">
+                  <button type="button" id="btnResend" className="btn-success form-control" onClick={ this.clickResend } >
+                    RESEND NEW PASSWORD
+                  </button>
+                </div>
+                <div className="input-group">
+                  <button type="button" id="btnBack" className="btn-outline-success form-control" onClick={ this.loginBack }>
+                    CANCEL
+                  </button>           
+                </div>            
+              </div>
+            </div>
           </div>
-
-          <div className="wrapper-form mx-5 my-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
-            <div className="form mb-2">
-              <div className="form-group mb-3">
-                <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
-                <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
-              </div>
-            </div>
-            <div className="button my-4">
-              <div className="input-group mb-3">
-                <button type="button" id="btnResend" className="btn-success form-control" onClick={ this.clickResend } >
-                  RESEND NEW PASSWORD
-                </button>
-              </div>
-              <div className="input-group mb-3">
-                <button type="button" id="btnBack" className="btn-outline-success form-control" onClick={ this.loginBack }>
-                  CANCEL
-                </button>           
-              </div>
-            </div>             
-          </div>          
-
-        </div>        
-      </div>
+        </div>
+      </React.Fragment>
     )
   }
 

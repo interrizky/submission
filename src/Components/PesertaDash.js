@@ -11,8 +11,8 @@ import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2022, 4, 28, 6, 0, 0)
-const sharia_deadline = new Date(2022, 6, 31, 23, 59, 59)
+const submission_deadline = new Date(2023, 4, 1, 23, 59, 59)
+const sharia_deadline = new Date(2023, 6, 1, 23, 59, 59)
 
 class PesertaDash extends React.Component {
   state = {
@@ -20,7 +20,7 @@ class PesertaDash extends React.Component {
     paperNumber: 0, //count paper number - place it on card
     entries: '',    
     dataMap: [],
-    perPage: 5,
+    perPage: 3,
     offset: 0,      
     currentPage: 0    
   }
@@ -197,8 +197,7 @@ class PesertaDash extends React.Component {
           return(
             <tr key={ this.state.offset+index+1 }>
               <td className="text-center">{ this.state.offset+index+1 }</td>
-              <td className="text-center">{ result.paper_code }</td> 
-              <td className="text-left">{ result.paper_type }</td>
+              <td className="text-center">{ result.paper_code } <hr/> {result.paper_type}</td> 
               <td className="text-left">{ result.sub_theme }</td>                                        
               <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
               {
@@ -317,8 +316,7 @@ class PesertaDash extends React.Component {
           return(
             <tr key={ this.state.offset+index+1 }>
               <td className="text-center">{ this.state.offset+index+1 }</td>
-              <td className="text-center">{ result.paper_code }</td> 
-              <td className="text-left">{ result.paper_type }</td>
+              <td className="text-center">{ result.paper_code } <hr/> {result.paper_type}</td> 
               <td className="text-left">{ result.sub_theme }</td>                                        
               <td className="text-left" style={{ fontStyle: 'italic' }}>{ result.title }</td>
               {
@@ -438,53 +436,62 @@ class PesertaDash extends React.Component {
       <React.Fragment>
         <Navbar />
 
-        <div className="row wrapper-navigation d-flex my-3">
-          <div className="navigation-add col-md-2">
-            <form className="form-inline">
-              <button type="button" name="btnAdd" id="btnAdd" className="btn btn-md btn-outline-primary mr-4" onClick={ this.openModal }>
-                Add Paper &nbsp; <FilePlus />
-              </button>
-              { this.state.isOpen ? <ModalForm closeModal={ this.closeModal } isOpen={ this.state.isOpen } handleSubmit={ this.handleSubmit } /> : null }
-            </form>
-          </div>
-          <div className="navigation-search col-md-10">
-            <form className="form-inline justify-content-center">
-              <div className="input-group">
-                <input type="text" className="form-control search" id="search" name="search" placeholder="Search Judul Here.." />
-                <div className="wrapper-button-navigation">
-                  <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-secondary mx-2" onClick= {this.handleFilter}>
-                    <Search />
-                  </button>
-                  <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-danger" onClick= {this.clearFilter}>
-                    <XCircle />
-                  </button>
-                </div>
-              </div>           
-            </form>
-          </div>
-        </div>        
-
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="0">
-            <Accordion.Header>List Paper</Accordion.Header>
+            <Accordion.Header>Search Filter</Accordion.Header>
             <Accordion.Body>
-              <div className="wrapper-table-product table-responsive my-3" style={{ overflow: "auto", height: "500px" }}>
-                <ReactPaginate
-                    previousLabel={'Prev'}
-                    nextLabel={'Next'}
-                    pageCount={this.state.pageCount || 0}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination'}
-                    activeClassName={'active'}                
-                  />
-                  <br />                
+              <div className="navigation-search">
+                <form className="form-inline justify-content-center">
+                  <div className="input-group">
+                    <input type="text" className="form-control search" id="search" name="search" placeholder="Search Judul Here.." />
+                    <div className="wrapper-button-navigation">
+                      <button type="button" name="btnSearch" id="btnSearch" className="btn btn-md btn-secondary mx-2" onClick= {this.handleFilter}>
+                        <Search />
+                      </button>
+                      <button type="button" name="btnReset" id="btnReset" className="btn btn-md btn-danger" onClick= {this.clearFilter}>
+                        <XCircle />
+                      </button>
+                    </div>
+                  </div>           
+                </form>
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        <hr className="border border-info border-2 opacity-50" />
+
+        <div className="navigation-add my-3">
+          <button type="button" name="btnAdd" id="btnAdd" className="btn btn-primary w-100" onClick={ this.openModal }>
+            Add Paper &nbsp; <FilePlus />
+          </button>
+          { this.state.isOpen ? <ModalForm closeModal={ this.closeModal } isOpen={ this.state.isOpen } handleSubmit={ this.handleSubmit } /> : null }
+        </div>
+
+        <hr className="border border-info border-2 opacity-50" />
+
+        <div className="wrapper-table">
+          <div className="card">
+            <div className="card-header" style={{ backgroundColor: "darkgrey" }}>
+              <p className="text-center m-0" style={{ fontWeight: "bold" }}>List Paper</p>
+            </div>
+            <div className="card-body">
+              <div className="wrapper-table-product table-responsive">
+              <ReactPaginate
+                  previousLabel={'Prev'}
+                  nextLabel={'Next'}
+                  pageCount={this.state.pageCount || 0}
+                  onPageChange={this.handlePageClick}
+                  containerClassName={'pagination'}
+                  activeClassName={'active'}                
+                />
+                <br />                
                 <table className="table table-bordered table-hover table-light mb-0">
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col" className="text-center" style={{ width: "4%" }}>#</th>
-                      <th scope="col" className="text-center" style={{ width: "11%" }}>Kode Paper</th>
-                      <th scope="col" className="text-center" style={{ width: "10%" }}>Jenis Paper</th>
-                      <th scope="col" className="text-center" style={{ width: "15%" }}>Sub Tema</th>                
+                      <th scope="col" className="text-center" style={{ width: "5%" }}>#</th>
+                      <th scope="col" className="text-center" style={{ width: "15%" }}>Kode & Jenis Paper</th>
+                      <th scope="col" className="text-center" style={{ width: "20%" }}>Sub Tema</th>                
                       <th scope="col" className="text-center" style={{ width: "20%" }}>Judul</th>              
                       <th scope="col" className="text-center" style={{ width: "15%" }}>Nama Peserta</th>              
                       <th scope="col" className="text-center" style={{ width: "10%" }}>Kategori</th>
@@ -496,9 +503,9 @@ class PesertaDash extends React.Component {
                   </tbody>
                 </table>
               </div>      
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>      
+            </div>
+          </div>
+        </div>
       </React.Fragment>      
     )
   }

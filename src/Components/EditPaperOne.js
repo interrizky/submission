@@ -4,10 +4,19 @@ import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie'
 import { saveAs } from "file-saver"
 import { Download } from 'react-feather'
+import ScaleLoader from "react-spinners/ScaleLoader"
 import Navbar from './Navbar'
 
 let formData = new FormData()
 const cookies = new Cookies()
+
+/* style for spinners */
+const override = {
+  position: "fixed", 
+  top: "50%", 
+  left: "50%", 
+  transform: "translate(-50%, -50%)" 
+}
 
 class EditPaperOne extends React.Component {
   state = {
@@ -38,7 +47,8 @@ class EditPaperOne extends React.Component {
     lampiran_filePath_1: '',
     lampiran_fileType_1: '',
     lampiran_fileSize_1: '',
-    temp_judul: ''
+    temp_judul: '',
+    loader_status: false
   }
 
   judul_change = (event) => {
@@ -128,6 +138,9 @@ class EditPaperOne extends React.Component {
           }
         })
       } else {
+        /* set loader to active */
+        this.setState({ loader_status: true })
+        /* send to server */
         const datax = await Axios({
           url: 'https://submission-api.ejavec.org/updatePaperOne',
           method: 'POST',
@@ -139,6 +152,7 @@ class EditPaperOne extends React.Component {
         })
 
         if( datax.data.status === 'success' ) {
+          this.setState({ loader_status: false })
           Swal.fire({
             title: 'Success!',
             text: datax.data.message,
@@ -154,6 +168,7 @@ class EditPaperOne extends React.Component {
             }
           })        
         } else {
+          this.setState({ loader_status: false })
           Swal.fire({
             title: 'Error!',
             text: datax.data.message,
@@ -230,126 +245,130 @@ class EditPaperOne extends React.Component {
     return(
       <React.Fragment>
         <Navbar />
-        <div className="card">
-          <h5 className="card-header text-center">Paper Form Peserta Individu - Edit</h5>
-          <div className="card-body">                      
-            <form id="paperone-edit">
-              <div className="wrapper-form">
-                <div className="row row-satu mb-2">
-                  <div className="form-group col-lg-4 col-md-4 col-sm-4">
-                    <label htmlFor="jenis_paper">Jenis Paper</label>
-                    <input type="text" className="form-control" id="jenis_paper" name="jenis_paper" defaultValue={this.state.paper_type} disabled />
-                  </div>          
-                  <div className="form-group col-lg-4 col-md-4 col-sm-4">
-                    <label htmlFor="kategori">Kategori</label>
-                    <input type="text" className="form-control" id="kategori" name="kategori" defaultValue={this.state.category} disabled />
-                  </div>
-                  <div className="form-group col-lg-4 col-md-4 col-sm-4">
-                    <label htmlFor="keikutsertaan">Keikutsertaan</label>
-                    <input type="text" className="form-control" id="keikutsertaan" name="keikutsertaan" defaultValue={this.state.participation_type} disabled />
-                  </div>  
-                </div>
-                <div className="form-group mb-2">
-                  <label htmlFor="sub_tema">Sub Tema</label>
-                  <textarea type="text" className="form-control" id="sub_tema" name="sub_tema" defaultValue={this.state.sub_theme} disabled />
-                </div>
-                <div className="form-group mb-4">
-                  <label htmlFor="judul">Judul Paper</label>
-                  <textarea autoFocus type="text" className="form-control" id="judul" name="judul" defaultValue={this.state.title} onChange={this.judul_change} />
-                  <input type="hidden" name="userid" id="userid" defaultValue={this.state.userid_code} ref={(input) => { this.useridInput = input }} />
-                  <input type="hidden" name="name" id="name" defaultValue={this.state.name_1} ref={(input) => { this.nameInput = input }} />
-                  <input type="hidden" name="phone" id="phone" defaultValue={this.state.phone} ref={(input) => { this.phoneInput = input }} />
-                  <input type="hidden" name="organization" id="organization" defaultValue={this.state.organization_1} ref={(input) => { this.organizationInput = input }} />
-                </div>
-
-                <div className="row row-dua mb-2">
-                  <div className="wrapper-existing col-md-6">
-                    <div className="form-group mb-2">
-                      <label className="col-md-6" htmlFor="files-1">File Paper Terupload</label>
-                    </div>
-                    <div className="form-group mb-2">
-                      <button type="button" id="btnPaperDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.paper_filePath_1, this.state.paper_fileName_1) }>
-                        Download File Paper &nbsp; <Download />
-                      </button>
-                    </div>                       
-                    <div className="form-group mb-2">
-                      <label className="col-md-6" htmlFor="files-2">File CV Terupload</label>
-                    </div>
-                    <div className="form-group mb-2">
-                      <button type="button" id="btnCvDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.cv_filePath_1, this.state.cv_fileName_1) }>
-                        Download File CV &nbsp; <Download />
-                      </button>
-                    </div>
-                    <div className="form-group mb-2">
-                      <label className="col-md-6" htmlFor="files-3">File Pernyataan Terupload</label>
-                    </div>
-                    <div className="form-group mb-2">
-                      <button type="button" id="btnPernyataanDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.pernyataan_filePath_1, this.state.pernyataan_fileName_1) }>
-                        Download File Pernyataan &nbsp; <Download />
-                      </button>
-                    </div>
-                    { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
-                      <React.Fragment>
-                      <div className="form-group mb-2">
-                        <label htmlFor="files-3">Lampiran File Perhitungan Dari Software Terupload</label>
+          { (this.state.loader_status) ? 
+              <ScaleLoader color="green" loading="true" height="50" width="50" cssOverride={ override } aria-label="Loading Spinner" data-testid="loader" speedMultiplier={ 1 } />
+            :
+            <div className="card">
+              <h5 className="card-header text-center">Paper Form Peserta Individu - Edit</h5>
+              <div className="card-body">                      
+                <form id="paperone-edit">
+                  <div className="wrapper-form">
+                    <div className="row row-satu mb-2">
+                      <div className="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label htmlFor="jenis_paper">Jenis Paper</label>
+                        <input type="text" className="form-control" id="jenis_paper" name="jenis_paper" defaultValue={this.state.paper_type} disabled />
+                      </div>          
+                      <div className="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label htmlFor="kategori">Kategori</label>
+                        <input type="text" className="form-control" id="kategori" name="kategori" defaultValue={this.state.category} disabled />
                       </div>
-                      <div className="form-group mb-2">
-                        <button type="button" id="btnLampiranDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.lampiran_filePath_1, this.state.lampiran_fileName_1) }>
-                          Download File Lampiran &nbsp; <Download />
-                        </button>
-                      </div>    
-                      </React.Fragment> : null        
-                    }                                                              
-                  </div>
-                  <div className="wrapper-new col-md-6">
-                    <div className="form-group mb-2">
-                      <label htmlFor="select-files-1">File Paper (Max 8MB), format file .pdf., .doc atau .docx</label>
+                      <div className="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label htmlFor="keikutsertaan">Keikutsertaan</label>
+                        <input type="text" className="form-control" id="keikutsertaan" name="keikutsertaan" defaultValue={this.state.participation_type} disabled />
+                      </div>  
                     </div>
                     <div className="form-group mb-2">
-                      <input className="form-control" type="file" name="paper_file" id="paper_file" onChange={this.paper_file_change} />
-                    </div>            
-                    <div className="form-group mb-2">
-                      <label htmlFor="select-files-2">File CV Pendaftar, format file .pdf, .doc atau .docx</label>
+                      <label htmlFor="sub_tema">Sub Tema</label>
+                      <textarea type="text" className="form-control" id="sub_tema" name="sub_tema" defaultValue={this.state.sub_theme} disabled />
                     </div>
-                    <div className="form-group mb-2">
-                      <input className="form-control" type="file" name="cv_file" id="cv_file" onChange={this.cv_file_change} />
-                    </div>                  
-                    <div className="form-group mb-2">
-                      <label htmlFor="select-files-3">File Surat Pernyataan (Max 8MB), format file .pdf, .doc atau .docx</label>
+                    <div className="form-group mb-4">
+                      <label htmlFor="judul">Judul Paper</label>
+                      <textarea autoFocus type="text" className="form-control" id="judul" name="judul" defaultValue={this.state.title} onChange={this.judul_change} />
+                      <input type="hidden" name="userid" id="userid" defaultValue={this.state.userid_code} ref={(input) => { this.useridInput = input }} />
+                      <input type="hidden" name="name" id="name" defaultValue={this.state.name_1} ref={(input) => { this.nameInput = input }} />
+                      <input type="hidden" name="phone" id="phone" defaultValue={this.state.phone} ref={(input) => { this.phoneInput = input }} />
+                      <input type="hidden" name="organization" id="organization" defaultValue={this.state.organization_1} ref={(input) => { this.organizationInput = input }} />
                     </div>
-                    <div className="form-group mb-2">
-                      <input className="form-control" type="file" name="pernyataan_file" id="pernyataan_file" onChange={this.pernyataan_file_change} />
-                    </div> 
-                    { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
-                      <React.Fragment>
+
+                    <div className="row row-dua mb-2">
+                      <div className="wrapper-existing col-md-6">
                         <div className="form-group mb-2">
-                          <label htmlFor="select-files-4">Lampiran File Perhitungan Dari Software (Max 8MB), format file .pdf, .doc atau .docx</label>
+                          <label className="col-md-6" htmlFor="files-1">File Paper Terupload</label>
                         </div>
                         <div className="form-group mb-2">
-                          <input className="form-control" type="file" name="lampiran_file" id="lampiran_file" onChange={this.lampiran_file_change} />
-                        </div>           
-                      </React.Fragment> : null        
-                    }  
+                          <button type="button" id="btnPaperDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.paper_filePath_1, this.state.paper_fileName_1) }>
+                            Download File Paper &nbsp; <Download />
+                          </button>
+                        </div>                       
+                        <div className="form-group mb-2">
+                          <label className="col-md-6" htmlFor="files-2">File CV Terupload</label>
+                        </div>
+                        <div className="form-group mb-2">
+                          <button type="button" id="btnCvDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.cv_filePath_1, this.state.cv_fileName_1) }>
+                            Download File CV &nbsp; <Download />
+                          </button>
+                        </div>
+                        <div className="form-group mb-2">
+                          <label className="col-md-6" htmlFor="files-3">File Pernyataan Terupload</label>
+                        </div>
+                        <div className="form-group mb-2">
+                          <button type="button" id="btnPernyataanDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.pernyataan_filePath_1, this.state.pernyataan_fileName_1) }>
+                            Download File Pernyataan &nbsp; <Download />
+                          </button>
+                        </div>
+                        { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
+                          <React.Fragment>
+                          <div className="form-group mb-2">
+                            <label htmlFor="files-3">Lampiran File Perhitungan Dari Software Terupload</label>
+                          </div>
+                          <div className="form-group mb-2">
+                            <button type="button" id="btnLampiranDownload" className="btn-outline-success form-control" onClick={ this.handleDownload(this.state.lampiran_filePath_1, this.state.lampiran_fileName_1) }>
+                              Download File Lampiran &nbsp; <Download />
+                            </button>
+                          </div>    
+                          </React.Fragment> : null        
+                        }                                                              
+                      </div>
+                      <div className="wrapper-new col-md-6">
+                        <div className="form-group mb-2">
+                          <label htmlFor="select-files-1">File Paper (Max 8MB), format file .pdf., .doc atau .docx</label>
+                        </div>
+                        <div className="form-group mb-2">
+                          <input className="form-control" type="file" name="paper_file" id="paper_file" onChange={this.paper_file_change} />
+                        </div>            
+                        <div className="form-group mb-2">
+                          <label htmlFor="select-files-2">File CV Pendaftar, format file .pdf, .doc atau .docx</label>
+                        </div>
+                        <div className="form-group mb-2">
+                          <input className="form-control" type="file" name="cv_file" id="cv_file" onChange={this.cv_file_change} />
+                        </div>                  
+                        <div className="form-group mb-2">
+                          <label htmlFor="select-files-3">File Surat Pernyataan (Max 8MB), format file .pdf, .doc atau .docx</label>
+                        </div>
+                        <div className="form-group mb-2">
+                          <input className="form-control" type="file" name="pernyataan_file" id="pernyataan_file" onChange={this.pernyataan_file_change} />
+                        </div> 
+                        { this.state.paper_type === 'Regional Economic Modeling Paper' ? 
+                          <React.Fragment>
+                            <div className="form-group mb-2">
+                              <label htmlFor="select-files-4">Lampiran File Perhitungan Dari Software (Max 8MB), format file .pdf, .doc atau .docx</label>
+                            </div>
+                            <div className="form-group mb-2">
+                              <input className="form-control" type="file" name="lampiran_file" id="lampiran_file" onChange={this.lampiran_file_change} />
+                            </div>           
+                          </React.Fragment> : null        
+                        }  
+                      </div>
+                    </div>                          
                   </div>
-                </div>                          
+                </form>
               </div>
-            </form>
-          </div>
-          <div className="card-footer">
-            <div className="wrapper-button">
-              <div className="input-group mt-2" style={{ alignItems: "center" }}>
-                <button type="submit" id="btnLogin" className="btn-success form-control" onClick={ this.onSubmit }>
-                  UPDATE PAPER
-                </button>        
-              </div>
-              <div className="input-group my-2" style={{ alignItems: "center" }}>
-                <button type="button" id="btnRegister" className="btn-outline-success form-control" onClick={ this.clickBack }>
-                  CANCEL
-                </button>        
-              </div>     
-            </div>      
-          </div>          
-        </div>          
+              <div className="card-footer">
+                <div className="wrapper-button">
+                  <div className="input-group mt-2" style={{ alignItems: "center" }}>
+                    <button type="submit" id="btnLogin" className="btn-success form-control" onClick={ this.onSubmit }>
+                      UPDATE PAPER
+                    </button>        
+                  </div>
+                  <div className="input-group my-2" style={{ alignItems: "center" }}>
+                    <button type="button" id="btnRegister" className="btn-outline-success form-control" onClick={ this.clickBack }>
+                      CANCEL
+                    </button>        
+                  </div>     
+                </div>      
+              </div>          
+            </div>          
+          }
       </React.Fragment>
     )    
   }
