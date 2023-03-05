@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { EyeOff } from 'react-feather'
+import { EyeOff, Eye } from 'react-feather'
 import imgEjavec from '../Assets/Images/ejavec-logo.svg'
 import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie'
@@ -8,6 +8,9 @@ import Cookies from 'universal-cookie'
 const cookies = new Cookies()
 
 class Login extends React.Component {
+  state = {
+    eyeOff: true,
+  }
   clickRegister = () => {
     window.location.href = '/register'  
   }
@@ -171,10 +174,15 @@ class Login extends React.Component {
                   <input autoFocus type="text" id="username" name="username" className="form-control" placeholder="Your Username" aria-label="Username" aria-describedby="basic-addon1" />
               </div>
               <div className="input-group mx-auto my-2" style={{ alignItems: "center" }}>
-                  <input type="password" id="passwd" name="passwd" className="form-control" placeholder="Your Password" aria-label="Password" aria-describedby="basic-addon2" autoComplete="off" />
-                  <div className="input-group-prepend">
-                    <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
-                  </div>                  
+                <input type="password" id="passwd" name="passwd" className="form-control" placeholder="Your Password" aria-label="Password" aria-describedby="basic-addon2" autoComplete="off" />
+                { (this.state.eyeOff) ? 
+                    <div className="input-group-prepend">
+                      <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
+                    </div> :
+                    <div className="input-group-prepend">
+                      <div className="input-group-text"><Eye onClick={ this.showHideOne } /></div>
+                    </div>
+                }
               </div>        
               <div className="input-group mx-auto my-2" style={{ alignItems: "center" }}>
                 <button type="button" id="btnLogin" className="btn-danger form-control" onClick={ this.clickSubmit }>
@@ -197,7 +205,7 @@ class Login extends React.Component {
   }
 
   showHideOne = (event) => {
-    event.preventDefault()
+    (this.state.eyeOff === true) ? this.setState({ eyeOff: false }) : this.setState({ eyeOff: true })    
     document.querySelector('#passwd').type === 'password' ? document.querySelector('#passwd').type = 'text' : document.querySelector('#passwd').type = 'password'
   }   
 }
