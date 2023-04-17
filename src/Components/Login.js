@@ -215,7 +215,7 @@ class Login extends React.Component {
               </form>    
             </div>                        
           </div>
-          <div className="card-footer row g-2">
+          <div className="card-footer row gx-2 gy-0">
             <div className="forgot text-center">
               <a href="/forgot" style={{ textDecoration: "none" }}>Forgot Password?</a>
             </div>            
