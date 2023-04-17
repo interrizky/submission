@@ -131,63 +131,57 @@ class Register extends React.Component {
       ?
         <ScaleLoader color="white" loading="true" cssOverride={ override } height="90px" width="15px" radius="10px" aria-label="Loading Spinner" data-testid="loader" speedMultiplier={ 1 } /> 
       :            
-        <div className='card'>
+        <div className='card' style={{ width: '25rem' }}>
           <div className='card-header' style={{ backgroundColor: 'white' }}>
             <h4 style={{ textAlign: "center" }}>USER REGISTRATION</h4>
           </div>
           <div className='card-body'>
             <form>
-              <div className="row g-2 d-flex wrapper-form">
-                <div className="wrapper-form-kiri col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                  <div className="form-group">
-                    <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Peserta</label>                  
-                    <input autoFocus type="text" id="nama" name="nama" className="form-control" placeholder="Full Name" aria-label="Name" aria-describedby="basic-addon1" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>No. Handphone Aktif</label>                  
-                    <input type="text" id="handphone" name="handphone" className="form-control" placeholder="Active Phone Number" aria-label="Phone Number" aria-describedby="basic-addon2" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="inputPassword-1-label" className="col-form-label" style={{ textAlign: "left" }}>Password</label>
-                    <div className="input-group">
-                      <input type="password" id="password1" name="password1" className="form-control" placeholder="Your Password" aria-label="Password1" aria-describedby="basic-addon5" autoComplete="off" minLength="4" maxLength="12" />
-                      <div className="input-group-prepend">
-                        <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
-                      </div>
-                    </div>
-                  </div>                      
+              <div className="row g-2 wrapper-form">
+                <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Peserta</label>                  
+                  <input autoFocus type="text" id="nama" name="nama" className="form-control" placeholder="Full Name" aria-label="Name" aria-describedby="basic-addon1" />
                 </div>
-                <div className="wrapper-form-kanan col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                  <div className="form-group">
-                    <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Instansi</label>                  
-                    <input type="text" id="organisasi" name="organisasi" className="form-control" placeholder="Organization / Institution Name" aria-label="Organization Name" aria-describedby="basic-addon3" />
-                  </div>                  
-                  <div className="form-group">
-                    <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
-                    <input type="text" id="email" name="email" className="form-control" placeholder="Active Email" aria-label="Email" aria-describedby="basic-addon4" />
-                  </div>   
-                  <div className="form-group">
-                    <label htmlFor="inputPassword-2-label" className="col-form-label" style={{ textAlign: "left" }}>Confirm Password</label>
-                    <div className="input-group">
-                      <input type="password" id="password2" name="password2" className="form-control" placeholder="Confirm Password" aria-label="Password2" aria-describedby="basic-addon6" autoComplete="off" minLength="4" maxLength="12" />
-                      <div className="input-group-prepend">
-                        <div className="input-group-text"><EyeOff onClick={ this.showHideTwo } /></div>
-                      </div>
+                <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Nama Instansi</label>                  
+                  <input type="text" id="organisasi" name="organisasi" className="form-control" placeholder="Organization / Institution Name" aria-label="Organization Name" aria-describedby="basic-addon3" />
+                </div>      
+                <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
+                  <input type="text" id="email" name="email" className="form-control" placeholder="Active Email" aria-label="Email" aria-describedby="basic-addon4" />
+                </div>                                       
+                <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>No. Handphone Aktif</label>                  
+                  <input type="text" id="handphone" name="handphone" className="form-control" placeholder="Active Phone Number" aria-label="Phone Number" aria-describedby="basic-addon2" />
+                </div>
+                <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label htmlFor="inputPassword-1-label" className="col-form-label" style={{ textAlign: "left" }}>Password</label>
+                  <div className="input-group">
+                    <input type="password" id="password1" name="password1" className="form-control" placeholder="Your Password" aria-label="Password1" aria-describedby="basic-addon5" autoComplete="off" minLength="4" maxLength="12" />
+                    <div className="input-group-prepend">
+                      <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
                     </div>
-                  </div>                   
-                </div>              
+                  </div>
+                </div>                      
+                <div className="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label htmlFor="inputPassword-2-label" className="col-form-label" style={{ textAlign: "left" }}>Confirm</label>
+                  <div className="input-group">
+                    <input type="password" id="password2" name="password2" className="form-control" placeholder="Confirm Password" aria-label="Password2" aria-describedby="basic-addon6" autoComplete="off" minLength="4" maxLength="12" />
+                    <div className="input-group-prepend">
+                      <div className="input-group-text"><EyeOff onClick={ this.showHideTwo } /></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="row g-2 my-2 button-action">
-                <div className="input-group">
-                  <button type="submit" id="btnSignUp" className="btn-danger form-control" onClick={ this.clickSignUp } >
-                    SIGN UP
-                  </button>
-                </div>
-                <div className="input-group">
-                  <button type="button" id="btnBack" className="btn-outline-danger form-control" onClick={ this.loginBack }>
-                    CANCEL
-                  </button>           
-                </div>              
+              <div className="input-group my-2">
+                <button type="submit" id="btnSignUp" className="btn-danger form-control" onClick={ this.clickSignUp } >
+                  SIGN UP
+                </button>
+              </div>
+              <div className="input-group my-2">
+                <button type="button" id="btnBack" className="btn-outline-danger form-control" onClick={ this.loginBack }>
+                  CANCEL
+                </button>           
               </div>            
             </form>
           </div>

@@ -176,8 +176,55 @@ class Login extends React.Component {
       (this.state.loaderStatus) 
       ?
         <ScaleLoader color="white" loading="true" cssOverride={ override } height="90px" width="15px" radius="10px" aria-label="Loading Spinner" data-testid="loader" speedMultiplier={ 1 } /> 
-      :      
-        <div className="login-page" id="login"  style={{
+      : 
+      <>
+        <div className="card">
+          <div className="card-body">
+            <div className="wrapper-image my-3 mx-auto text-center">
+              <img className="logoLogin" alt="Logo Login EJAVEC" src={ imgEjavec } style={{ height: '75px' }} />
+            </div>
+            <div className="wrapper-judul-login my-3 mx-auto text-center">
+              <p className="login-text" style={{ fontSize: '20px', fontWeight: 'bold', fontStyle: 'italic' }}> L O G I N </p>
+            </div>
+            <div className="wrapper-form">
+              <form>
+                <div className="input-group mx-auto my-2" style={{ alignItems: "center" }}>
+                    <input autoFocus type="text" id="username" name="username" className="form-control" placeholder="Your Username" aria-label="Username" aria-describedby="basic-addon1" />
+                </div>
+                <div className="input-group mx-auto my-2" style={{ alignItems: "center" }}>
+                  <input type="password" id="passwd" name="passwd" className="form-control" placeholder="Your Password" aria-label="Password" aria-describedby="basic-addon2" autoComplete="off" />
+                  { (this.state.eyeOff) ? 
+                      <div className="input-group-prepend">
+                        <div className="input-group-text"><EyeOff onClick={ this.showHideOne } /></div>
+                      </div> :
+                      <div className="input-group-prepend">
+                        <div className="input-group-text"><Eye onClick={ this.showHideOne } /></div>
+                      </div>
+                  }
+                </div>        
+                <div className="input-group mx-auto my-2" style={{ alignItems: "center" }}>
+                  <button type="button" id="btnLogin" className="btn-danger form-control" onClick={ this.clickSubmit }>
+                    LOGIN
+                  </button>        
+                </div>
+                <div className="input-group mx-auto my-2" style={{ alignItems: "center" }}>
+                  <button type="button" id="btnRegister" className="btn-outline-danger form-control" onClick={ this.clickRegister }>
+                    SIGN UP HERE
+                  </button>        
+                </div>
+              </form>    
+            </div>                        
+          </div>
+          <div className="card-footer row g-2">
+            <div className="forgot text-center">
+              <a href="/forgot" style={{ textDecoration: "none" }}>Forgot Password?</a>
+            </div>            
+            <div className="code text-center">
+              <a href="/code" style={{ textDecoration: "none" }}>Resend The Registration Code</a>
+            </div>
+          </div>
+        </div>
+        {/* <div className="login-page" id="login"  style={{
             backgroundColor: 'white', 
             justifyContent: 'center', 
             alignItems: 'center', 
@@ -223,7 +270,8 @@ class Login extends React.Component {
                 </div>
               </form>    
             </div>          
-        </div>
+        </div> */}
+      </>     
     )
   }
 
