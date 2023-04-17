@@ -1,107 +1,75 @@
-import React from 'react';
-import Axios from 'axios';
-
-/* SweetAlert2 */
+import React from 'react'
+import Axios from 'axios'
+import ScaleLoader from 'react-spinners/ScaleLoader'
 import Swal from 'sweetalert2'
 
+const override = {
+  position: "fixed", 
+  top: "50%", 
+  left: "50%", 
+  transform: "translate(-50%, -50%)" 
+}
+
 class Code extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      loaderStatus: false,
+    }
+  }
   render() {
     return(
-      <React.Fragment>
-        {/* <div className="row forgot-code-page d-flex align-items-center">
-          <div className="wrapper-forgot-code mx-auto" id="forgot-code" style={{
-            backgroundColor: 'white', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-            // textAlign: 'center', 
-            width: '480px', 
-            height: '480px',                 
-            borderRadius: '15px'
-          }}>
-            <div className="wrapper-header mx-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
-              <div className="header mb-2">
-                <h4 style={{ textAlign: "center" }}>Resend The Verification Code</h4>
-              </div>
-              <div className="text mb-2">
-                <p style={{ textAlign: "justify", fontSize: "13px" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Kode Verifikasi baru akan dikirimkan ke email anda. Terima kasih.
-                </p>              
-              </div>         
-            </div>
-
-            <div className="wrapper-form mx-5 my-5" id="wrapper-form" style={{ position: "relative", top: "5%"  }}>
-              <div className="form mb-2">
-                <div className="form-group mb-3">
-                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
-                  <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
-                </div>
-              </div>
-              <div className="button my-4">
-                <div className="input-group mb-3">
-                  <button type="button" id="btnResend" className="btn-success form-control" onClick={ this.clickResend } >
-                    RESEND NEW CODE
-                  </button>
-                </div>
-                <div className="input-group mb-3">
-                  <button type="button" id="btnBack" className="btn-outline-success form-control" onClick={ this.loginBack }>
-                    CANCEL
-                  </button>           
-                </div>
-              </div>             
-            </div>          
-
-          </div>        
-        </div> */}
-
-        <div className="content w-50">
-          <div className="card" style={{ borderRadius: "15px" }}>
-            <div className="card-body">
-              <div className="row wrapper-header g-2">
-                <h4 className="text-center">Resend The Verification Code</h4>
-                <div className="wrapper-sub-heading">
-                  <p style={{ fontSize: "13px", textAlign: "justify" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Kode Verifikasi baru akan dikirimkan ke email anda. Terima kasih.</p>                
-                </div>
-              </div>
-
-              <form>
-                <div className="form-group">
-                  <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
-                  <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
-                </div>
-              </form>
-            </div>
-            <div className="card-footer">
-              <div className="row wrapper-button g-2">
-                <div className="input-group">
-                  <button type="button" id="btnResend" className="btn-success form-control" onClick={ this.clickResend } >
-                    RESEND NEW CODE
-                  </button>
-                </div>
-                <div className="input-group">
-                  <button type="button" id="btnBack" className="btn-outline-success form-control" onClick={ this.loginBack }>
-                    CANCEL
-                  </button>           
-                </div>            
-              </div>
-            </div>
+      (this.state.loaderStatus) 
+      ?
+        <ScaleLoader color="white" loading="true" cssOverride={ override } height="90px" width="15px" radius="10px" aria-label="Loading Spinner" data-testid="loader" speedMultiplier={ 1 } /> 
+      :            
+        <div className="card" style={{ width: '20rem' }}>
+          <div className="card-header" style={{ backgroundColor: 'white' }}>
+            <h4 className="text-center" style={{ fontSize: '21px' }}>Resend The Verification Code</h4>
           </div>
-        </div>      
-
-      </React.Fragment>
+          <div className="card-body">
+            <div className="wrapper-sub-heading">
+              <p style={{ fontSize: "14px", textAlign: "justify" }}>Masukkan email anda yang teregistrasi di website ini pada kolom yang telah disediakan. Kode Verifikasi baru akan dikirimkan ke email anda. Terima kasih.</p>                
+            </div>
+            <form className="row g-2">
+              <div className="form-group">
+                <label htmlFor="email-label" className="col-form-label" style={{ textAlign: "left" }}>Email for Username</label>                  
+                <input autoFocus type="text" id="email" name="email" className="form-control" placeholder="Your Email" aria-label="Email" aria-describedby="basic-addon1" />
+              </div>
+              <div className="input-group">
+                <button type="button" id="btnResend" className="btn-success form-control" onClick={ this.clickResend } >
+                  RESEND NEW CODE
+                </button>
+              </div>
+              <div className="input-group">
+                <button type="button" id="btnBack" className="btn-outline-success form-control" onClick={ this.loginBack }>
+                  CANCEL
+                </button>           
+              </div>                          
+            </form>            
+          </div>       
+        </div>
     )
   }
 
   clickResend = async(event) => {
     event.preventDefault()
 
-    if( document.querySelector('#email') === null || document.querySelector('#email') === '' ) {
+    if( document.querySelector('#email').value === null || document.querySelector('#email').value === '' ) {
       Swal.fire({
         title: 'Error!',
-        text: 'Terjadi Kesalahan! Masukkan Email Anda Yang Terdaftar!',
+        text: 'Terjadi Kesalahan! Kolom Email Wajib Terisi!',
         icon: 'error',
         confirmButtonText: 'Okay',
-        confirmButtonColor: 'Orange',            
+        confirmButtonColor: 'indianred',            
       })      
     } else {
+      /* set loader */
+      this.setState({ loaderStatus: true })
+
+      /* grab email value */
+      let email_value = document.querySelector('#email').value
+
       /* check email */
       const datax_email = await Axios({
         url: 'https://submission-api.ejavec.org/checkmail',
@@ -110,7 +78,7 @@ class Code extends React.Component {
           'Content-Type': 'application/json',
         },
         data: JSON.stringify({ 
-          data_email: document.querySelector('#email').value,
+          data_email: email_value,
           data_kode: "code"
         })                   
       })
@@ -124,10 +92,13 @@ class Code extends React.Component {
             'Content-Type': 'application/json',
           },
           data: JSON.stringify({ 
-            data_email: document.querySelector('#email').value,
+            data_email: email_value,
             data_kode: "sendcode"
           })               
         })
+
+        /* unset loader */
+        if( datax_email ) this.setState({ loaderStatus: false })        
 
         if( datax !== null ) {
           let timerInterval
@@ -136,7 +107,7 @@ class Code extends React.Component {
             text: 'Check Your Email For The Registration Code',
             icon: 'success',
             confirmButtonText: 'COOL',
-            confirmButtonColor: 'orange',
+            confirmButtonColor: 'green',
             html: 'Check Your Email For The Verification Code. Will be redirected to Login Page in <b></b> milliseconds.',
               timer: 3000,
               timerProgressBar: true,
@@ -158,13 +129,20 @@ class Code extends React.Component {
             })        
         }          
       } else {
+        /* unset loader */
+        if( datax_email ) this.setState({ loaderStatus: false })
+
         Swal.fire({
           title: 'Error!',
           text: 'Terjadi Kesalahan! Email Tidak Terdaftar!',
           icon: 'error',
           confirmButtonText: 'Okay',
-          confirmButtonColor: 'Orange',            
-        })            
+          confirmButtonColor: 'indianred',            
+        }).then(result =>  {
+          if(result.isConfirmed) {          
+            window.location.reload()
+          }
+        })           
       }
     }
   }
