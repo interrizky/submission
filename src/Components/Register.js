@@ -68,8 +68,6 @@ class Register extends React.Component {
         })                   
       })
 
-      console.log(datax_email)
-
       /* kalo emailnya udah ada */
       if( datax_email.data.status === 'Email Exist' ) {
         this.setState({ loaderStatus: false })        
