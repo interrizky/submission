@@ -21,6 +21,13 @@ class Register extends React.Component {
   clickSignUp = async(event) => {
     event.preventDefault();
 
+    /* grab value */
+    let email_value = document.querySelector('#email').value
+    let name_value = document.querySelector('#nama').value.toUpperCase()
+    let handphone_value = document.querySelector('#handphone').value
+    let organisasi_value = document.querySelector('#organisasi').value.toUpperCase()
+    let password_value = document.querySelector('#password2').value    
+
     if( document.querySelector('#nama').value === '' || document.querySelector('#handphone').value === '' || document.querySelector('#organisasi').value === '' || document.querySelector('#email').value === '' || document.querySelector('#password1').value === '' || document.querySelector('#password2').value === '') {
       Swal.fire({
         title: 'Error!',
@@ -49,9 +56,6 @@ class Register extends React.Component {
       /* set loader */
       this.setState({ loaderStatus: true })
 
-      /* grab email value */
-      let email_value = document.querySelector('#email').value
-
       /* check email */
       const datax_email = await Axios({
         url: 'https://submission-api.ejavec.org/checkmail',
@@ -64,10 +68,11 @@ class Register extends React.Component {
         })                   
       })
 
-      if( datax_email ) this.setState({ loaderStatus: false })
+      console.log(datax_email)
 
       /* kalo emailnya udah ada */
       if( datax_email.data.status === 'Email Exist' ) {
+        this.setState({ loaderStatus: false })        
         Swal.fire({
           title: 'Error!',
           text: 'Terjadi Kesalahan! Email Sudah Terdaftar!',
@@ -83,15 +88,15 @@ class Register extends React.Component {
             'Content-Type': 'application/json',
           },
           data: JSON.stringify({ 
-            data_nama: document.querySelector('#nama').value.toUpperCase(),
-            data_handphone: document.querySelector('#handphone').value,
-            data_organisasi: document.querySelector('#organisasi').value.toUpperCase(),
-            data_email: document.querySelector('#email').value,
-            data_password: document.querySelector('#password2').value,
+            data_nama: name_value,
+            data_handphone: handphone_value,
+            data_organisasi: organisasi_value,
+            data_email: email_value,
+            data_password: password_value,
           })                   
         })
 
-        if( datax ) this.setState({ loaderStatus: false })
+        this.setState({ loaderStatus: false })
 
         if( datax !== null ) {             
           let timerInterval

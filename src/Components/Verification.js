@@ -19,72 +19,80 @@ class Verification extends React.Component {
   clickActivate = async(event) => {
     event.preventDefault()
 
-    this.setState({ ...this.state, loaderStatus: true })
-
-    const datax = await Axios({
-      url: 'https://submission-api.ejavec.org/verify',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: JSON.stringify({ 
-        name: localStorage.getItem('name'),
-        email: localStorage.getItem('email'),
-        kode_registrasi: document.querySelector('#kode_registrasi').value,
-      })                   
-    })
-
-    /* data sesuai */
-    if( datax.data.status === 'OK' ) {
-      /* unset loader */
-      this.setState({ ...this.state, loaderStatus: false })
-      let timerInterval
-      Swal.fire({
-        title: 'Success!',
-        text: 'Redirecting to Login Page',
-        icon: 'success',
-        confirmButtonText: 'Cool',
-        confirmButtonColor: 'orange',
-        html: 'Will be redirected to Login Page in <b></b> milliseconds.',
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading()
-            const b = Swal.getHtmlContainer().querySelector('b')
-            timerInterval = setInterval(() => {
-              b.textContent = Swal.getTimerLeft()
-            }, 100)
-          },
-          willClose: () => {
-            clearInterval(timerInterval)
-          }
-        }).then((result) => {
-          /* Read more about handling dismissals below */
-          if (result.dismiss === Swal.DismissReason.timer) {
-              console.log('I was closed by the timer')
-          }
-          /* remove it in the LocalStorage (cause of using location.href) */
-          localStorage.removeItem('email')
-          localStorage.removeItem('name')
-          /* redirected to login page */
-          window.location.href = '/'
-        })
-    } else {
-      /* unset loader */
-      this.setState({ ...this.state, loaderStatus: false })      
+    if( document.querySelector('#kode_registrasi').value === '' ) {
       Swal.fire({
         title: 'Error!',
-        text: 'Terjadi Kesalahan! Kode Verifikasi Tidak Sesuai!',
+        text: 'Periksa Kembali Semua Inputan Anda!',
         icon: 'error',
         confirmButtonText: 'Okay',
         confirmButtonColor: 'indianred',            
-      }).then(result =>  {
-        if(result.isConfirmed) {          
-          window.location.reload()
-        }
+      })                  
+    } else {
+      this.setState({ ...this.state, loaderStatus: true })
+  
+      const datax = await Axios({
+        url: 'https://submission-api.ejavec.org/verify',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({ 
+          name: localStorage.getItem('name'),
+          email: localStorage.getItem('email'),
+          kode_registrasi: document.querySelector('#kode_registrasi').value,
+        })                   
       })
-    }
 
+      /* unset loader */
+      this.setState({ ...this.state, loaderStatus: false })      
+  
+      /* data sesuai */
+      if( datax.data.status === 'OK' ) {
+        let timerInterval
+        Swal.fire({
+          title: 'Success!',
+          text: 'Redirecting to Login Page',
+          icon: 'success',
+          confirmButtonText: 'Cool',
+          confirmButtonColor: 'orange',
+          html: 'Will be redirected to Login Page in <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+            /* remove it in the LocalStorage (cause of using location.href) */
+            localStorage.removeItem('email')
+            localStorage.removeItem('name')
+            /* redirected to login page */
+            window.location.href = '/'
+          })
+      } else { 
+        Swal.fire({
+          title: 'Error!',
+          text: 'Terjadi Kesalahan! Kode Verifikasi Tidak Sesuai!',
+          icon: 'error',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: 'indianred',            
+        }).then(result =>  {
+          if(result.isConfirmed) {          
+            window.location.reload()
+          }
+        })
+      }
+    }
   }
 
   render() {
