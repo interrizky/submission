@@ -8176,7 +8176,7 @@ class AdminDash extends React.Component {
             </div>
           </div>
 
-          <div className="wrapper-baris-kedua mx-3 my-2">
+          <div className="row d-flex wrapper-baris-kedua mx-3 my-2">
             <div className="table-ten-latest col-md-12">
               <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
