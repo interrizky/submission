@@ -368,7 +368,7 @@ class PaperGroup extends React.Component {
                   { this.state.jenis_paper === 'Regional Economic Modeling Paper' ? 
                     <React.Fragment>
                       <div className="form-group mb-2">
-                        <label htmlFor="select-files-3">Lampiran File Perhitungan Dari Software (Max 8MB), format file .pdf, .doc atau .docx</label>
+                        <label htmlFor="select-files-3">Lampiran File Perhitungan Dari Software (Max 8MB), format file .zip atau .rar</label>
                       </div>
                       <div className="form-group mb-2">
                         <input className="form-control" type="file" name="lampiran_file" id="lampiran_file" onChange={this.lampiran_file_change} required />
