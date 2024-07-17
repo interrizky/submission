@@ -282,13 +282,13 @@ class ShariaGroup extends React.Component {
                       <input className="form-control" type="file" name="paper_file" id="paper_file" onChange={this.paper_file_change} required />
                     </div>            
                     <div className="form-group mb-2">
-                      <label htmlFor="select-files-2">File CV Pendaftar, format file .pdf, .doc atau .docx</label>
+                      <label htmlFor="select-files-2">File Curriculum Vitae (CV) Pendaftar, format file .pdf, .doc atau .docx</label>
                     </div>
                     <div className="form-group mb-2">
                       <input className="form-control" type="file" name="cv_file" id="cv_file" onChange={this.cv_file_change} required />
                     </div>                  
                     <div className="form-group mb-2">
-                      <label htmlFor="select-files-3">File Surat Pernyataan (Max 8MB), format file .pdf, .doc atau .docx</label>
+                      <label htmlFor="select-files-3">File Surat Pernyataan / Statement Letter (Max 8MB), format file .pdf, .doc atau .docx</label>
                     </div>
                     <div className="form-group mb-2">
                       <input className="form-control" type="file" name="pernyataan_file" id="pernyataan_file" onChange={this.pernyataan_file_change} required />

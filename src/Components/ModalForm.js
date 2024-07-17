@@ -8,27 +8,28 @@ const cookies = new Cookies()
 
 let lookup = {
   'General': [
-    { id: '1', text: 'Strategi Penguatan Nilai Tambah Sektor Pertanian Dan Manufaktur Untuk Memperkuat Ketahanan Ekonomi Jawa Timur.' },
-    { id: '2', text: 'Strategi Mendorong Implementasi Green Economy Untuk Mendukung Ketahanan Ekonomi Jawa Timur Yang Berkelanjutan Dan Inklusif.' },
-    { id: '3', text: 'Strategi Dan Inovasi Akselerasi Daya Saing Ekspor Luar Negeri Jawa Timur Di Tengah Peningkatan Ketidakpastian Global.' },
-    { id: '4', text: 'Mendorong Inovasi Pembangunan Ekonomi Syariah di Jawa Timur Yang Inklusif dan Berkelanjutan.' },
-    { id: '5', text: 'Strategi Mendorong Digitalisasi Ekonomi Untuk Mendukung Efisiensi Ekonomi Jawa Timur.' }
+    { id: '1', text: 'Industri Pengolahan' },
+    { id: '2', text: 'Agrikultur' },
+    { id: '3', text: 'Pariwisata' },
+    { id: '4', text: 'Perdagangan Domestik dan/atau Internasional' },
+    { id: '5', text: 'Pergudangan dan Transportasi (Logistik)' },
+    { id: '6', text: 'Inflasi dan Stabilitas Harga' }
   ],
   'Modeling': [
-    { id: '6', text: 'Model Proyeksi/Forecasting/Determinan Pertumbuhan Ekonomi Jawa Timur Dan Turunannya (Sisi Permintaan).' },
-    { id: '7', text: 'Model Proyeksi/Forecasting/Determinan Pertumbuhan Ekonomi Jawa Timur Dan Turunannya (Sisi Penawaran).' },
-    { id: '8', text: 'Simulasi Berbagai Dampak Isu Strategis Terhadap Ketahanan Perekonomian Jawa Timur.' },
-    { id: '9', text: 'Simulasi Berbagai Opsi Kebijakan, Baik Kebijakan Moneter, Makroprudensial, Mikroprudensial, Fiskal, Maupun Kebijakan Pemerintah Pusat Dan Daerah, Serta Kebijakan Negara Lain Terhadap Perekonomian Jawa Timur.' },
-    { id: '10', text: 'Fundamental Pertumbuhan Ekonomi Jawa Timur Saat Ini dan Ke Depan.' }
+    // { id: '6', text: 'Model Proyeksi/Forecasting/Determinan Pertumbuhan Ekonomi Jawa Timur Dan Turunannya (Sisi Permintaan).' },
+    // { id: '7', text: 'Model Proyeksi/Forecasting/Determinan Pertumbuhan Ekonomi Jawa Timur Dan Turunannya (Sisi Penawaran).' },
+    // { id: '8', text: 'Simulasi Berbagai Dampak Isu Strategis Terhadap Ketahanan Perekonomian Jawa Timur.' },
+    // { id: '9', text: 'Simulasi Berbagai Opsi Kebijakan, Baik Kebijakan Moneter, Makroprudensial, Mikroprudensial, Fiskal, Maupun Kebijakan Pemerintah Pusat Dan Daerah, Serta Kebijakan Negara Lain Terhadap Perekonomian Jawa Timur.' },
+    // { id: '10', text: 'Fundamental Pertumbuhan Ekonomi Jawa Timur Saat Ini dan Ke Depan.' }
   ],
   'Sharia': [
-    { id: '11', text: 'Food' },
-    { id: '12', text: 'Fashion'},
-    { id: '13', text: 'Finance (meliputi juga instrumen keuangan syariah)'},
-    { id: '14', text: 'Integrated Farming'},
-    { id: '15', text: 'Renewable Energy'},
-    { id: '16', text: 'Fundutainment (industri kreatif meliputi aplikasi, games, film, musik, arsitektur, desain dan seni pertunjukan)'},
-    { id: '17', text: 'Funtrepreneur (jasa/properti/socialpreneur/travel dll)'}
+    // { id: '11', text: 'Food' },
+    // { id: '12', text: 'Fashion'},
+    // { id: '13', text: 'Finance (meliputi juga instrumen keuangan syariah)'},
+    // { id: '14', text: 'Integrated Farming'},
+    // { id: '15', text: 'Renewable Energy'},
+    // { id: '16', text: 'Fundutainment (industri kreatif meliputi aplikasi, games, film, musik, arsitektur, desain dan seni pertunjukan)'},
+    // { id: '17', text: 'Funtrepreneur (jasa/properti/socialpreneur/travel dll)'}
   ],
 }
 
@@ -104,7 +105,7 @@ class ModalForm extends React.Component {
           { this.state.dataValue === 'General' || this.state.dataValue === 'Modeling' ? 
           <div className="wrapper-tema">
             Tema Umum: <p className="tema-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
-              Mendorong Resiliensi Ekonomi Jawa Timur Yang Inklusif Dan Berkelanjutan Di Tengah Peningkatan Ketidakpastian Global.
+              Optimalisasi Sektor Ekonomi Unggulan dan Stabilitas Harga untuk Memperkuat Ketahanan dan Akselerasi Pertumbuhan Ekonomi Jawa Timur.
             </p>
             Lingkup Penelitian:
             <p className="lingkup-text" style={{ fontSize: '14px', fontWeight: 'bold', fontStyle: 'italic' }}>
@@ -122,8 +123,8 @@ class ModalForm extends React.Component {
               <label htmlFor="select1">Jenis Paper</label>
               <select className="form-control" id="jenis_paper" onChange={ this.handleJenisPaperChange }>
                 <option value="General">General Paper</option>
-                <option value="Modeling">Regional Economic Modeling Paper</option>
-                <option value="Sharia">Java Sharia Business Model</option>
+                {/* <option value="Modeling">Regional Economic Modeling Paper</option> */}
+                {/* <option value="Sharia">Java Sharia Business Model</option> */}
               </select>
             </div>
             <div className="form-group mb-2">

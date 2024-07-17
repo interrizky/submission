@@ -11,8 +11,8 @@ import date from 'date-and-time';
 
 const cookies = new Cookies()
 const now = new Date()
-const submission_deadline = new Date(2023, 4, 20, 23, 59, 59)
-const sharia_deadline = new Date(2023, 6, 1, 23, 59, 59)
+const submission_deadline = new Date(2024, 6, 26, 23, 59, 59)
+const sharia_deadline = new Date(2024, 4, 30, 23, 59, 59)
 
 class PesertaDash extends React.Component {
   state = {

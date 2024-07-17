@@ -6436,7 +6436,7 @@ class AdminDash extends React.Component {
                 }
               }           
             }
-          }              
+          }
 
           XLSX.utils.book_append_sheet(workBook, ws2, "REMP (not)")        
 
@@ -6457,6 +6457,8 @@ class AdminDash extends React.Component {
 
         if( datax !== null ) {
           this.setState({ tempObjOne: datax.data.listSubmitSharia, tempObjTwo: datax.data.listNotSubmitSharia })
+
+          console.log(datax)
 
           let workBook = XLSX.utils.book_new()
 
@@ -7282,7 +7284,7 @@ class AdminDash extends React.Component {
                 }
               }           
             }
-          }    
+          }             
 
           XLSX.utils.book_append_sheet(workBook, ws1, "Sharia (submitted)")
 
@@ -8107,7 +8109,7 @@ class AdminDash extends React.Component {
                 }
               }           
             }
-          }              
+          }
 
           XLSX.utils.book_append_sheet(workBook, ws2, "Sharia (not)")        
 
